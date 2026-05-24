@@ -5,14 +5,15 @@ cd "$(dirname "$0")"
 
 DAEMON_PORT="${OD_DAEMON_PORT:-17456}"
 WEB_PORT="${OD_WEB_PORT:-17573}"
+HOST="${OD_HOST:-127.0.0.1}"   # use 0.0.0.0 para liberar na LAN
 WEB_URL="http://localhost:${WEB_PORT}"
 
 echo "▶  Iniciando Open Design..."
-echo "   daemon : ${DAEMON_PORT}"
-echo "   web    : ${WEB_PORT}"
+echo "   daemon : ${HOST}:${DAEMON_PORT}"
+echo "   web    : ${HOST}:${WEB_PORT}"
 echo ""
 
-pnpm tools-dev run web \
+OD_HOST="$HOST" pnpm tools-dev run web \
   --daemon-port "$DAEMON_PORT" \
   --web-port "$WEB_PORT" \
   > /tmp/od-start.log 2>&1 &

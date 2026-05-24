@@ -134,9 +134,12 @@ export const AGENT_DEFS = [
       { id: 'sonnet', label: 'Sonnet (alias)' },
       { id: 'opus', label: 'Opus (alias)' },
       { id: 'haiku', label: 'Haiku (alias)' },
+      { id: 'claude-opus-4-7', label: 'claude-opus-4-7' },
+      { id: 'claude-opus-4-7[1m]', label: 'claude-opus-4-7 (1M ctx)' },
+      { id: 'claude-sonnet-4-6', label: 'claude-sonnet-4-6' },
+      { id: 'claude-haiku-4-5', label: 'claude-haiku-4-5' },
       { id: 'claude-opus-4-5', label: 'claude-opus-4-5' },
       { id: 'claude-sonnet-4-5', label: 'claude-sonnet-4-5' },
-      { id: 'claude-haiku-4-5', label: 'claude-haiku-4-5' },
     ],
     // Prompt delivered via stdin to avoid both Linux `spawn E2BIG`
     // (MAX_ARG_STRLEN caps a single argv entry at ~128 KB) and Windows
@@ -185,6 +188,7 @@ export const AGENT_DEFS = [
     // as a hint. Users can supply other ids via the custom-model input.
     fallbackModels: [
       DEFAULT_MODEL_OPTION,
+      { id: 'gpt-5.5', label: 'gpt-5.5' },
       { id: 'gpt-5-codex', label: 'gpt-5-codex' },
       { id: 'gpt-5', label: 'gpt-5' },
       { id: 'o3', label: 'o3' },
