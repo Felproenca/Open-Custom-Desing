@@ -340,6 +340,80 @@ O daemon possui uma pasta oculta na raiz do repo. Tudo nela é gitignored e loca
 
 Mapa completo de arquivos, scripts e troubleshooting → [`QUICKSTART.md`](QUICKSTART.md).
 
+## Como usar (interface web)
+
+O Open Design é **local-first**: não existe SaaS hospedado. Você roda na sua máquina e acessa pelo navegador. Três cenários cobrem 99% dos usos.
+
+### 1 · Modo "duplo-clique" (recomendado para usuário final)
+
+Depois de `pnpm install` uma vez, use os scripts auxiliares na raiz do repo:
+
+```bash
+./start.sh    # sobe daemon + web (portas fixas) e abre o navegador
+./stop.sh     # para tudo
+```
+
+Portas padrão: daemon `17456`, web `17573`. Sobreponha com env vars: `OD_DAEMON_PORT=18000 OD_WEB_PORT=18001 ./start.sh`.
+
+URL: **http://localhost:17573** (abre automaticamente se você tem `xdg-open` ou `open`).
+
+### 2 · Comando manual (controle fino)
+
+```bash
+cd open-design
+pnpm install                                              # uma vez
+pnpm tools-dev run web --daemon-port 17456 --web-port 17573
+```
+
+Abra **http://localhost:17573**. Para parar: `pnpm tools-dev stop`. Para inspecionar:
+
+```bash
+pnpm tools-dev status --json
+pnpm tools-dev logs --json
+pnpm tools-dev check
+```
+
+### 3 · App desktop (Electron, sem terminal aberto)
+
+```bash
+pnpm tools-dev                       # sobe daemon + web + desktop juntos
+```
+
+Uma janela nativa abre apontando para a web local. Fechando a janela, tudo morre junto. Em ambiente GUI, valide com:
+
+```bash
+pnpm tools-dev inspect desktop status
+pnpm tools-dev inspect desktop screenshot --path /tmp/od.png
+```
+
+Pacote `.app` (macOS beta): `pnpm tools-pack build` → `pnpm tools-pack start`.
+
+### Self-host em servidor remoto (avançado)
+
+Tecnicamente possível, não suportado oficialmente: rode `pnpm tools-dev run web` numa VM/VPS e acesse via port-forward SSH ou reverse proxy com TLS + auth próprios. **Avisos:**
+
+- O daemon assume que você é dono da máquina — ele faz `spawn` de CLIs de agente e escreve em `.od/projects/`.
+- Sem auth nativa na UI. Adicione uma camada (nginx basic-auth, Cloudflare Access, Tailscale) antes de expor.
+- A camada web (Next.js) pode ir para Vercel; o daemon precisa de filesystem real + CLIs de agente instaladas.
+
+### Fluxo típico de uso
+
+1. Suba o serviço (cenário 1, 2 ou 3 acima).
+2. Abra a URL web no navegador.
+3. Cole sua chave de modelo (Anthropic, OpenAI, ou qualquer endpoint BYOK compatível com OpenAI) no diálogo de boas-vindas. **Sem chave?** Se você já tem `claude`, `codex`, `gemini`, `cursor-agent`, etc. no `PATH`, o daemon detecta e usa direto.
+4. Crie um projeto, escolha uma skill (ex.: `web-prototype`, `guizang-ppt`, `dashboard`) e um design system (ex.: `linear-app`, `stripe`, `warm-editorial`).
+5. Digite o brief. Responda o formulário de descoberta do turn 1 (30s de radios).
+6. Veja o todo plan streamando ao vivo e o artefato renderizar no iframe.
+7. Baixe como HTML / PDF / ZIP, ou salve como template reutilizável.
+
+### Não existe (intencionalmente)
+
+- Versão SaaS hospedada por terceiros.
+- Conta / login / multi-tenancy.
+- CLI puro headless sem daemon — o bin `od` é parte do daemon, não roda standalone.
+
+Tudo é local-first por design: você é dono do `.od/`, dos artefatos, das chaves de modelo e do agente que conduz o loop.
+
 ## Estrutura do repositório
 
 ```
