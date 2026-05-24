@@ -39,11 +39,12 @@ const DICTS: Record<Locale, Dict> = {
 
 const LS_KEY = 'open-design:locale';
 
-// First-run default is English. We honor an explicit user pick saved to
-// localStorage but never auto-detect from `navigator.language`, so the
-// initial experience is consistent and predictable.
+// First-run default is pt-BR (this fork ships Portuguese-first). We honor
+// an explicit user pick saved to localStorage but never auto-detect from
+// `navigator.language`, so the initial experience is consistent and
+// predictable.
 function detectInitialLocale(): Locale {
-  if (typeof window === 'undefined') return 'en';
+  if (typeof window === 'undefined') return 'pt-BR';
   try {
     const stored = window.localStorage.getItem(LS_KEY);
     if (stored && (LOCALES as string[]).includes(stored)) {
@@ -52,7 +53,7 @@ function detectInitialLocale(): Locale {
   } catch {
     /* ignore */
   }
-  return 'en';
+  return 'pt-BR';
 }
 
 interface I18nContextValue {

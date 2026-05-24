@@ -428,7 +428,7 @@ export function SettingsDialog({
                 />
               </label>
               <label className="field">
-                <span className="field-label">Quick fill provider</span>
+                <span className="field-label">Preenchimento rápido</span>
                 <select
                   value=""
                   onChange={(e) => {
