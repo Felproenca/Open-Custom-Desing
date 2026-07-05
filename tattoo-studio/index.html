@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AETHER — Tattoo & Art Lab</title>
+  
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* Design Tokens */
+    :root {
+      --canvas: #000000;
+      --foreground: #F5F5F7;
+      --accent: #E2C39B;       /* Dourado Champagne */
+      --accent-red: #FF3E3E;   /* Vermelho Neon */
+      --neutral: #111114;
+      --neutral-border: rgba(245, 245, 247, 0.08);
+      
+      --font-display: 'Syne', sans-serif;
+      --font-serif: 'Playfair Display', serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+    
+    /* Hide default cursor on desktop */
+    @media (min-width: 921px) {
+      body, a, button {
+        cursor: none !important;
+      }
+    }
+    
+    /* Custom Precision Cursor */
+    .custom-cursor {
+      width: 24px;
+      height: 24px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      display: none;
+    }
+    
+    @media (min-width: 921px) {
+      .custom-cursor {
+        display: block;
+      }
+    }
+    
+    .cursor-dot {
+      width: 4px;
+      height: 4px;
+      background-color: var(--accent-red);
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    
+    .cursor-ring {
+      width: 100%;
+      height: 100%;
+      border: 1px solid rgba(226, 195, 187, 0.2);
+      border-radius: 50%;
+      position: absolute;
+      transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.2s;
+    }
+    
+    /* Cursor hover modifications */
+    body.hover-link .cursor-ring {
+      transform: scale(1.6);
+      border-color: var(--accent-red);
+    }
+    
+    /* Smooth Scroll / Scrollbar */
+    html.lenis {
+      height: auto;
+    }
+    .lenis-clean html.lenis {
+      scrollbar-width: none;
+    }
+    .lenis-clean ::-webkit-scrollbar {
+      display: none;
+    }
+    
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--canvas);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--neutral);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent);
+    }
+    
+    /* Layout */
+    body {
+      background-color: var(--canvas);
+      color: var(--foreground);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+      width: 100%;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    .grid-12 {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+    
+    @media (max-width: 920px) {
+      .grid-12 {
+        grid-template-columns: 1fr;
+        padding: 0 24px;
+      }
+    }
+    
+    section {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+    
+    .fullscreen-section {
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      align-items: center;
+      padding: 0;
+    }
+    
+    /* Typography */
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 8.5vw, 110px);
+      line-height: 0.9;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+    
+    .serif-italic {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: -0.01em;
+    }
+    
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+    
+    .body-lead {
+      font-size: clamp(16px, 2.2vw, 22px);
+      line-height: 1.4;
+      font-weight: 300;
+      color: rgba(245, 245, 247, 0.8);
+    }
+    
+    /* Reveal effect */
+    .reveal-wrapper {
+      overflow: hidden;
+      display: block;
+    }
+    .reveal-item {
+      transform: translateY(105%);
+      display: block;
+    }
+    
+    /* Header Navigation */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 32px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      mix-blend-mode: difference;
+    }
+    
+    .logo {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 800;
+      text-decoration: none;
+      color: #fff;
+      letter-spacing: -0.04em;
+    }
+    
+    .logo span {
+      color: var(--accent-red);
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 40px;
+    }
+    
+    .nav-link {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-decoration: none;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+      position: relative;
+      padding: 4px 0;
+    }
+    
+    .nav-link:hover {
+      opacity: 1;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--accent-red);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    
+    .nav-link:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+    
+    /* Creative Buttons */
+    .btn-creative {
+      display: inline-flex;
+      align-items: center;
+      padding: 18px 40px;
+      border: 1px solid var(--accent);
+      background: transparent;
+      color: var(--foreground);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      transition: color 0.4s;
+    }
+    
+    .btn-creative::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--accent);
+      transform: translateY(100%);
+      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      z-index: -1;
+    }
+    
+    .btn-creative:hover {
+      color: var(--canvas);
+    }
+    
+    .btn-creative:hover::before {
+      transform: translateY(0);
+    }
+    
+    /* Rotating Stamp Badge */
+    .rotating-badge-container {
+      position: absolute;
+      right: 48px;
+      bottom: 48px;
+      width: 120px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+    }
+    
+    .badge-svg {
+      width: 100%;
+      height: 100%;
+      animation: spin 16s linear infinite;
+    }
+    
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Background Pattern */
+    .bg-grid-lines {
+      background-image: 
+        linear-gradient(to right, rgba(245, 245, 247, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(245, 245, 247, 0.03) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+    
+    /* Artwork & Image Containers */
+    .artwork-card {
+      background: var(--neutral);
+      border: 1px solid var(--neutral-border);
+      padding: 24px;
+      position: relative;
+      transition: border-color 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+      display: flex;
+      flex-direction: column;
+      transform-origin: center;
+    }
+    
+    .artwork-card:hover {
+      border-color: var(--accent);
+    }
+    
+    .artwork-img-wrapper {
+      position: relative;
+      aspect-ratio: 1/1.2;
+      overflow: hidden;
+      background: #09090b;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .artwork-img-wrapper svg {
+      width: 75%;
+      height: 75%;
+      stroke: var(--accent);
+      stroke-width: 1.2;
+      fill: none;
+      transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), stroke-width 0.4s;
+    }
+    
+    .artwork-card:hover .artwork-img-wrapper svg {
+      transform: scale(1.08) rotate(3deg);
+      stroke: var(--foreground);
+      stroke-width: 1.5;
+    }
+    
+    /* Artist / Resident grid styling */
+    .artist-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--neutral-border);
+      padding: 40px 0;
+      transition: border-color 0.4s;
+    }
+    
+    .artist-row:last-child {
+      border-bottom: 1px solid var(--neutral-border);
+    }
+    
+    .artist-row:hover {
+      border-color: var(--accent);
+    }
+    
+    .artist-name {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 48px);
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      transition: color 0.4s, transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    
+    .artist-row:hover .artist-name {
+      color: var(--accent);
+      transform: translateX(20px);
+    }
+    
+    .artist-details {
+      display: flex;
+      gap: 60px;
+      align-items: center;
+    }
+    
+    .artist-style {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    
+    /* Infinite Marquee */
+    .marquee-container {
+      width: 100vw;
+      overflow: hidden;
+      background: #000;
+      border-top: 1px solid var(--neutral-border);
+      border-bottom: 1px solid var(--neutral-border);
+      padding: 30px 0;
+      position: relative;
+    }
+    
+    .marquee-track {
+      display: flex;
+      white-space: nowrap;
+      width: max-content;
+      animation: marquee-infinite 30s linear infinite;
+    }
+    
+    .marquee-text {
+      font-family: var(--font-display);
+      font-size: clamp(24px, 5vw, 54px);
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: rgba(245, 245, 247, 0.15);
+      display: inline-block;
+      padding-right: 50px;
+    }
+    
+    .marquee-text span {
+      color: var(--accent);
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 400;
+      text-transform: none;
+    }
+    
+    @keyframes marquee-infinite {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    
+    /* Floating Dragon SVG Style */
+    .hero-dragon-svg {
+      transform-origin: center;
+      filter: drop-shadow(0 0 15px rgba(226, 195, 155, 0.08));
+    }
+  </style>
+</head>
+<body class="bg-grid-lines">
+
+  <!-- Custom Cursor Markup -->
+  <div class="custom-cursor" id="js-cursor">
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+  </div>
+
+  <header>
+    <a href="#" class="logo">AETHER<span>.</span></a>
+    <nav class="nav-links">
+      <a href="#galeria" class="nav-link">Galeria</a>
+      <a href="#manifesto" class="nav-link">Conceito</a>
+      <a href="#artistas" class="nav-link">Artistas</a>
+      <a href="#contato" class="nav-link">Contato</a>
+    </nav>
+  </header>
+
+  <div id="scroll-wrapper">
+    <main id="content">
+
+      <!-- HERO SECTION -->
+      <section class="fullscreen-section" style="border-bottom: 1px solid var(--neutral-border);" id="hero" data-od-id="hero">
+        <div class="grid-12" style="width: 100%; z-index: 10; align-items: center;">
+          
+          <!-- Text left -->
+          <div style="grid-column: 1 / span 7;">
+            <span class="eyebrow reveal-wrapper"><span class="reveal-item">Tattoo & Fine Art Laboratory</span></span>
+            <h1 class="hero-title">
+              <span class="reveal-wrapper"><span class="reveal-item">Cicatrizes que</span></span>
+              <span class="reveal-wrapper"><span class="reveal-item">contam <span class="serif-italic" style="color: var(--accent);">histórias</span></span></span>
+            </h1>
+            <div style="margin-top: 40px; max-width: 480px;">
+              <p class="body-lead" style="margin-bottom: 40px;">Um espaço focado em precisão cirúrgica, técnicas autorais de fine line, blackwork e geometria sagrada.</p>
+              <a href="#galeria" class="btn-creative">Ver Portfólio</a>
+            </div>
+          </div>
+          
+          <!-- Japanese Dragon Right -->
+          <div style="grid-column: 8 / span 5; display: flex; align-items: center; justify-content: center; position: relative;">
+            <img class="hero-dragon-svg" src="assets/hero_dragon.png" alt="Japanese Dragon Tattoo Art" style="width: 105%; height: auto; object-fit: contain; pointer-events: none;">
+          </div>
+          
+        </div>
+
+        <!-- Rotating circle badge bottom right -->
+        <div class="rotating-badge-container">
+          <svg class="badge-svg" viewBox="0 0 100 100">
+            <path id="badgePath" d="M 50,50 m -35,0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none" />
+            <text>
+              <textPath href="#badgePath" fill="rgba(245,245,247,0.4)" font-family="var(--font-mono)" font-size="5.2" letter-spacing="0.1em">
+                • PRECISAO • ARTE AUTORAL • TATUAGEM CONCEITUAL
+              </textPath>
+            </text>
+          </svg>
+        </div>
+      </section>
+
+      <!-- GALERIA HORIZONTAL CAROUSEL SECTION (GSAP Pinned) -->
+      <section id="galeria" style="background: #09090b; padding: 0;" data-od-id="horizontal-carousel">
+        <div class="gallery-container" style="height: 100vh; width: 100vw; display: flex; align-items: center; overflow: hidden; position: relative;">
+          
+          <!-- Opaque Left Header block (Masks the sliding track behind it) -->
+          <div style="padding: 0 48px; width: 35vw; flex-shrink: 0; z-index: 10; border-right: 1px solid var(--neutral-border); height: 100vh; display: flex; flex-direction: column; justify-content: center; background: #09090b; position: relative;">
+            <span class="eyebrow">PORTFÓLIO</span>
+            <h2 style="font-family: var(--font-display); font-size: clamp(32px, 5vw, 64px); text-transform: uppercase; line-height: 0.95; margin-bottom: 24px;">Artes<br>Originais</h2>
+            <p style="font-size: 15px; opacity: 0.6; max-width: 320px;">Role a tela para navegar pelos estilos, traços e flashes conceituais desenvolvidos no laboratório.</p>
+            
+            <!-- Indicator -->
+            <div style="margin-top: 60px; display: flex; align-items: center; gap: 16px;">
+              <div style="width: 80px; height: 1px; background: var(--accent);"></div>
+              <span style="font-family: var(--font-mono); font-size: 11px; color: var(--accent);">ARRASTE HORIZONTAL</span>
+            </div>
+          </div>
+          
+          <!-- Track that slides horizontally (Positioned behind header via lower z-index) -->
+          <div class="horizontal-scroll-track" style="display: flex; gap: 40px; padding: 0 80px; width: 230vw; align-items: center; z-index: 5; position: relative;">
+            
+            <!-- Card 1 (Abstract Geometry) -->
+            <div class="artwork-card" style="width: 420px; flex-shrink: 0;">
+              <div class="artwork-img-wrapper">
+                <svg viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="30" stroke-dasharray="2, 2" />
+                  <line x1="20" y1="50" x2="80" y2="50" />
+                  <line x1="50" y1="20" x2="50" y2="80" />
+                  <polygon points="50,25 55,35 65,35 58,42 61,52 50,45 39,52 42,42 35,35 45,35" />
+                  <circle cx="50" cy="50" r="10" />
+                </svg>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-family: var(--font-mono); font-size: 11px; opacity: 0.5;">01 / GEOMETRIA SAGRADA</span>
+                <span style="font-family: var(--font-serif); font-style: italic; color: var(--accent);">Aether</span>
+              </div>
+            </div>
+
+            <!-- Card 2 (Fine Line Floral) -->
+            <div class="artwork-card" style="width: 420px; flex-shrink: 0;">
+              <div class="artwork-img-wrapper">
+                <svg viewBox="0 0 100 100">
+                  <path d="M50,90 Q40,60 50,20 Q60,60 50,90 Z" />
+                  <path d="M50,60 Q30,45 25,30 Q45,35 50,60 Z" />
+                  <path d="M50,60 Q70,45 75,30 Q55,35 50,60 Z" />
+                  <circle cx="50" cy="20" r="3" fill="var(--accent)" />
+                  <circle cx="25" cy="30" r="2" fill="var(--accent)" />
+                  <circle cx="75" cy="30" r="2" fill="var(--accent)" />
+                </svg>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-family: var(--font-mono); font-size: 11px; opacity: 0.5;">02 / FINE LINE BOTÂNICO</span>
+                <span style="font-family: var(--font-serif); font-style: italic; color: var(--accent);">Lotus</span>
+              </div>
+            </div>
+
+            <!-- Card 3 (Blackwork Cyber) -->
+            <div class="artwork-card" style="width: 420px; flex-shrink: 0;">
+              <div class="artwork-img-wrapper">
+                <svg viewBox="0 0 100 100">
+                  <rect x="25" y="25" width="50" height="50" stroke-width="2" />
+                  <line x1="25" y1="25" x2="75" y2="75" stroke-width="3" />
+                  <line x1="75" y1="25" x2="25" y2="75" stroke-width="3" />
+                  <circle cx="50" cy="50" r="18" fill="var(--canvas)" />
+                  <circle cx="50" cy="50" r="8" fill="var(--accent-red)" />
+                </svg>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-family: var(--font-mono); font-size: 11px; opacity: 0.5;">03 / CYBER BLACKWORK</span>
+                <span style="font-family: var(--font-serif); font-style: italic; color: var(--accent);">Matrix</span>
+              </div>
+            </div>
+
+            <!-- Card 4 (Micro Realism) -->
+            <div class="artwork-card" style="width: 420px; flex-shrink: 0;">
+              <div class="artwork-img-wrapper">
+                <svg viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="35" />
+                  <circle cx="50" cy="50" r="25" stroke-dasharray="1, 4" />
+                  <line x1="50" y1="15" x2="50" y2="85" />
+                  <path d="M20,35 Q50,15 80,35" />
+                  <path d="M20,65 Q50,85 80,65" />
+                  <circle cx="50" cy="50" r="4" fill="var(--accent)" />
+                </svg>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-family: var(--font-mono); font-size: 11px; opacity: 0.5;">04 / COSMOS REALISMO</span>
+                <span style="font-family: var(--font-serif); font-style: italic; color: var(--accent);">Gravity</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- CONCEPT MANIFESTO SECTION (GSAP Pinned) -->
+      <section id="manifesto" style="background: #000; height: 100vh; display: flex; align-items: center; justify-content: center; padding: 0 48px; border-bottom: 1px solid var(--neutral-border);" data-od-id="manifesto-scroll">
+        <p class="manifesto-text" style="font-family: var(--font-serif); font-size: clamp(24px, 4.5vw, 60px); line-height: 1.3; text-align: center; max-width: 1100px; color: rgba(245, 245, 247, 0.1);">
+          <span class="manifesto-span">A pele não é apenas uma tela.</span> 
+          <span class="manifesto-span" style="color: var(--accent);">É o mapa da alma,</span> 
+          <span class="manifesto-span">onde cada linha traduz em traços permanentes</span> 
+          <span class="manifesto-span">a complexidade de uma existência.</span>
+        </p>
+      </section>
+      
+      <!-- INFINITE TEXT MARQUEE BETWEEN SECTIONS -->
+      <div class="marquee-container">
+        <div class="marquee-track">
+          <div class="marquee-text">AETHER TATTOO LAB • <span>Cicatriz Consciente</span> • PRECISAO CIRURGICA • <span>Geometria Sagrada</span> • FINE LINE •</div>
+          <div class="marquee-text">AETHER TATTOO LAB • <span>Cicatriz Consciente</span> • PRECISAO CIRURGICA • <span>Geometria Sagrada</span> • FINE LINE •</div>
+        </div>
+      </div>
+
+      <!-- ARTISTAS RESIDENTES SECTION -->
+      <section id="artistas" style="padding: 140px 0; border-bottom: 1px solid var(--neutral-border);" data-od-id="artists-list">
+        <div class="grid-12">
+          <!-- Header -->
+          <div style="grid-column: 1 / span 12; margin-bottom: 80px;">
+            <span class="eyebrow">RESIDENTES</span>
+            <h2 style="font-family: var(--font-display); font-size: clamp(32px, 5vw, 64px); text-transform: uppercase;">Artistas do Laboratório</h2>
+          </div>
+          
+          <div style="grid-column: 1 / span 12;">
+            
+            <!-- Artist 1 -->
+            <div class="artist-row">
+              <h3 class="artist-name">Gabriela Black</h3>
+              <div class="artist-details">
+                <span class="artist-style">Fine Line & Botânico</span>
+                <span style="font-family: var(--font-mono); font-size: 12px; opacity: 0.4;">SÃO PAULO</span>
+              </div>
+            </div>
+
+            <!-- Artist 2 -->
+            <div class="artist-row">
+              <h3 class="artist-name">Marcus Aether</h3>
+              <div class="artist-details">
+                <span class="artist-style">Cyber Blackwork</span>
+                <span style="font-family: var(--font-mono); font-size: 12px; opacity: 0.4;">BERLIM / SP</span>
+              </div>
+            </div>
+
+            <!-- Artist 3 -->
+            <div class="artist-row">
+              <h3 class="artist-name">Elena Vostok</h3>
+              <div class="artist-details">
+                <span class="artist-style">Geometria & Pontilhismo</span>
+                <span style="font-family: var(--font-mono); font-size: 12px; opacity: 0.4;">MOSCOU / SP</span>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </section>
+
+      <!-- CURATOR CONTACT BLOCK (FOOTER) -->
+      <section id="contato" style="background: #000; border-bottom: none;" data-od-id="contact-footer">
+        <div class="grid-12" style="padding-top: 40px; padding-bottom: 80px;">
+          
+          <div style="grid-column: 1 / span 12; border-bottom: 1px solid var(--neutral-border); padding-bottom: 60px; margin-bottom: 60px;">
+            <span class="eyebrow">AGENDAMENTO</span>
+            <h2 style="font-family: var(--font-display); font-size: clamp(38px, 7vw, 84px); text-transform: uppercase; line-height: 0.95;">
+              Marque sua<br><span class="serif-italic" style="color: var(--accent);">sessão</span>.
+            </h2>
+          </div>
+          
+          <!-- Left details -->
+          <div style="grid-column: 1 / span 6; margin-bottom: 40px;">
+            <p style="font-size: 18px; margin-bottom: 40px; font-weight: 300; max-width: 480px;">Nossas consultas são sob agendamento prévio. Criamos cada arte do zero, de forma única e personalizada.</p>
+            <a href="mailto:booking@aether.tattoo" class="btn-creative">Enviar Ideia de Projeto</a>
+          </div>
+          
+          <!-- Right details -->
+          <div style="grid-column: 8 / span 5; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <p style="font-family: var(--font-mono); font-size: 11px; color: var(--accent); margin-bottom: 12px;">ENDEREÇO</p>
+              <p style="font-size: 14px; opacity: 0.7;">Alameda Lorena, 1420<br>Jardins, São Paulo — SP</p>
+            </div>
+            
+            <div style="margin-top: 40px;">
+              <p style="font-family: var(--font-mono); font-size: 11px; color: var(--accent); margin-bottom: 12px;">SOCIAL</p>
+              <div style="display: flex; gap: 24px;">
+                <a href="#" class="nav-link" style="font-size: 12px;">Instagram</a>
+                <a href="#" class="nav-link" style="font-size: 12px;">Pinterest</a>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- CDN scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.36/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Animation & Scroll Controller Setup -->
+  <script>
+    // Initialize Lenis smooth scroll
+    const lenis = new Lenis({
+      duration: 1.4,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      smoothTouch: false,
+      infinite: false
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Bind GSAP ScrollTrigger to Lenis scroll events
+    lenis.on('scroll', ScrollTrigger.update);
+
+    // Configure GSAP to update with Lenis raf
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+    
+    // Custom Precision Cursor follow physics
+    const cursor = document.getElementById('js-cursor');
+    const links = document.querySelectorAll('a, button, .artist-row, .artwork-card');
+    
+    window.addEventListener('mousemove', (e) => {
+      gsap.to(cursor, {
+        x: e.clientX,
+        y: e.clientY,
+        duration: 0.25,
+        ease: 'power3.out'
+      });
+    });
+    
+    links.forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        document.body.classList.add('hover-link');
+      });
+      link.addEventListener('mouseleave', () => {
+        document.body.classList.remove('hover-link');
+      });
+    });
+    
+    // DOM animations on load
+    window.addEventListener('DOMContentLoaded', () => {
+      // Animate text reveals in Hero section
+      gsap.to('.reveal-item', {
+        y: '0%',
+        duration: 1.4,
+        ease: 'power4.out',
+        stagger: 0.15,
+        delay: 0.3
+      });
+      
+      // Hero Dragon Scroll Animation (Rotation & Parallax)
+      gsap.to('.hero-dragon-svg', {
+        rotation: 40,
+        y: 120,
+        scale: 0.85,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+      
+      // Horizontal Scroll animation (GSAP Pinned)
+      const track = document.querySelector('.horizontal-scroll-track');
+      const horizScrollTrigger = ScrollTrigger.create({
+        trigger: '#galeria',
+        pin: true,
+        start: 'top top',
+        end: () => `+=${track.scrollWidth - window.innerWidth * 0.65 + 300}`,
+        scrub: true,
+        invalidateOnRefresh: true,
+        animation: gsap.to(track, {
+          x: () => -(track.scrollWidth - window.innerWidth * 0.65),
+          ease: 'none'
+        })
+      });
+      
+      // Skew/Tilt cards dynamically on scroll velocity
+      let proxy = { skew: 0 },
+          skewSetter = gsap.quickSetter(".artwork-card", "skewX", "deg"),
+          clamp = gsap.utils.clamp(-8, 8); // clamp values between -8 and 8 degrees
+
+      ScrollTrigger.create({
+        trigger: '#galeria',
+        start: 'top top',
+        end: () => `+=${track.scrollWidth - window.innerWidth * 0.65 + 300}`,
+        onUpdate: (self) => {
+          let skew = clamp(self.getVelocity() / -400);
+          if (Math.abs(skew) > Math.abs(proxy.skew)) {
+            proxy.skew = skew;
+            gsap.to(proxy, {
+              skew: 0,
+              duration: 0.8,
+              ease: "power3.out",
+              overwrite: "auto",
+              onUpdate: () => skewSetter(proxy.skew)
+            });
+          }
+        }
+      });
+      
+      // Manifesto text highlight (GSAP Pinned)
+      gsap.to('.manifesto-text span', {
+        color: '#F5F5F7',
+        stagger: 0.25,
+        scrollTrigger: {
+          trigger: '#manifesto',
+          pin: true,
+          start: 'top top',
+          end: '+=1000',
+          scrub: true,
+          invalidateOnRefresh: true
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AuraLens — See Beyond Reality</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.25/dist/lenis.css" />
+
+  <style>
+    /* ===== DESIGN SYSTEM TOKENS ===== */
+    :root {
+      --bg: #06060A;
+      --bg-gradient: #0A0A12;
+      --surface: #111118;
+      --surface-elevated: #1A1A24;
+      --surface-glass: rgba(17, 17, 24, 0.6);
+      --text: #F0F0F5;
+      --text-secondary: #8A8A9A;
+      --text-muted: #55556A;
+      --accent: #6C5CE7;
+      --accent-glow: rgba(108, 92, 231, 0.3);
+      --accent-secondary: #00D2FF;
+      --accent-warm: #FF6B6B;
+      --border: rgba(255, 255, 255, 0.06);
+      --border-subtle: rgba(255, 255, 255, 0.03);
+      --font-body: 'Inter', system-ui, sans-serif;
+      --font-display: 'Space Grotesk', 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --max-width: 1200px;
+      --section-gap: 120px;
+      --content-padding: 24px 48px;
+    }
+
+    /* ===== LENIS SCROLLBAR ===== */
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+    .lenis.lenis-stopped { overflow: hidden; }
+    .lenis.lenis-smooth iframe { pointer-events: none; }
+    html.lenis::-webkit-scrollbar { width: 5px; }
+    html.lenis::-webkit-scrollbar-track { background: transparent; }
+    html.lenis::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+    /* ===== RESET ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
+    a:hover { opacity: 0.8; }
+
+    /* ===== SCROLL UTILITIES ===== */
+    [data-scroll] { will-change: transform, opacity; }
+
+    [data-scroll-reveal] {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: none;
+    }
+    [data-scroll-reveal="fade-left"] { transform: translateX(60px); }
+    [data-scroll-reveal="fade-right"] { transform: translateX(-60px); }
+    [data-scroll-reveal="scale-up"] { transform: scale(0.85); }
+    [data-scroll-reveal="fade-up-wide"] { transform: translateY(80px) scale(0.95); }
+
+    /* ===== EXPLODE ===== */
+    [data-scroll-explode] {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 550px;
+    }
+    .explode-piece {
+      position: absolute;
+      will-change: transform, opacity;
+      transition: none;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    /* ===== IMAGE MOTION ===== */
+    [data-scroll-image-motion] {
+      overflow: hidden;
+      position: relative;
+      border-radius: 20px;
+    }
+    [data-scroll-image-motion] img,
+    [data-scroll-image-motion] video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      will-change: transform;
+    }
+
+    /* ===== HOVER 3D ===== */
+    .hover-3d {
+      perspective: 1200px;
+      transform-style: preserve-3d;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .hover-3d img {
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .hover-3d:hover img {
+      transform: rotateY(6deg) rotateX(-4deg) scale(1.03);
+    }
+
+    /* ===== TYPOGRAPHY ===== */
+    h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 700; }
+    h1 {
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      font-weight: 800;
+    }
+    h2 {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+    h3 {
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      line-height: 1.3;
+      font-weight: 600;
+    }
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+    .subtitle {
+      font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+      color: var(--text-secondary);
+      max-width: 560px;
+      line-height: 1.75;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 50%, var(--accent-warm) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ===== LAYOUT ===== */
+    .section {
+      padding: var(--section-gap) var(--content-padding);
+      max-width: var(--max-width);
+      margin: 0 auto;
+      scroll-margin-top: 80px;
+      position: relative;
+    }
+    .section--full { max-width: none; padding: 0; }
+    .section--hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+
+    /* ===== COMPONENTS ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 36px;
+      border-radius: 12px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 30px var(--accent-glow);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 50px var(--accent-glow), 0 8px 32px rgba(0,0,0,0.3);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+    }
+    .btn-secondary:hover {
+      border-color: var(--text-secondary);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-glow), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .card:hover::before { opacity: 1; }
+    .card:hover {
+      border-color: rgba(108, 92, 231, 0.2);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+    .card h3 { margin-bottom: 12px; }
+    .card p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; }
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--surface-elevated);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1;
+    }
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      margin-top: 8px;
+    }
+
+    .ph-img {
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ===== GLASS MORPHISM ===== */
+    .glass {
+      background: var(--surface-glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+    }
+
+    /* ===== GLOW EFFECTS ===== */
+    .glow-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      opacity: 0.4;
+    }
+
+    /* ===== NOISE OVERLAY ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+
+    /* ===== REDUCED MOTION ===== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      [data-scroll-reveal] { opacity: 1; transform: none; }
+      [data-scroll] { transform: none !important; }
+    }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px) {
+      :root { --section-gap: 80px; --content-padding: 20px; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      [data-scroll-explode] { display: none; }
+      .hover-3d:hover img { transform: none; }
+      h1 { font-size: clamp(2.5rem, 10vw, 4rem); }
+    }
+
+    /* ===== PROGRESS BAR ===== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: transparent;
+      z-index: 10001;
+    }
+    .scroll-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+      transform-origin: left;
+      transform: scaleX(0);
+    }
+
+    /* ===== CUSTOM ANIMATIONS ===== */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+    }
+    @keyframes scroll-indicator {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(12px); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Scroll progress -->
+  <div class="scroll-progress">
+    <div class="scroll-progress-bar" data-scroll-progress></div>
+  </div>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav style="position:fixed; top:0; left:0; right:0; z-index:10000; padding:20px 48px; display:flex; justify-content:space-between; align-items:center; background:rgba(6,6,10,0.7); backdrop-filter:blur(20px) saturate(1.5); border-bottom:1px solid var(--border-subtle);">
+    <span style="font-family:var(--font-display); font-weight:800; font-size:1.3rem; letter-spacing:-0.02em;">
+      <span style="color:var(--accent);">Aura</span>Lens
+    </span>
+    <div style="display:flex; gap:36px; align-items:center; font-size:0.85rem; font-weight:500;">
+      <a href="#features" style="color:var(--text-secondary);">Features</a>
+      <a href="#design" style="color:var(--text-secondary);">Design</a>
+      <a href="#gallery" style="color:var(--text-secondary);">Gallery</a>
+      <a href="#specs" style="color:var(--text-secondary);">Specs</a>
+      <button class="btn btn-primary" style="padding:10px 24px; font-size:0.8rem;">Pre-order</button>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="section section--hero" data-od-id="hero" style="overflow:hidden;">
+    <!-- Background glow orbs -->
+    <div class="glow-orb" style="width:600px; height:600px; background:var(--accent); top:-200px; right:-100px; animation:pulse-glow 6s infinite;"></div>
+    <div class="glow-orb" style="width:400px; height:400px; background:var(--accent-secondary); bottom:-100px; left:-100px; animation:pulse-glow 8s infinite 2s;"></div>
+
+    <!-- Parallax background image -->
+    <div data-scroll data-scroll-speed="-0.3" style="position:absolute; inset:0; z-index:0;">
+      <div class="ph-img" style="width:100%; height:130%; position:absolute; top:-15%; opacity:0.15; border-radius:0;">HERO BACKGROUND — Ultra-wide product shot with dramatic lighting</div>
+    </div>
+
+    <!-- Content -->
+    <div data-scroll data-scroll-speed="0.15" style="position:relative; z-index:1;">
+      <div class="eyebrow" data-scroll data-scroll-reveal="fade-up">Introducing AuraLens Pro</div>
+      <h1 data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.1">
+        See beyond<br /><span class="gradient-text">reality.</span>
+      </h1>
+      <p class="subtitle" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.2" style="margin:28px 0 48px;">
+        The world's first AR lens with neural-adaptive optics. 8K micro-OLED, 180° field of view, and AI that learns how you see.
+      </p>
+      <div data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.3" style="display:flex; gap:16px; flex-wrap:wrap;">
+        <button class="btn btn-primary">Pre-order — $899</button>
+        <button class="btn btn-secondary">Watch film</button>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.6" style="position:absolute; bottom:48px; left:50%; transform:translateX(-50%); text-align:center; z-index:1;">
+      <p style="font-family:var(--font-mono); font-size:0.65rem; color:var(--text-muted); letter-spacing:0.25em; margin-bottom:12px;">SCROLL</p>
+      <div style="width:1px; height:32px; margin:0 auto; position:relative; overflow:hidden;">
+        <div style="width:100%; height:100%; background:var(--accent); animation:scroll-indicator 1.5s infinite;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRODUCT EXPLODED VIEW ===== -->
+  <section class="section" data-od-id="product-reveal">
+    <div class="glow-orb" style="width:500px; height:500px; background:var(--accent); left:50%; top:50%; transform:translate(-50%,-50%); opacity:0.15;"></div>
+
+    <div class="eyebrow" data-scroll data-scroll-reveal="fade-up">Engineering</div>
+    <h2 data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.1" style="max-width:600px;">
+      Precision in<br />every layer.
+    </h2>
+    <p class="subtitle" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.2" style="margin-bottom:80px;">
+      47 custom components. Zero compromises. Each layer engineered for clarity, comfort, and computational power.
+    </p>
+
+    <div data-scroll data-scroll-explode="radial" data-scroll-range="0.15-0.65" style="min-height:550px;">
+      <div class="explode-piece" data-explode-angle="0" data-explode-distance="200" style="width:220px; height:160px;">
+        <div class="ph-img" style="width:100%; height:100%; border-radius:16px; background:var(--surface-elevated); border-color:var(--accent-glow);">Neural Display Panel</div>
+      </div>
+      <div class="explode-piece" data-explode-angle="60" data-explode-distance="180" style="width:180px; height:180px;">
+        <div class="ph-img" style="width:100%; height:100%; border-radius:16px; background:var(--surface-elevated);">Optical Array</div>
+      </div>
+      <div class="explode-piece" data-explode-angle="120" data-explode-distance="210" style="width:200px; height:140px;">
+        <div class="ph-img" style="width:100%; height:100%; border-radius:16px; background:var(--surface-elevated);">Thermal Core</div>
+      </div>
+      <div class="explode-piece" data-explode-angle="180" data-explode-distance="190" style="width:160px; height:160px;">
+        <div class="ph-img" style="width:100%; height:100%; border-radius:16px; background:var(--surface-elevated);">AI Chip</div>
+      </div>
+      <div class="explode-piece" data-explode-angle="240" data-explode-distance="200" style="width:190px; height:150px;">
+        <div class="ph-img" style="width:100%; height:100%; border-radius:16px; background:var(--surface-elevated);">Battery Cell</div>
+      </div>
+      <div class="explode-piece" data-explode-angle="300" data-explode-distance="185" style="width:170px; height:170px;">
+        <div class="ph-img" style="width:100%; height:100%; border-radius:16px; background:var(--surface-elevated);">Titanium Frame</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURES ===== -->
+  <section class="section" id="features" data-od-id="features">
+    <div class="eyebrow" data-scroll data-scroll-reveal="fade-up">Capabilities</div>
+    <h2 data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.1">Built for the impossible.</h2>
+    <p class="subtitle" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.2" style="margin-bottom:72px;">
+      Every feature designed to dissolve the boundary between digital and physical.
+    </p>
+
+    <div class="grid-3">
+      <div class="card" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.0">
+        <div class="card-icon">🧠</div>
+        <h3>Neural Optics</h3>
+        <p>AI-driven lens adjustment that adapts to your pupil dilation, ambient light, and focal preferences in real-time.</p>
+      </div>
+      <div class="card" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.1">
+        <div class="card-icon">👁️</div>
+        <h3>8K Micro-OLED</h3>
+        <p>Two 4K displays at 120Hz with HDR10+ — sharper than human retinal resolution at any viewing distance.</p>
+      </div>
+      <div class="card" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.2">
+        <div class="card-icon">🌐</div>
+        <h3>180° Spatial</h3>
+        <p>Full peripheral immersion with spatial audio mapping. Sound comes from where objects appear in space.</p>
+      </div>
+      <div class="card" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.0">
+        <div class="card-icon">⚡</div>
+        <h3>14hr Battery</h3>
+        <p>Solid-state graphene cell with wireless charging. Full-day use from a 45-minute fast charge.</p>
+      </div>
+      <div class="card" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.1">
+        <div class="card-icon">🪶</div>
+        <h3>38g Ultra-light</h3>
+        <p>Titanium-carbon composite frame. Lighter than most sunglasses. You forget you're wearing it.</p>
+      </div>
+      <div class="card" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.2">
+        <div class="card-icon">🔒</div>
+        <h3>Privacy Core</h3>
+        <p>On-device processing only. Eye tracking data never leaves your lens. Zero cloud dependency.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DESIGN SECTION — KEN BURNS + HOVER 3D ===== -->
+  <section class="section" id="design" data-od-id="design">
+    <div class="eyebrow" data-scroll data-scroll-reveal="fade-up">Design Language</div>
+    <h2 data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.1">Every surface, considered.</h2>
+
+    <div class="grid-2" style="margin-top:72px; gap:32px;">
+      <div data-scroll data-scroll-image-motion="ken-burns" style="border-radius:20px; overflow:hidden; aspect-ratio:4/3;">
+        <div class="ph-img" style="width:100%; height:100%; aspect-ratio:auto; background:linear-gradient(135deg, var(--surface) 0%, var(--surface-elevated) 100%);">
+          Product macro shot — titanium texture, dramatic side-light
+        </div>
+      </div>
+      <div data-scroll data-scroll-reveal="fade-left" data-scroll-delay="0.2" style="display:flex; flex-direction:column; justify-content:center; gap:20px;">
+        <p class="eyebrow">Material</p>
+        <h3>Grade 5 Titanium</h3>
+        <p class="subtitle">Aerospace-grade alloy, hand-polished to a matte finish. Warm to the touch. Cold to doubt.</p>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:32px; gap:32px;">
+      <div data-scroll data-scroll-reveal="fade-right" data-scroll-delay="0.2" style="display:flex; flex-direction:column; justify-content:center; gap:20px;">
+        <p class="eyebrow">Interface</p>
+        <h3>Air Gesture Control</h3>
+        <p class="subtitle">Pinch, swipe, and point in mid-air. No controllers. Your hands are the interface.</p>
+      </div>
+      <div class="hover-3d" data-scroll data-scroll-image-motion="ken-burns" style="border-radius:20px; overflow:hidden; aspect-ratio:4/3;">
+        <div class="ph-img" style="width:100%; height:100%; aspect-ratio:auto; background:linear-gradient(225deg, var(--surface-elevated) 0%, var(--surface) 100%);">
+          Hand gesture interaction — close-up with motion blur
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VIDEO SECTION ===== -->
+  <section class="section section--full" data-od-id="video" style="padding:var(--section-gap) 0;">
+    <div style="max-width:var(--max-width); margin:0 auto; padding:var(--content-padding);">
+      <div class="eyebrow" data-scroll data-scroll-reveal="fade-up">Experience</div>
+      <h2 data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.1">Watch it come alive.</h2>
+    </div>
+    <div data-scroll data-scroll-image-motion="ken-burns" style="max-width:1400px; margin:56px auto 0; border-radius:28px; overflow:hidden; aspect-ratio:16/9; position:relative;">
+      <video data-scroll-video muted playsinline preload="auto" style="width:100%; height:100%; object-fit:cover;">
+        <source src="" type="video/mp4" />
+      </video>
+      <div class="ph-img" style="position:absolute; inset:0; border-radius:0; background:var(--surface); border:none;">
+        Product reveal film — 4K cinematic, 60fps, dramatic lighting
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SPECS / STATS ===== -->
+  <section class="section" id="specs" data-od-id="specs">
+    <div class="eyebrow" data-scroll data-scroll-reveal="fade-up">Specifications</div>
+    <h2 data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.1" style="margin-bottom:72px;">Numbers that matter.</h2>
+
+    <div class="grid-4">
+      <div data-scroll data-scroll-reveal="scale-up" data-scroll-delay="0.0" style="text-align:center;">
+        <div class="stat-value gradient-text">8K</div>
+        <div class="stat-label">Combined Resolution</div>
+      </div>
+      <div data-scroll data-scroll-reveal="scale-up" data-scroll-delay="0.1" style="text-align:center;">
+        <div class="stat-value gradient-text">180°</div>
+        <div class="stat-label">Field of View</div>
+      </div>
+      <div data-scroll data-scroll-reveal="scale-up" data-scroll-delay="0.2" style="text-align:center;">
+        <div class="stat-value gradient-text">38g</div>
+        <div class="stat-label">Total Weight</div>
+      </div>
+      <div data-scroll data-scroll-reveal="scale-up" data-scroll-delay="0.3" style="text-align:center;">
+        <div class="stat-value gradient-text">14hr</div>
+        <div class="stat-label">Battery Life</div>
+      </div>
+    </div>
+
+    <!-- Detailed specs grid -->
+    <div class="grid-2" style="margin-top:80px; gap:32px;">
+      <div class="card glass" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.0">
+        <h3 style="color:var(--accent); margin-bottom:24px;">Display</h3>
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border-subtle); padding-bottom:12px;">
+            <span style="color:var(--text-secondary); font-size:0.85rem;">Panel</span>
+            <span style="font-family:var(--font-mono); font-size:0.85rem;">Micro-OLED</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border-subtle); padding-bottom:12px;">
+            <span style="color:var(--text-secondary); font-size:0.85rem;">Resolution</span>
+            <span style="font-family:var(--font-mono); font-size:0.85rem;">3840 × 3840 per eye</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border-subtle); padding-bottom:12px;">
+            <span style="color:var(--text-secondary); font-size:0.85rem;">Refresh Rate</span>
+            <span style="font-family:var(--font-mono); font-size:0.85rem;">120Hz adaptive</span>
+          </div>
+          <div style="display:flex; justify-content:space-between;">
+            <span style="color:var(--text-secondary); font-size:0.85rem;">HDR</span>
+            <span style="font-family:var(--font-mono); font-size:0.85rem;">HDR10+ / Dolby Vision</span>
+          </div>
+        </div>
+      </div>
+      <div class="card glass" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.1">
+        <h3 style="color:var(--accent-secondary); margin-bottom:24px;">Compute</h3>
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border-subtle); padding-bottom:12px;">
+            <span style="color:var(--text-secondary); font-size:0.85rem;">Processor</span>
+            <span style="font-family:var(--font-mono); font-size:0.85rem;">Aura A2 Neural</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border-subtle); padding-bottom:12px;">
+            <span style="color:var(--text-secondary); font-size:0.85rem;">AI TOPS</span>
+            <span style="font-family:var(--font-mono); font-size:0.85rem;">45 TOPS</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border-subtle); padding-bottom:12px;">
+            <span style="color:var(--text-secondary); font-size:0.85rem;">Memory</span>
+            <span style="font-family:var(--font-mono); font-size:0.85rem;">16GB LPDDR5X</span>
+          </div>
+          <div style="display:flex; justify-content:space-between;">
+            <span style="color:var(--text-secondary); font-size:0.85rem;">Storage</span>
+            <span style="font-family:var(--font-mono); font-size:0.85rem;">256GB UFS 4.0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section class="section" data-od-id="testimonials">
+    <div class="eyebrow" data-scroll data-scroll-reveal="fade-up">Early Voices</div>
+    <h2 data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.1" style="margin-bottom:72px;">What they're saying.</h2>
+
+    <div class="grid-3">
+      <div class="card glass" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.0">
+        <p style="font-size:1.05rem; line-height:1.7; margin-bottom:24px; font-style:italic;">"I've tried every AR headset. AuraLens is the first one I'd actually wear in public."</p>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:40px; height:40px; border-radius:50%; background:var(--surface-elevated);"></div>
+          <div>
+            <div style="font-weight:600; font-size:0.9rem;">Sarah Chen</div>
+            <div style="color:var(--text-muted); font-size:0.75rem;">TechCrunch</div>
+          </div>
+        </div>
+      </div>
+      <div class="card glass" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.1">
+        <p style="font-size:1.05rem; line-height:1.7; margin-bottom:24px; font-style:italic;">"The neural optics are witchcraft. It adjusts before I even realize I need it to."</p>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:40px; height:40px; border-radius:50%; background:var(--surface-elevated);"></div>
+          <div>
+            <div style="font-weight:600; font-size:0.9rem;">Marcus Webb</div>
+            <div style="color:var(--text-muted); font-size:0.75rem;">The Verge</div>
+          </div>
+        </div>
+      </div>
+      <div class="card glass" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.2">
+        <p style="font-size:1.05rem; line-height:1.7; margin-bottom:24px; font-style:italic;">"38g. I keep checking if it's actually on. This is the future of computing."</p>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:40px; height:40px; border-radius:50%; background:var(--surface-elevated);"></div>
+          <div>
+            <div style="font-weight:600; font-size:0.9rem;">Aiko Tanaka</div>
+            <div style="color:var(--text-muted); font-size:0.75rem;">Wired</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="section" data-od-id="cta" style="text-align:center; padding:160px var(--content-padding); position:relative;">
+    <div class="glow-orb" style="width:700px; height:700px; background:var(--accent); left:50%; top:50%; transform:translate(-50%,-50%); opacity:0.1;"></div>
+
+    <div data-scroll data-scroll-speed="0.1" style="position:relative; z-index:1;">
+      <div class="eyebrow" data-scroll data-scroll-reveal="fade-up" style="justify-content:center;">Limited Edition</div>
+      <h2 data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.1" style="max-width:700px; margin:0 auto 24px;">
+        The future is <span class="gradient-text">visible</span>.
+      </h2>
+      <p class="subtitle" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.2" style="margin:0 auto 56px; text-align:center;">
+        First 1,000 units ship Q1 2027. Reserve yours with a fully refundable $99 deposit.
+      </p>
+      <div data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.3" style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+        <button class="btn btn-primary" style="font-size:1.05rem; padding:20px 52px;">Reserve Now — $99</button>
+        <button class="btn btn-secondary" style="font-size:1.05rem; padding:20px 40px;">Compare models</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer style="border-top:1px solid var(--border-subtle); padding:48px; text-align:center;">
+    <div style="max-width:var(--max-width); margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px;">
+      <div style="font-family:var(--font-display); font-weight:800; font-size:1.1rem;">
+        <span style="color:var(--accent);">Aura</span>Lens
+      </div>
+      <div style="display:flex; gap:32px; font-size:0.8rem; color:var(--text-muted);">
+        <a href="#" style="color:var(--text-muted);">Privacy</a>
+        <a href="#" style="color:var(--text-muted);">Terms</a>
+        <a href="#" style="color:var(--text-muted);">Press Kit</a>
+        <a href="#" style="color:var(--text-muted);">Contact</a>
+      </div>
+      <div style="font-size:0.75rem; color:var(--text-muted);">&copy; 2026 AuraLens Inc.</div>
+    </div>
+  </footer>
+
+  <!-- ===== LENIS + GSAP + SCROLLTRIGGER ===== -->
+  <script src="https://unpkg.com/lenis@1.3.25/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ===== LENIS SMOOTH SCROLL =====
+    const lenis = new Lenis({
+      autoRaf: true,
+      anchors: true,
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      touchMultiplier: 2,
+    });
+
+    // Sync Lenis with GSAP ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+
+    // ===== SCROLL PROGRESS =====
+    gsap.to('[data-scroll-progress]', {
+      scaleX: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: document.body,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: true
+      }
+    });
+
+    // ===== PARALLAX (data-scroll-speed) =====
+    gsap.utils.toArray('[data-scroll-speed]').forEach(el => {
+      const speed = parseFloat(el.dataset.scrollSpeed);
+      gsap.to(el, {
+        y: () => speed * ScrollTrigger.maxScroll(window) * 0.1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+    });
+
+    // ===== SCROLL REVEALS (data-scroll-reveal) =====
+    gsap.utils.toArray('[data-scroll-reveal]').forEach(el => {
+      const type = el.dataset.scrollReveal;
+      const delay = parseFloat(el.dataset.scrollDelay) || 0;
+      const fromMap = {
+        'fade-up':      { y: 50, opacity: 0 },
+        'fade-up-wide': { y: 80, opacity: 0, scale: 0.95 },
+        'fade-down':    { y: -50, opacity: 0 },
+        'fade-left':    { x: 60, opacity: 0 },
+        'fade-right':   { x: -60, opacity: 0 },
+        'scale-up':     { scale: 0.85, opacity: 0 },
+        'scale-down':   { scale: 1.15, opacity: 0 },
+        'rotate-in':    { rotation: -12, opacity: 0 }
+      };
+      const from = fromMap[type] || { y: 40, opacity: 0 };
+
+      gsap.from(el, {
+        ...from,
+        duration: 1.1,
+        delay: delay,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 88%',
+          toggleActions: 'play none none reverse'
+        }
+      });
+    });
+
+    // ===== EXPLODED VIEW (data-scroll-explode) =====
+    gsap.utils.toArray('[data-scroll-explode]').forEach(container => {
+      const range = container.dataset.scrollRange.split('-').map(Number);
+      const pieces = container.querySelectorAll('.explode-piece');
+
+      pieces.forEach(piece => {
+        const angle = parseFloat(piece.dataset.explodeAngle) * Math.PI / 180;
+        const dist = parseFloat(piece.dataset.explodeDistance);
+        const rot = parseFloat(piece.dataset.explodeRotate || '0');
+
+        gsap.to(piece, {
+          x: Math.cos(angle) * dist,
+          y: Math.sin(angle) * dist,
+          rotation: rot,
+          opacity: 0.75,
+          scale: 0.92,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: container,
+            start: `top ${range[0] * 100}%`,
+            end: `top ${range[1] * 100}%`,
+            scrub: true
+          }
+        });
+      });
+    });
+
+    // ===== KEN BURNS (data-scroll-image-motion="ken-burns") =====
+    gsap.utils.toArray('[data-scroll-image-motion="ken-burns"]').forEach(el => {
+      const img = el.querySelector('img, video, .ph-img');
+      if (!img) return;
+      gsap.fromTo(img,
+        { scale: 1.08, x: '-2%', y: '-1.5%' },
+        {
+          scale: 1.18, x: '2%', y: '1%',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true
+          }
+        }
+      );
+    });
+
+    // ===== SCROLL-LINKED VIDEO =====
+    const scrollVideo = document.querySelector('[data-scroll-video]');
+    if (scrollVideo && scrollVideo.querySelector('source')?.src) {
+      scrollVideo.pause();
+      ScrollTrigger.create({
+        trigger: scrollVideo,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true,
+        onUpdate: self => {
+          if (scrollVideo.duration) {
+            scrollVideo.currentTime = self.progress * scrollVideo.duration;
+          }
+        }
+      });
+    }
+
+    // ===== HOVER 3D (enhanced with JS for smooth tilt) =====
+    document.querySelectorAll('.hover-3d').forEach(el => {
+      el.addEventListener('mousemove', e => {
+        const rect = el.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        const img = el.querySelector('img, .ph-img');
+        if (img) {
+          gsap.to(img, {
+            rotateY: x * 12,
+            rotateX: -y * 12,
+            scale: 1.03,
+            duration: 0.4,
+            ease: 'power2.out'
+          });
+        }
+      });
+      el.addEventListener('mouseleave', () => {
+        const img = el.querySelector('img, .ph-img');
+        if (img) {
+          gsap.to(img, {
+            rotateY: 0,
+            rotateX: 0,
+            scale: 1,
+            duration: 0.6,
+            ease: 'power3.out'
+          });
+        }
+      });
+    });
+
+    // ===== STAT COUNTER ANIMATION =====
+    gsap.utils.toArray('.stat-value').forEach(el => {
+      gsap.from(el, {
+        opacity: 0,
+        scale: 0.7,
+        duration: 0.8,
+        ease: 'back.out(1.7)',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        }
+      });
+    });
+
+    // ===== REDUCED MOTION =====
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      lenis.destroy();
+      ScrollTrigger.getAll().forEach(st => st.kill());
+      document.querySelectorAll('[data-scroll-reveal]').forEach(el => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      });
+    }
+  </script>
+
+</body>
+</html>

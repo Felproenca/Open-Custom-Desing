@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premium Creative Showcase</title>
+  
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Space+Mono&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  
+  <!-- Main Styles -->
+  <style>
+    /* CSS Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* Design Tokens (overwritten by active design system) */
+    :root {
+      --accent: #E2C39B;
+      --accent-rgb: 226, 195, 155;
+      --danger: #FF3E3E;
+      --canvas: #0A0A0C;
+      --foreground: #F5F5F7;
+      --neutral: #141417;
+      --neutral-border: rgba(245, 245, 247, 0.1);
+      
+      --font-display: 'Syne', sans-serif;
+      --font-serif: 'Playfair Display', serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+    
+    /* Smooth Scroll Foundations (Lenis) */
+    html.lenis {
+      height: auto;
+    }
+    .lenis-clean html.lenis {
+      scrollbar-width: none;
+    }
+    .lenis-clean ::-webkit-scrollbar {
+      display: none;
+    }
+    .lenis-scrollbar {
+      width: 4px;
+      height: 100%;
+      position: fixed;
+      right: 0;
+      top: 0;
+      z-index: 9999;
+      background: transparent;
+    }
+    .lenis-scrollbar-handle {
+      width: 100%;
+      background: var(--accent);
+      opacity: 0.3;
+      border-radius: 2px;
+      transition: opacity 0.3s;
+    }
+    .lenis-scrollbar:hover .lenis-scrollbar-handle {
+      opacity: 0.8;
+    }
+    
+    /* Body & Layout Styling */
+    body {
+      background-color: var(--canvas);
+      color: var(--foreground);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      width: 100%;
+    }
+    
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--canvas);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--neutral);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent);
+    }
+    
+    /* Grid & Columns */
+    .grid-12 {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+    
+    @media (max-width: 920px) {
+      .grid-12 {
+        grid-template-columns: 1fr;
+        padding: 0 24px;
+        gap: 16px;
+      }
+    }
+    
+    /* Typography Helpers */
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 8vw, 110px);
+      line-height: 0.95;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+    
+    .serif-italic {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+    
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+    
+    .body-lead {
+      font-size: clamp(16px, 2.5vw, 22px);
+      line-height: 1.5;
+      font-weight: 300;
+      opacity: 0.8;
+    }
+    
+    /* Section Defaults */
+    section {
+      position: relative;
+      padding: 140px 0;
+      width: 100%;
+      border-bottom: 1px solid var(--neutral-border);
+    }
+    
+    .fullscreen-section {
+      height: 100vh;
+      min-height: 650px;
+      display: flex;
+      align-items: center;
+      padding: 0;
+    }
+    
+    /* Premium Components & Effects */
+    .studio-card {
+      background: var(--neutral);
+      border: 1px solid var(--neutral-border);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.5s ease;
+    }
+    
+    .studio-card:hover {
+      border-color: var(--accent);
+    }
+    
+    .img-wrapper {
+      position: relative;
+      overflow: hidden;
+      background: #141417;
+      aspect-ratio: 16/10;
+    }
+    
+    .img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.05);
+      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    
+    .img-wrapper:hover img {
+      transform: scale(1.15);
+    }
+    
+    /* Reveal Typography Classes */
+    .reveal-wrapper {
+      overflow: hidden;
+      display: block;
+    }
+    
+    .reveal-item {
+      transform: translateY(105%);
+      display: block;
+    }
+    
+    /* Premium Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 24px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      mix-blend-mode: difference;
+    }
+    
+    .logo {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      text-decoration: none;
+      color: var(--foreground);
+      letter-spacing: -0.02em;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 32px;
+    }
+    
+    .nav-link {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-decoration: none;
+      color: var(--foreground);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      position: relative;
+      padding: 4px 0;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    
+    .nav-link:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+    
+    /* Button Custom styling */
+    .btn-creative {
+      display: inline-flex;
+      align-items: center;
+      padding: 16px 36px;
+      border: 1px solid var(--accent);
+      background: transparent;
+      color: var(--foreground);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.4s ease;
+    }
+    
+    .btn-creative::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--accent);
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      z-index: -1;
+    }
+    
+    .btn-creative:hover {
+      color: var(--canvas);
+    }
+    
+    .btn-creative:hover::before {
+      transform: translateY(0);
+    }
+    
+    /* Dotted background pattern */
+    .bg-dots {
+      background-image: radial-gradient(var(--neutral-border) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    
+    /* Placeholder images */
+    .ph-img {
+      background: var(--neutral);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(245, 245, 247, 0.15);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      border: 1px dashed var(--neutral-border);
+    }
+  </style>
+</head>
+<body class="bg-dots">
+  
+  <header>
+    <a href="#" class="logo">STUDIO.OD</a>
+    <nav class="nav-links">
+      <a href="#work" class="nav-link">Work</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Main Scroll Container -->
+  <div id="scroll-wrapper">
+    <main id="content">
+      
+      <!-- HERO -->
+      <section class="fullscreen-section" data-od-id="hero">
+        <div class="grid-12" style="width: 100%;">
+          <div style="grid-column: 1 / span 10;">
+            <span class="eyebrow reveal-wrapper"><span class="reveal-item">CREATIVE STUDIO</span></span>
+            <h1 class="hero-title">
+              <span class="reveal-wrapper"><span class="reveal-item">We craft premium</span></span>
+              <span class="reveal-wrapper"><span class="reveal-item">digital <span class="serif-italic">masterpieces</span></span></span>
+            </h1>
+          </div>
+          <div style="grid-column: 1 / span 6; margin-top: 40px;">
+            <p class="body-lead">Designing state-of-the-art interactive websites powered by smooth physics, cinematic transitions, and timeless design layout rules.</p>
+            <div style="margin-top: 40px;">
+              <a href="#work" class="btn-creative">Explore projects</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- [ADDITIONAL SECTIONS INSERTED HERE] -->
+      
+    </main>
+  </div>
+
+  <!-- Smooth Scroll (Lenis) & GSAP CDN Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.36/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Animation & Scroll Controller Setup -->
+  <script>
+    // Initialize Lenis smooth scroll
+    const lenis = new Lenis({
+      duration: 1.4,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      smoothTouch: false,
+      infinite: false
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Bind GSAP ScrollTrigger to Lenis scroll events
+    lenis.on('scroll', ScrollTrigger.update);
+
+    // Configure GSAP to update with Lenis raf
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+    
+    // Default Reveal Animations on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      // Animate text reveals in Hero section
+      gsap.to('.reveal-item', {
+        y: '0%',
+        duration: 1.2,
+        ease: 'power4.out',
+        stagger: 0.15,
+        delay: 0.2
+      });
+      
+      // Setup parallax scroll triggers (Example)
+      const parallaxImages = document.querySelectorAll('.parallax-image');
+      parallaxImages.forEach(img => {
+        gsap.to(img, {
+          yPercent: -15,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: img.parentElement,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

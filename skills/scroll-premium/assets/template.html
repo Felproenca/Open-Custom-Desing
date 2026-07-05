@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[PRODUCT_NAME]</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Lenis smooth scroll -->
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.25/dist/lenis.css" />
+
+  <style>
+    /* ================================================================
+       DESIGN SYSTEM TOKENS — Replace with DESIGN.md values
+       ================================================================ */
+    :root {
+      --bg: #050508;
+      --bg-subtle: #0A0A10;
+      --surface: #111118;
+      --surface-elevated: #1A1A24;
+      --surface-glass: rgba(17, 17, 24, 0.65);
+      --text: #EDEDF0;
+      --text-secondary: #8888A0;
+      --text-muted: #55556A;
+      --accent: #6C5CE7;
+      --accent-glow: rgba(108, 92, 231, 0.25);
+      --accent-secondary: #00D2FF;
+      --accent-warm: #FF6B6B;
+      --border: rgba(255, 255, 255, 0.06);
+      --border-subtle: rgba(255, 255, 255, 0.03);
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-display: 'Space Grotesk', 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --max-width: 1440px;
+      --section-gap: clamp(80px, 10vw, 140px);
+      --content-padding: clamp(1.25rem, 4.6875vw, 4.5rem);
+      --scrollbar-width: 6px;
+    }
+
+    /* ================================================================
+       LENIS SMOOTH SCROLL
+       ================================================================ */
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+    .lenis.lenis-stopped body { overflow: hidden; }
+    .lenis.lenis-smooth iframe { pointer-events: none; }
+
+    /* ================================================================
+       RESET
+       ================================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent) var(--bg);
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: none;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: none; border: 0; padding: 0; margin: 0; background: none; font: inherit; }
+
+    /* Selection */
+    ::selection { background: var(--accent); color: #fff; }
+
+    /* Focus */
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: var(--scrollbar-width); }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent-secondary); }
+
+    /* ================================================================
+       PLAY / PAUSE MOTION
+       ================================================================ */
+    html[data-motion="paused"] *,
+    html[data-motion="paused"] *::before,
+    html[data-motion="paused"] *::after {
+      animation-play-state: paused !important;
+      transition-duration: 0s !important;
+    }
+
+    /* ================================================================
+       CUSTOM CURSOR
+       ================================================================ */
+    .cursor {
+      position: fixed;
+      top: 0; left: 0;
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10002;
+      mix-blend-mode: difference;
+      transform: translate(-50%, -50%);
+      transition: width 0.25s, height 0.25s, background 0.25s;
+    }
+    .cursor-follower {
+      position: fixed;
+      top: 0; left: 0;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(108, 92, 231, 0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10002;
+      mix-blend-mode: difference;
+      transform: translate(-50%, -50%);
+      transition: width 0.35s cubic-bezier(0.25,0.46,0.45,0.94),
+                  height 0.35s cubic-bezier(0.25,0.46,0.45,0.94),
+                  border-color 0.25s;
+    }
+    .cursor.is-expanded { width: 50px; height: 50px; background: var(--accent-secondary); }
+    .cursor-follower.is-expanded { width: 70px; height: 70px; border-color: var(--accent-secondary); }
+    @media (max-width: 768px) {
+      body { cursor: auto; }
+      .cursor, .cursor-follower { display: none !important; }
+    }
+
+    /* ================================================================
+       MOTION TOGGLE
+       ================================================================ */
+    .motion-toggle {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      z-index: 10001;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--surface-glass);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: none;
+      transition: all 0.3s;
+    }
+    .motion-toggle:hover { border-color: var(--accent); background: var(--surface-elevated); }
+    .motion-toggle__on, .motion-toggle__off { font-size: 0.65rem; font-family: var(--font-mono); letter-spacing: 0.05em; }
+    html[data-motion="paused"] .motion-toggle__on { display: none; }
+    html:not([data-motion="paused"]) .motion-toggle__off { display: none; }
+
+    /* ================================================================
+       WEBGL CONTAINER
+       ================================================================ */
+    .webgl-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .webgl-bg canvas { display: block; }
+
+    /* ================================================================
+       BACKGROUND GRID
+       ================================================================ */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* ================================================================
+       SCROLL UTILITIES
+       ================================================================ */
+    [data-scroll] { will-change: transform, opacity; }
+    [data-scroll-reveal] { opacity: 0; transform: translateY(40px); }
+    [data-scroll-reveal="fade-left"] { transform: translateX(60px); }
+    [data-scroll-reveal="fade-right"] { transform: translateX(-60px); }
+    [data-scroll-reveal="scale-up"] { transform: scale(0.85); }
+    [data-scroll-reveal="clip"] { clip-path: inset(100% 0 0 0); transform: none; }
+
+    /* ================================================================
+       EXPLODE
+       ================================================================ */
+    [data-scroll-explode] {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 500px;
+    }
+    .explode-piece {
+      position: absolute;
+      will-change: transform, opacity;
+    }
+
+    /* ================================================================
+       IMAGE MOTION
+       ================================================================ */
+    [data-scroll-image-motion] { overflow: hidden; position: relative; border-radius: 16px; }
+    [data-scroll-image-motion] img {
+      width: 100%; height: 100%; object-fit: cover;
+      will-change: transform;
+    }
+
+    /* ================================================================
+       HOVER 3D
+       ================================================================ */
+    .hover-3d { perspective: 1200px; transform-style: preserve-3d; border-radius: 16px; overflow: hidden; }
+    .hover-3d img { transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); }
+
+    /* ================================================================
+       CHOREOGRAPHY — clip-path text reveal
+       ================================================================ */
+    .clip-line { display: block; overflow: hidden; line-height: inherit; }
+    .clip-line > span { display: inline-block; }
+
+    /* ================================================================
+       TYPOGRAPHY
+       ================================================================ */
+    h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em; }
+    h1 { font-size: clamp(3rem, 9vw, 7.5rem); line-height: 0.95; font-weight: 800; letter-spacing: -0.03em; }
+    h2 { font-size: clamp(2rem, 5vw, 3.8rem); line-height: 1.08; }
+    h3 { font-size: clamp(1.1rem, 1.8vw, 1.4rem); line-height: 1.3; font-weight: 600; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+
+    .subtitle {
+      font-size: clamp(1rem, 1.6vw, 1.2rem);
+      color: var(--text-secondary);
+      max-width: 520px;
+      line-height: 1.75;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 60%, var(--accent-warm) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ================================================================
+       LAYOUT
+       ================================================================ */
+    .section {
+      position: relative;
+      z-index: 1;
+      padding: var(--section-gap) var(--content-padding);
+      max-width: var(--max-width);
+      margin: 0 auto;
+      scroll-margin-top: 80px;
+    }
+    .section--full { max-width: none; padding: 0; }
+    .section--hero {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 56px); align-items: center; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    @media (max-width: 768px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } }
+
+    /* ================================================================
+       COMPONENTS
+       ================================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      cursor: none;
+      transition: all 0.3s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 0 24px var(--accent-glow); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 40px var(--accent-glow), 0 8px 24px rgba(0,0,0,0.3); }
+    .btn-secondary { background: transparent; color: var(--text); border: 1px solid var(--border); backdrop-filter: blur(8px); }
+    .btn-secondary:hover { border-color: var(--text-secondary); background: rgba(255,255,255,0.03); }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-glow), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .card:hover::before { opacity: 1; }
+    .card:hover { border-color: rgba(108,92,231,0.2); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.25); }
+    .card h3 { margin-bottom: 10px; }
+    .card p { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.7; }
+    .card-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: var(--surface-elevated);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px;
+      font-size: 1.2rem;
+    }
+
+    .ph-img {
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      aspect-ratio: 16/9;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+    }
+
+    .glass {
+      background: var(--surface-glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+
+    /* ================================================================
+       ANIMATED GRADIENT HEADER
+       ================================================================ */
+    .header-gradient {
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-secondary), var(--accent-warm), var(--accent));
+      background-size: 300% 100%;
+      animation: gradient-slide 8s ease-in-out infinite alternate;
+    }
+    @keyframes gradient-slide {
+      0% { background-position: 0% 0%; }
+      50% { background-position: 100% 0%; }
+      100% { background-position: 0% 0%; }
+    }
+
+    /* ================================================================
+       NOISE OVERLAY
+       ================================================================ */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.02;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+
+    /* ================================================================
+       REDUCED MOTION
+       ================================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      [data-scroll-reveal] { opacity: 1; transform: none !important; }
+      [data-scroll] { transform: none !important; }
+      .cursor, .cursor-follower { display: none !important; }
+    }
+
+    /* ================================================================
+       MOBILE
+       ================================================================ */
+    @media (max-width: 768px) {
+      .section--hero { justify-content: center; padding-top: 120px; }
+      [data-scroll-explode] { display: none; }
+      .hover-3d:hover img { transform: none; }
+      .motion-toggle { bottom: 16px; right: 16px; }
+    }
+
+    /* ================================================================
+       SCROLL PROGRESS
+       ================================================================ */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 2px;
+      background: transparent;
+      z-index: 10001;
+    }
+    .scroll-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+      transform-origin: left;
+      transform: scaleX(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- WebGL Background -->
+  <div class="webgl-bg" data-webgl-bg></div>
+
+  <!-- Background Grid -->
+  <div class="bg-grid"></div>
+
+  <!-- Scroll Progress -->
+  <div class="scroll-progress"><div class="scroll-progress-bar" data-scroll-progress></div></div>
+
+  <!-- Custom Cursor -->
+  <div class="cursor" data-cursor></div>
+  <div class="cursor-follower" data-cursor-follower></div>
+
+  <!-- Motion Toggle -->
+  <button class="motion-toggle" data-motion-toggle aria-label="Toggle animations">
+    <span class="motion-toggle__on">⏸</span>
+    <span class="motion-toggle__off">▶</span>
+  </button>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav style="position:fixed; top:3px; left:0; right:0; z-index:10000; padding:20px var(--content-padding); display:flex; justify-content:space-between; align-items:center; transition:background 0.3s, backdrop-filter 0.3s;" data-nav>
+    <span style="font-family:var(--font-display); font-weight:800; font-size:1.2rem; letter-spacing:-0.02em;">
+      <span class="gradient-text">[BRAND]</span>
+    </span>
+    <div style="display:flex; gap:32px; align-items:center; font-size:0.82rem; font-weight:500;">
+      <a href="#features" style="color:var(--text-secondary); cursor:none;">Features</a>
+      <a href="#design" style="color:var(--text-secondary); cursor:none;">Design</a>
+      <a href="#gallery" style="color:var(--text-secondary); cursor:none;">Gallery</a>
+      <button class="btn btn-primary magnetic" style="padding:10px 22px; font-size:0.78rem;">Get Started</button>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="section section--hero" data-od-id="hero" style="overflow:hidden;">
+    <div data-scroll data-scroll-speed="-0.15" style="position:relative; z-index:1; margin-bottom:auto; padding-top:clamp(8rem, 12vw, 10rem);">
+      <p class="eyebrow" data-scroll data-scroll-reveal="fade-up">[PRODUCT_NAME]</p>
+      <h1 data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.1" class="hero-title" style="max-width:80%;">
+        [HEADLINE — short, bold, specific]
+      </h1>
+      <p class="subtitle" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.2" style="margin:24px 0 40px;">
+        [TAGLINE — one or two sentences about what makes this special]
+      </p>
+      <div data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.3" style="display:flex; gap:14px; flex-wrap:wrap;">
+        <button class="btn btn-primary magnetic">[CTA]</button>
+        <button class="btn btn-secondary magnetic">[SECONDARY CTA]</button>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.5" style="text-align:center; padding-bottom:clamp(2rem, 3vw, 3rem);">
+      <p style="font-family:var(--font-mono); font-size:0.6rem; color:var(--text-muted); letter-spacing:0.25em;">SCROLL</p>
+    </div>
+  </section>
+
+  <!-- ===== PRODUCT REVEAL / EXPLODED VIEW ===== -->
+  <section class="section" data-od-id="product-reveal">
+    <div class="eyebrow" data-scroll data-scroll-reveal="fade-up">[SECTION LABEL]</div>
+    <h2 data-scroll data-scroll-reveal="clip" class="section-title" style="max-width:600px;">
+      [SECTION HEADLINE — bold, specific]
+    </h2>
+    <p class="subtitle" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.1" style="margin-bottom:72px;">
+      [Section description — what it is, why it matters]
+    </p>
+
+    <div data-scroll data-scroll-explode="radial" data-scroll-range="0.15-0.65" style="min-height:500px;">
+      <div class="explode-piece" data-explode-angle="0" data-explode-distance="200" style="width:200px; height:160px;">
+        <div class="ph-img" style="width:100%; height:100%; border-radius:14px;">[Component A]</div>
+      </div>
+      <div class="explode-piece" data-explode-angle="60" data-explode-distance="180" style="width:180px; height:180px;">
+        <div class="ph-img" style="width:100%; height:100%; border-radius:14px;">[Component B]</div>
+      </div>
+      <div class="explode-piece" data-explode-angle="120" data-explode-distance="210" style="width:200px; height:140px;">
+        <div class="ph-img" style="width:100%; height:100%; border-radius:14px;">[Component C]</div>
+      </div>
+      <div class="explode-piece" data-explode-angle="180" data-explode-distance="190" style="width:160px; height:160px;">
+        <div class="ph-img" style="width:100%; height:100%; border-radius:14px;">[Component D]</div>
+      </div>
+      <div class="explode-piece" data-explode-angle="240" data-explode-distance="200" style="width:190px; height:150px;">
+        <div class="ph-img" style="width:100%; height:100%; border-radius:14px;">[Component E]</div>
+      </div>
+      <div class="explode-piece" data-explode-angle="300" data-explode-distance="185" style="width:170px; height:170px;">
+        <div class="ph-img" style="width:100%; height:100%; border-radius:14px;">[Component F]</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURES ===== -->
+  <section class="section" id="features" data-od-id="features">
+    <div class="eyebrow" data-scroll data-scroll-reveal="fade-up">[SECTION LABEL]</div>
+    <h2 data-scroll data-scroll-reveal="clip" class="section-title">[FEATURES HEADLINE]</h2>
+    <p class="subtitle" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.1" style="margin-bottom:64px;">
+      [Features description]
+    </p>
+
+    <div class="grid-3">
+      <div class="card" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0">
+        <div class="card-icon">[ICON]</div>
+        <h3>[FEATURE 1]</h3>
+        <p>[Description of feature one]</p>
+      </div>
+      <div class="card" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.1">
+        <div class="card-icon">[ICON]</div>
+        <h3>[FEATURE 2]</h3>
+        <p>[Description of feature two]</p>
+      </div>
+      <div class="card" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.2">
+        <div class="card-icon">[ICON]</div>
+        <h3>[FEATURE 3]</h3>
+        <p>[Description of feature three]</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DESIGN / GALLERY — KEN BURNS + HOVER 3D ===== -->
+  <section class="section" id="design" data-od-id="design">
+    <div class="eyebrow" data-scroll data-scroll-reveal="fade-up">[SECTION LABEL]</div>
+    <h2 data-scroll data-scroll-reveal="clip" class="section-title">[DESIGN HEADLINE]</h2>
+
+    <div class="grid-2" style="margin-top:64px; gap:32px;">
+      <div data-scroll data-scroll-image-motion="ken-burns" style="border-radius:16px; overflow:hidden; aspect-ratio:4/3;">
+        <div class="ph-img" style="width:100%; height:100%; aspect-ratio:auto;">[IMAGE 1 — descriptive alt text]</div>
+      </div>
+      <div data-scroll data-scroll-reveal="fade-left" data-scroll-delay="0.15" style="display:flex; flex-direction:column; justify-content:center; gap:16px;">
+        <p class="eyebrow">[DETAIL LABEL]</p>
+        <h3>[DETAIL HEADLINE]</h3>
+        <p class="subtitle">[Detail description]</p>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:32px; gap:32px;">
+      <div data-scroll data-scroll-reveal="fade-right" data-scroll-delay="0.15" style="display:flex; flex-direction:column; justify-content:center; gap:16px;">
+        <p class="eyebrow">[DETAIL LABEL]</p>
+        <h3>[DETAIL HEADLINE]</h3>
+        <p class="subtitle">[Detail description]</p>
+      </div>
+      <div class="hover-3d" data-scroll data-scroll-image-motion="ken-burns" style="border-radius:16px; overflow:hidden; aspect-ratio:4/3;">
+        <div class="ph-img" style="width:100%; height:100%; aspect-ratio:auto;">[IMAGE 2]</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VIDEO ===== -->
+  <section class="section section--full" data-od-id="video" style="padding:var(--section-gap) 0;">
+    <div style="max-width:var(--max-width); margin:0 auto; padding:var(--content-padding);">
+      <div class="eyebrow" data-scroll data-scroll-reveal="fade-up">[SECTION LABEL]</div>
+      <h2 data-scroll data-scroll-reveal="clip" class="section-title">[VIDEO HEADLINE]</h2>
+    </div>
+    <div data-scroll data-scroll-image-motion="ken-burns" style="max-width:1400px; margin:48px auto 0; border-radius:20px; overflow:hidden; aspect-ratio:16/9; position:relative;">
+      <video data-scroll-video muted playsinline preload="auto" style="width:100%; height:100%; object-fit:cover;">
+        <source src="" type="video/mp4" />
+      </video>
+      <div class="ph-img" style="position:absolute; inset:0; border-radius:0; border:none; background:var(--surface);">[VIDEO DESCRIPTION]</div>
+    </div>
+  </section>
+
+  <!-- ===== SPECS / STATS ===== -->
+  <section class="section" id="specs" data-od-id="specs">
+    <div class="eyebrow" data-scroll data-scroll-reveal="fade-up">[SECTION LABEL]</div>
+    <h2 data-scroll data-scroll-reveal="clip" class="section-title" style="margin-bottom:64px;">[SPECS HEADLINE]</h2>
+
+    <div class="grid-4" style="text-align:center;">
+      <div data-scroll data-scroll-reveal="scale-up" data-scroll-delay="0">
+        <div class="stat-value gradient-text" data-counter="[VALUE1]">0</div>
+        <div class="stat-label">[LABEL1]</div>
+      </div>
+      <div data-scroll data-scroll-reveal="scale-up" data-scroll-delay="0.1">
+        <div class="stat-value gradient-text" data-counter="[VALUE2]">0</div>
+        <div class="stat-label">[LABEL2]</div>
+      </div>
+      <div data-scroll data-scroll-reveal="scale-up" data-scroll-delay="0.2">
+        <div class="stat-value gradient-text" data-counter="[VALUE3]">0</div>
+        <div class="stat-label">[LABEL3]</div>
+      </div>
+      <div data-scroll data-scroll-reveal="scale-up" data-scroll-delay="0.3">
+        <div class="stat-value gradient-text" data-counter="[VALUE4]">0</div>
+        <div class="stat-label">[LABEL4]</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="section" data-od-id="cta" style="text-align:center; padding:clamp(100px, 12vw, 160px) var(--content-padding);">
+    <div data-scroll data-scroll-speed="0.08">
+      <div class="eyebrow" data-scroll data-scroll-reveal="fade-up" style="justify-content:center;">[CTA LABEL]</div>
+      <h2 data-scroll data-scroll-reveal="clip" class="section-title" style="max-width:700px; margin:0 auto 20px;">
+        [CTA HEADLINE]
+      </h2>
+      <p class="subtitle" data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.1" style="margin:0 auto 48px; text-align:center;">
+        [CTA description]
+      </p>
+      <div data-scroll data-scroll-reveal="fade-up" data-scroll-delay="0.2" style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+        <button class="btn btn-primary magnetic" style="font-size:1rem; padding:18px 48px;">[PRIMARY CTA]</button>
+        <button class="btn btn-secondary magnetic" style="font-size:1rem; padding:18px 36px;">[SECONDARY CTA]</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer style="border-top:1px solid var(--border-subtle); padding:40px var(--content-padding);">
+    <div style="max-width:var(--max-width); margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
+      <div style="font-family:var(--font-display); font-weight:800; font-size:1rem;">
+        <span class="gradient-text">[BRAND]</span>
+      </div>
+      <div style="display:flex; gap:28px; font-size:0.75rem; color:var(--text-muted);">
+        <a href="#" style="color:var(--text-muted); cursor:none;">[LINK1]</a>
+        <a href="#" style="color:var(--text-muted); cursor:none;">[LINK2]</a>
+        <a href="#" style="color:var(--text-muted); cursor:none;">[LINK3]</a>
+      </div>
+      <div style="font-size:0.7rem; color:var(--text-muted);">[COPYRIGHT]</div>
+    </div>
+  </footer>
+
+  <!-- ================================================================
+       SCRIPTS
+       ================================================================ -->
+  <script src="https://unpkg.com/lenis@1.3.25/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.185.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* ============================================================
+       LENIS SMOOTH SCROLL
+       ============================================================ */
+    const lenis = new Lenis({
+      autoRaf: true,
+      anchors: true,
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      touchMultiplier: 2,
+    });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+
+    /* ============================================================
+       THREE.js WEBGL PARTICLE BACKGROUND
+       ============================================================ */
+    (function initWebGL() {
+      const container = document.querySelector('[data-webgl-bg]');
+      if (!container || typeof THREE === 'undefined') return;
+
+      const COUNT = window.innerWidth < 768 ? 800 : 1800;
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
+      camera.position.z = 3;
+
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'high-performance' });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+
+      const geometry = new THREE.BufferGeometry();
+      const positions = new Float32Array(COUNT * 3);
+      for (let i = 0; i < COUNT; i++) {
+        positions[i * 3] = (Math.random() - 0.5) * 8;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 8;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 4;
+      }
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+      const material = new THREE.PointsMaterial({
+        color: 0x6C5CE7,
+        size: 0.012,
+        transparent: true,
+        opacity: 0.5,
+        sizeAttenuation: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      });
+      const particles = new THREE.Points(geometry, material);
+      scene.add(particles);
+
+      let mouseX = 0, mouseY = 0;
+      document.addEventListener('mousemove', e => {
+        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+        mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+      });
+
+      function animate() {
+        requestAnimationFrame(animate);
+        const t = Date.now() * 0.001;
+        particles.rotation.y = t * 0.08;
+        particles.rotation.x = Math.sin(t * 0.05) * 0.08;
+        particles.rotation.y += mouseX * 0.015;
+        particles.rotation.x += mouseY * 0.015;
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    })();
+
+    /* ============================================================
+       CUSTOM CURSOR
+       ============================================================ */
+    const cursor = document.querySelector('[data-cursor]');
+    const follower = document.querySelector('[data-cursor-follower]');
+    if (cursor && follower) {
+      document.addEventListener('mousemove', e => {
+        gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
+        gsap.to(follower, { x: e.clientX, y: e.clientY, duration: 0.35, ease: 'power2.out' });
+      });
+      document.querySelectorAll('a, button, .hover-3d, .card, .magnetic').forEach(el => {
+        el.addEventListener('mouseenter', () => { cursor.classList.add('is-expanded'); follower.classList.add('is-expanded'); });
+        el.addEventListener('mouseleave', () => { cursor.classList.remove('is-expanded'); follower.classList.remove('is-expanded'); });
+      });
+    }
+
+    /* ============================================================
+       MAGNETIC BUTTONS
+       ============================================================ */
+    document.querySelectorAll('.magnetic').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: 'power2.out' });
+      });
+      btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.3)' });
+      });
+    });
+
+    /* ============================================================
+       SCROLL PROGRESS
+       ============================================================ */
+    gsap.to('[data-scroll-progress]', {
+      scaleX: 1, ease: 'none',
+      scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: true }
+    });
+
+    /* ============================================================
+       NAV SCROLL STATE
+       ============================================================ */
+    const nav = document.querySelector('[data-nav]');
+    if (nav) {
+      ScrollTrigger.create({
+        start: 80,
+        onUpdate: (self) => {
+          if (window.scrollY > 80) {
+            nav.style.background = 'rgba(5,5,8,0.85)';
+            nav.style.backdropFilter = 'blur(20px) saturate(1.5)';
+          } else {
+            nav.style.background = 'transparent';
+            nav.style.backdropFilter = 'none';
+          }
+        }
+      });
+    }
+
+    /* ============================================================
+       PARALLAX (data-scroll-speed)
+       ============================================================ */
+    gsap.utils.toArray('[data-scroll-speed]').forEach(el => {
+      const speed = parseFloat(el.dataset.scrollSpeed);
+      gsap.to(el, {
+        y: () => speed * ScrollTrigger.maxScroll(window) * 0.1,
+        ease: 'none',
+        scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+      });
+    });
+
+    /* ============================================================
+       SCROLL REVEALS
+       ============================================================ */
+    gsap.utils.toArray('[data-scroll-reveal]').forEach(el => {
+      const type = el.dataset.scrollReveal;
+      const delay = parseFloat(el.dataset.scrollDelay) || 0;
+      const fromMap = {
+        'fade-up':    { y: 40, opacity: 0 },
+        'fade-down':  { y: -40, opacity: 0 },
+        'fade-left':  { x: 50, opacity: 0 },
+        'fade-right': { x: -50, opacity: 0 },
+        'scale-up':   { scale: 0.85, opacity: 0 },
+        'clip':       { clipPath: 'inset(100% 0 0 0)', opacity: 1 },
+      };
+      const from = fromMap[type] || { y: 40, opacity: 0 };
+      const props = type === 'clip'
+        ? { clipPath: 'inset(0% 0 0 0)', duration: 1.2, delay, ease: 'power4.out',
+            scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' } }
+        : { ...from, duration: 1, delay, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none reverse' } };
+      gsap.from(el, props);
+    });
+
+    /* ============================================================
+       EXPLODED VIEW
+       ============================================================ */
+    gsap.utils.toArray('[data-scroll-explode]').forEach(container => {
+      const range = container.dataset.scrollRange.split('-').map(Number);
+      container.querySelectorAll('.explode-piece').forEach(piece => {
+        const angle = parseFloat(piece.dataset.explodeAngle) * Math.PI / 180;
+        const dist = parseFloat(piece.dataset.explodeDistance);
+        gsap.to(piece, {
+          x: Math.cos(angle) * dist, y: Math.sin(angle) * dist,
+          opacity: 0.7, scale: 0.92, ease: 'none',
+          scrollTrigger: { trigger: container, start: `top ${range[0]*100}%`, end: `top ${range[1]*100}%`, scrub: true }
+        });
+      });
+    });
+
+    /* ============================================================
+       KEN BURNS
+       ============================================================ */
+    gsap.utils.toArray('[data-scroll-image-motion="ken-burns"]').forEach(el => {
+      const img = el.querySelector('img, video, .ph-img');
+      if (!img) return;
+      gsap.fromTo(img,
+        { scale: 1.08, x: '-2%', y: '-1.5%' },
+        { scale: 1.18, x: '2%', y: '1%', ease: 'none',
+          scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } }
+      );
+    });
+
+    /* ============================================================
+       HOVER 3D (GSAP-enhanced)
+       ============================================================ */
+    document.querySelectorAll('.hover-3d').forEach(el => {
+      el.addEventListener('mousemove', e => {
+        const rect = el.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        const img = el.querySelector('img, .ph-img');
+        if (img) gsap.to(img, { rotateY: x * 12, rotateX: -y * 12, scale: 1.03, duration: 0.4, ease: 'power2.out' });
+      });
+      el.addEventListener('mouseleave', () => {
+        const img = el.querySelector('img, .ph-img');
+        if (img) gsap.to(img, { rotateY: 0, rotateX: 0, scale: 1, duration: 0.6, ease: 'power3.out' });
+      });
+    });
+
+    /* ============================================================
+       STAT COUNTERS
+       ============================================================ */
+    document.querySelectorAll('[data-counter]').forEach(el => {
+      const raw = el.dataset.counter;
+      const num = parseFloat(raw.replace(/[^0-9.]/g, ''));
+      const suffix = raw.replace(/[0-9.]/g, '');
+      if (isNaN(num)) return;
+      const obj = { val: 0 };
+      gsap.to(obj, {
+        val: num, duration: 2, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' },
+        onUpdate: () => { el.textContent = Math.round(obj.val).toLocaleString() + suffix; }
+      });
+    });
+
+    /* ============================================================
+       SCROLL-LINKED VIDEO
+       ============================================================ */
+    const sv = document.querySelector('[data-scroll-video]');
+    if (sv && sv.querySelector('source')?.src) {
+      sv.pause();
+      ScrollTrigger.create({
+        trigger: sv, start: 'top bottom', end: 'bottom top', scrub: true,
+        onUpdate: self => { if (sv.duration) sv.currentTime = self.progress * sv.duration; }
+      });
+    }
+
+    /* ============================================================
+       PLAY / PAUSE TOGGLE
+       ============================================================ */
+    document.querySelectorAll('[data-motion-toggle]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const paused = document.documentElement.dataset.motion === 'paused';
+        document.documentElement.dataset.motion = paused ? '' : 'paused';
+        if (paused) { lenis.start(); ScrollTrigger.getAll().forEach(st => st.enable()); }
+        else { lenis.stop(); ScrollTrigger.getAll().forEach(st => st.disable()); }
+      });
+    });
+
+    /* ============================================================
+       REDUCED MOTION
+       ============================================================ */
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      lenis.destroy();
+      ScrollTrigger.getAll().forEach(st => st.kill());
+      document.querySelectorAll('[data-scroll-reveal]').forEach(el => {
+        el.style.opacity = '1'; el.style.transform = 'none'; el.style.clipPath = 'none';
+      });
+      const webgl = document.querySelector('[data-webgl-bg]');
+      if (webgl) webgl.style.display = 'none';
+    }
+  </script>
+</body>
+</html>

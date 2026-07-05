@@ -6186,3 +6186,82 @@ body.entry-resizing { cursor: col-resize; user-select: none; }
   font-size: 11.5px !important;
   padding: 4px 10px !important;
 }
+
+/* ============================================================
+   Motion Components — Three.js, GSAP, anime.js integrations
+   ============================================================ */
+
+/* Three.js Background */
+.three-background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.three-background canvas {
+  display: block;
+}
+
+/* Motion Hero */
+.motion-hero {
+  position: relative;
+  padding: 3rem 2rem;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--bg-panel) 0%, var(--bg-subtle) 100%);
+  overflow: hidden;
+}
+.motion-hero-content {
+  position: relative;
+  z-index: 1;
+}
+.motion-hero-title {
+  background: linear-gradient(135deg, var(--text-strong) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animated Cards */
+.animated-card {
+  border-radius: var(--radius);
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s ease;
+  cursor: pointer;
+}
+.animated-card:hover {
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
+}
+.animated-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Animated List */
+.animated-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Pulse Animation */
+.pulse-animation {
+  display: inline-block;
+}
+
+/* Motion Loader */
+.motion-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.motion-loader canvas {
+  display: block;
+}
+
+/* Page Transition */
+.page-transition {
+  will-change: opacity, transform;
+}
