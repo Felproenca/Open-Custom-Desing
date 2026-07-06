@@ -1,0 +1,18 @@
+# CRAV Burgers — Styles
+
+CSS extraído via Tailwind + Next.js. Cores do sistema:
+
+```css
+--red: #f91814
+--mustard: #FFC614
+--mustard-dark: #ED900A
+--beige: #f5e3cd
+--black: #4C0016
+--green: #77C41E
+```
+
+Tipografia:
+- Display: Modak
+- Body: Mouse Memoirs
+
+Para CSS completo, usar Playwright para extrair os chunks do Next.js.

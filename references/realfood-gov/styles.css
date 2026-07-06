@@ -1,0 +1,14 @@
+# Real Food — Styles
+
+CSS embarcado nos chunks do Next.js. Não disponível como arquivo separado.
+
+Variáveis de design extraídas do HTML:
+```css
+--red1: #BD0C3C
+--red2: #cf2e2e
+--red3: #ff6900
+--off-white: #FDFBEE
+--bg: #F3F0D6
+```
+
+Para CSS completo, inspecionar o site no browser ou usar Playwright para extrair.

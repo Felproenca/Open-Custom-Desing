@@ -1,0 +1,10 @@
+# Telescope — Styles
+
+CSS externo: `/_nuxt/entry.tFlogPss.css`
+
+Variáveis de design:
+```css
+--accent: #E3F794 (lime)
+```
+
+Site é SPA — CSS real precisa de browser rendering para extração completa.

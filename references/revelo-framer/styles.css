@@ -1,0 +1,13 @@
+# Revelo — Styles
+
+CSS gerenciado pelo Framer runtime. Disponível em:
+- `https://framerusercontent.com/assets/*.css`
+
+Variáveis de design (escuro):
+```css
+--bg: #111
+--accent: neon/glow
+--text: white
+```
+
+Para CSS completo, usar Playwright para extrair do render final.
