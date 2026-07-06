@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open Design — Painel Operacional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   DESIGN SYSTEM — Open Design
+   ============================================ */
+:root {
+  /* Core */
+  --bg-0: #09090b;
+  --bg-1: #18181b;
+  --bg-2: #27272a;
+  --bg-3: #3f3f46;
+  --border: #2e2e33;
+  --border-focus: #52525b;
+
+  /* Brand */
+  --lime: #d2ff00;
+  --lime-dim: rgba(210,255,0,.08);
+  --lime-mid: rgba(210,255,0,.15);
+
+  /* Semantic */
+  --green: #22c55e;
+  --yellow: #eab308;
+  --red: #ef4444;
+  --blue: #3b82f6;
+  --purple: #a855f7;
+  --orange: #f97316;
+
+  /* Text */
+  --text-1: #fafafa;
+  --text-2: #a1a1aa;
+  --text-3: #71717a;
+  --text-4: #52525b;
+
+  /* Typography */
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --mono: 'SF Mono', Monaco, 'Cascadia Code', 'Fira Code', monospace;
+
+  /* Spacing */
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 20px; --sp-6: 24px; --sp-8: 32px; --sp-10: 40px;
+
+  /* Radius */
+  --r-sm: 6px; --r-md: 8px; --r-lg: 12px; --r-xl: 16px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.4);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,.5);
+
+  /* Transitions */
+  --ease: cubic-bezier(.16,1,.3,1);
+  --dur: 200ms;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { font-size: 16px; }
+body { font-family: var(--font); background: var(--bg-0); color: var(--text-1); display: flex; height: 100vh; overflow: hidden; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+input { font-family: inherit; }
+
+/* ============================================
+   LAYOUT
+   ============================================ */
+.sidebar {
+  width: 260px; background: var(--bg-1); border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; flex-shrink: 0; z-index: 20;
+}
+.sidebar-header {
+  padding: var(--sp-5) var(--sp-5) var(--sp-4); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: var(--sp-3);
+}
+.sidebar-logo {
+  width: 32px; height: 32px; background: var(--lime); border-radius: var(--r-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 14px; color: var(--bg-0); flex-shrink: 0;
+}
+.sidebar-brand { font-size: 14px; font-weight: 700; letter-spacing: -.01em; }
+.sidebar-brand span { color: var(--lime); }
+
+.sidebar-nav { flex: 1; padding: var(--sp-2); overflow-y: auto; }
+.nav-section { font-size: 10px; font-weight: 600; color: var(--text-4); text-transform: uppercase; letter-spacing: .08em; padding: var(--sp-4) var(--sp-3) var(--sp-2); }
+.nav-item {
+  display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-sm); font-size: 13px; color: var(--text-2); cursor: pointer;
+  transition: all var(--dur) var(--ease); user-select: none;
+}
+.nav-item:hover { background: var(--bg-2); color: var(--text-1); }
+.nav-item.active { background: var(--lime-dim); color: var(--lime); font-weight: 500; }
+.nav-item svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 1.5; fill: none; flex-shrink: 0; }
+.nav-item .badge {
+  margin-left: auto; font-size: 10px; font-weight: 600; padding: 1px 6px;
+  border-radius: 99px; background: var(--bg-3); color: var(--text-2);
+}
+.nav-item.active .badge { background: var(--lime-mid); color: var(--lime); }
+
+.sidebar-footer {
+  padding: var(--sp-3) var(--sp-5); border-top: 1px solid var(--border);
+  font-size: 11px; color: var(--text-4); display: flex; justify-content: space-between;
+}
+
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+.topbar {
+  height: 52px; border-bottom: 1px solid var(--border); display: flex; align-items: center;
+  padding: 0 var(--sp-6); gap: var(--sp-4); flex-shrink: 0; background: var(--bg-1);
+}
+.topbar-title { font-size: 15px; font-weight: 600; }
+.topbar-search {
+  margin-left: auto; width: 240px; height: 32px; background: var(--bg-2);
+  border: 1px solid var(--border); border-radius: var(--r-sm); padding: 0 var(--sp-3);
+  font-size: 12px; color: var(--text-1); outline: none; transition: border-color var(--dur);
+}
+.topbar-search:focus { border-color: var(--lime); }
+.topbar-search::placeholder { color: var(--text-4); }
+.topbar-status { display: flex; align-items: center; gap: var(--sp-2); font-size: 12px; color: var(--text-2); }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+.status-dot.warning { background: var(--yellow); }
+.status-dot.error { background: var(--red); }
+
+.content { flex: 1; overflow-y: auto; padding: var(--sp-6); }
+
+/* ============================================
+   COMPONENTS
+   ============================================ */
+
+/* Cards */
+.card {
+  background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-lg);
+  padding: var(--sp-5); transition: border-color var(--dur), box-shadow var(--dur);
+}
+.card:hover { border-color: var(--border-focus); }
+.card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--sp-4); }
+.card-title { font-size: 14px; font-weight: 600; }
+.card-subtitle { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+
+/* Grid */
+.grid { display: grid; gap: var(--sp-4); }
+.g2 { grid-template-columns: 1fr 1fr; }
+.g3 { grid-template-columns: 1fr 1fr 1fr; }
+.g4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+.g5 { grid-template-columns: 1fr 1fr 1fr 1fr 1fr; }
+@media (max-width: 1200px) { .g4, .g5 { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 900px) { .g3, .g4, .g5 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .g2, .g3, .g4, .g5 { grid-template-columns: 1fr; } }
+
+/* Metric Cards */
+.metric-card { text-align: center; padding: var(--sp-6) var(--sp-4); }
+.metric-value { font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -.02em; }
+.metric-label { font-size: 12px; color: var(--text-3); margin-top: var(--sp-2); }
+
+/* Tags */
+.tag {
+  display: inline-flex; align-items: center; font-size: 11px; font-weight: 500;
+  padding: 2px 8px; border-radius: 99px; gap: 4px;
+}
+.tag-green { background: rgba(34,197,94,.1); color: var(--green); }
+.tag-yellow { background: rgba(234,179,8,.1); color: var(--yellow); }
+.tag-red { background: rgba(239,68,68,.1); color: var(--red); }
+.tag-blue { background: rgba(59,130,246,.1); color: var(--blue); }
+.tag-purple { background: rgba(168,85,247,.1); color: var(--purple); }
+.tag-lime { background: var(--lime-dim); color: var(--lime); }
+.tag-orange { background: rgba(249,115,22,.1); color: var(--orange); }
+.tag-neutral { background: var(--bg-2); color: var(--text-2); }
+
+/* Tables */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th {
+  text-align: left; padding: var(--sp-3) var(--sp-4); font-size: 11px; font-weight: 600;
+  color: var(--text-3); text-transform: uppercase; letter-spacing: .05em;
+  border-bottom: 1px solid var(--border); background: var(--bg-1);
+  position: sticky; top: 0; z-index: 1;
+}
+td { padding: var(--sp-3) var(--sp-4); font-size: 13px; border-bottom: 1px solid rgba(46,46,51,.4); }
+tr:hover td { background: rgba(255,255,255,.015); }
+
+/* Progress Bar */
+.progress { height: 4px; background: var(--bg-2); border-radius: 2px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 2px; transition: width .5s var(--ease); }
+
+/* Agent Cards */
+.agent-card {
+  background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-lg);
+  padding: var(--sp-4); display: flex; gap: var(--sp-4); transition: all var(--dur);
+}
+.agent-card:hover { border-color: var(--border-focus); box-shadow: var(--shadow-sm); }
+.agent-icon {
+  width: 44px; height: 44px; border-radius: var(--r-md); display: flex;
+  align-items: center; justify-content: center; font-size: 13px; font-weight: 800; flex-shrink: 0;
+}
+.agent-icon.active { background: rgba(34,197,94,.12); color: var(--green); }
+.agent-icon.idle { background: rgba(234,179,8,.1); color: var(--yellow); }
+.agent-icon.off { background: var(--bg-2); color: var(--text-4); }
+.agent-body { flex: 1; min-width: 0; }
+.agent-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.agent-meta { font-size: 11px; color: var(--text-3); }
+.agent-stats { display: flex; gap: var(--sp-4); margin-top: var(--sp-3); }
+.agent-stat { font-size: 11px; color: var(--text-3); }
+.agent-stat strong { color: var(--text-2); font-weight: 600; }
+.agent-pulse { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 2px; }
+.agent-pulse.on { background: var(--green); animation: pulse 2s infinite; }
+.agent-pulse.wait { background: var(--yellow); animation: pulse 3s infinite; }
+.agent-pulse.off { background: var(--text-4); }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+
+/* Panels */
+.panel { display: none; }
+.panel.active { display: block; animation: fadeIn .3s var(--ease); }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.panel-header { margin-bottom: var(--sp-6); }
+.panel-title { font-size: 20px; font-weight: 700; letter-spacing: -.02em; }
+.panel-desc { font-size: 13px; color: var(--text-3); margin-top: var(--sp-1); }
+
+/* Modal */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.6); backdrop-filter: blur(4px);
+  z-index: 100; display: none; align-items: center; justify-content: center;
+  animation: fadeIn .2s var(--ease);
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-xl);
+  width: 90%; max-width: 640px; max-height: 80vh; overflow-y: auto;
+  box-shadow: var(--shadow-lg); animation: modalIn .3s var(--ease);
+}
+@keyframes modalIn { from { opacity: 0; transform: scale(.95) translateY(10px); } }
+.modal-header {
+  padding: var(--sp-5) var(--sp-6); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.modal-title { font-size: 16px; font-weight: 600; }
+.modal-close {
+  width: 28px; height: 28px; border-radius: var(--r-sm); display: flex;
+  align-items: center; justify-content: center; color: var(--text-3);
+  transition: all var(--dur); background: none; border: none;
+}
+.modal-close:hover { background: var(--bg-2); color: var(--text-1); }
+.modal-body { padding: var(--sp-6); }
+.modal-body h4 { font-size: 13px; font-weight: 600; margin: var(--sp-4) 0 var(--sp-2); color: var(--text-2); }
+.modal-body p { font-size: 13px; color: var(--text-3); line-height: 1.6; }
+.modal-body code {
+  font-family: var(--mono); font-size: 12px; background: var(--bg-2);
+  padding: 2px 6px; border-radius: 4px; color: var(--lime);
+}
+
+/* Skill Card Interactive */
+.skill-card {
+  background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-md);
+  padding: var(--sp-4); cursor: pointer; transition: all var(--dur);
+}
+.skill-card:hover { border-color: var(--lime); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.skill-card h4 { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.skill-card p { font-size: 11px; color: var(--text-3); line-height: 1.5; }
+
+/* DS Card */
+.ds-card {
+  background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--r-md);
+  padding: var(--sp-4); cursor: pointer; transition: all var(--dur); text-align: center;
+}
+.ds-card:hover { border-color: var(--lime); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.ds-card .ds-colors { display: flex; gap: 4px; justify-content: center; margin-bottom: var(--sp-3); }
+.ds-card .ds-color { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--bg-0); }
+.ds-card .ds-name { font-size: 13px; font-weight: 600; }
+
+/* Log */
+.log-line {
+  font-family: var(--mono); font-size: 12px; line-height: 1.8; padding: 2px 0;
+  display: flex; gap: var(--sp-3);
+}
+.log-ts { color: var(--text-4); min-width: 60px; }
+.log-level { min-width: 44px; font-weight: 600; font-size: 10px; text-transform: uppercase; }
+.log-level.ok { color: var(--green); }
+.log-level.info { color: var(--blue); }
+.log-level.warn { color: var(--yellow); }
+.log-level.err { color: var(--red); }
+.log-msg { color: var(--text-2); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--bg-3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-4); }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">OD</div>
+    <div class="sidebar-brand">Open <span>Design</span></div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">Principal</div>
+    <div class="nav-item active" data-panel="overview" onclick="show('overview')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Visão Geral
+    </div>
+    <div class="nav-item" data-panel="agents" onclick="show('agents')">
+      <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Agentes
+      <span class="badge">11</span>
+    </div>
+    <div class="nav-item" data-panel="skills" onclick="show('skills')">
+      <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.92 6.92a2.12 2.12 0 0 1-3-3l6.92-6.92a6 6 0 0 1 7.94-7.94l-3.76 3.76Z"/></svg>
+      Skills
+      <span class="badge">31</span>
+    </div>
+    <div class="nav-item" data-panel="design" onclick="show('design')">
+      <svg viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r="2.5"/><path d="M17.5 2h-11A5.5 5.5 0 0 0 1 7.5v9A5.5 5.5 0 0 0 6.5 22h11a5.5 5.5 0 0 0 5.5-5.5v-9A5.5 5.5 0 0 0 17.5 2Z"/></svg>
+      Design Systems
+      <span class="badge">72+</span>
+    </div>
+    <div class="nav-section">Dados</div>
+    <div class="nav-item" data-panel="refs" onclick="show('refs')">
+      <svg viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+      Referências
+      <span class="badge">8</span>
+    </div>
+    <div class="nav-item" data-panel="log" onclick="show('log')">
+      <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+      Atividade
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <span>v0.1.0</span>
+    <span id="clock"></span>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title" id="pageTitle">Visão Geral</span>
+    <input class="topbar-search" placeholder="Buscar..." id="search" oninput="handleSearch(this.value)">
+    <div class="topbar-status">
+      <div class="status-dot" id="statusDot"></div>
+      <span id="statusText">Sistema operacional</span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ===== OVERVIEW ===== -->
+    <div class="panel active" id="p-overview">
+      <div class="panel-header">
+        <div class="panel-title">Visão Geral</div>
+        <div class="panel-desc">Estado atual do Open Design e todos os seus componentes</div>
+      </div>
+      <div class="grid g5" style="margin-bottom:var(--sp-6)">
+        <div class="card metric-card"><div class="metric-value" style="color:var(--green)" id="mActive">1</div><div class="metric-label">Agentes Ativos</div></div>
+        <div class="card metric-card"><div class="metric-value" style="color:var(--lime)">31</div><div class="metric-label">Skills</div></div>
+        <div class="card metric-card"><div class="metric-value" style="color:var(--blue)">72+</div><div class="metric-label">Design Systems</div></div>
+        <div class="card metric-card"><div class="metric-value" style="color:var(--purple)">8</div><div class="metric-label">Referências</div></div>
+        <div class="card metric-card"><div class="metric-value" style="color:var(--orange)">5</div><div class="metric-label">Direções</div></div>
+      </div>
+      <div class="grid g2">
+        <div class="card">
+          <div class="card-header"><div class="card-title">Ambiente</div></div>
+          <div style="display:flex;flex-direction:column;gap:var(--sp-3)">
+            <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--text-3)">Node.js</span><span style="font-family:var(--mono);font-size:11px">v26.3.1</span></div>
+            <div class="progress"><div class="progress-fill" style="width:45%;background:var(--green)"></div></div>
+            <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--text-3)">pnpm</span><span style="font-family:var(--mono);font-size:11px">v10.33.2</span></div>
+            <div class="progress"><div class="progress-fill" style="width:30%;background:var(--blue)"></div></div>
+            <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--text-3)">Chromium</span><span style="font-family:var(--mono);font-size:11px">Playwright</span></div>
+            <div class="progress"><div class="progress-fill" style="width:60%;background:var(--purple)"></div></div>
+            <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--text-3)">Playwright</span><span style="font-family:var(--mono);font-size:11px">Instalado</span></div>
+            <div class="progress"><div class="progress-fill" style="width:100%;background:var(--lime)"></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Atividade Recente</div></div>
+          <div id="overviewLog" style="max-height:200px;overflow-y:auto"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== AGENTS ===== -->
+    <div class="panel" id="p-agents">
+      <div class="panel-header">
+        <div class="panel-title">Agentes de Codificação</div>
+        <div class="panel-desc">11 CLIs suportadas — detectadas automaticamente no PATH</div>
+      </div>
+      <div class="grid g2" id="agentGrid"></div>
+    </div>
+
+    <!-- ===== SKILLS ===== -->
+    <div class="panel" id="p-skills">
+      <div class="panel-header">
+        <div class="panel-title">Skills</div>
+        <div class="panel-desc">31 skills organizadas por cenário — clique para detalhes</div>
+      </div>
+      <div id="skillsContent"></div>
+    </div>
+
+    <!-- ===== DESIGN SYSTEMS ===== -->
+    <div class="panel" id="p-design">
+      <div class="panel-header">
+        <div class="panel-title">Design Systems</div>
+        <div class="panel-desc">72+ sistemas de produto — clique para ver o DESIGN.md</div>
+      </div>
+      <div class="grid g5" id="dsGrid"></div>
+    </div>
+
+    <!-- ===== REFERENCES ===== -->
+    <div class="panel" id="p-refs">
+      <div class="panel-header">
+        <div class="panel-title">Referências</div>
+        <div class="panel-desc">8 sites premium extraídos — clique para explorar</div>
+      </div>
+      <div class="table-wrap">
+        <table id="refsTable">
+          <thead><tr><th>Referência</th><th>Site</th><th>Nicho</th><th>Padrões</th><th>Transferível</th><th>Ações</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== LOG ===== -->
+    <div class="panel" id="p-log">
+      <div class="panel-header">
+        <div class="panel-title">Atividade</div>
+        <div class="panel-desc">Log de eventos do sistema em tempo real</div>
+      </div>
+      <div class="card" style="padding:var(--sp-4)">
+        <div id="fullLog" style="max-height:calc(100vh - 200px);overflow-y:auto;font-family:var(--mono)"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle"></div>
+      <button class="modal-close" onclick="closeModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// ===== PANEL SWITCHING =====
+function show(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('p-' + id).classList.add('active');
+  document.querySelector(`[data-panel="${id}"]`).classList.add('active');
+  const titles = {overview:'Visão Geral',agents:'Agentes de Codificação',skills:'Skills',design:'Design Systems',refs:'Referências',log:'Atividade'};
+  document.getElementById('pageTitle').textContent = titles[id] || id;
+}
+
+// ===== CLOCK =====
+function tick() {
+  const t = new Date().toLocaleTimeString('pt-BR');
+  document.getElementById('clock').textContent = t;
+}
+setInterval(tick, 1000); tick();
+
+// ===== MODAL =====
+function openModal(title, html) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalBody').innerHTML = html;
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ===== SEARCH =====
+function handleSearch(q) {
+  q = q.toLowerCase();
+  document.querySelectorAll('.skill-card, .ds-card').forEach(el => {
+    el.style.display = el.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+
+// ===== AGENTS =====
+const agents = [
+  {id:'claude',name:'Claude Code',type:'Anthropic',adapter:'stdio',icon:'C',installed:true,running:true,pid:16520,cpu:3648,mem:'142MB',ver:'2.1.200',
+   desc:'Agente principal da Anthropic. Modelo de raciocínio avançado para código, design e tarefas complexas. Suporta ferramentas Read, Write, Bash, WebFetch.',
+   usage:'Utilizado para: geração de sites, extração de assets, criação de templates, análise de referências.'},
+  {id:'codex',name:'Codex CLI',type:'OpenAI',adapter:'stdio',icon:'CX',installed:false,running:false,desc:'CLI de código da OpenAI. Modelo GPT para geração e edição de código.'},
+  {id:'cursor',name:'Cursor Agent',type:'Cursor',adapter:'stdio',icon:'Cu',installed:false,running:false,desc:'Agente do IDE Cursor. Integrado com autocomplete e edição inteligente.'},
+  {id:'gemini',name:'Gemini CLI',type:'Google',adapter:'stdio',icon:'G',installed:false,running:false,desc:'CLI do Google Gemini. Modelos multimodais para código e design.'},
+  {id:'opencode',name:'OpenCode',type:'OpenSource',adapter:'stdio',icon:'OC',installed:false,running:false,desc:'Agente open-source para código. Comunidade ativa.'},
+  {id:'qwen',name:'Qwen Code',type:'QwenLM',adapter:'stdio',icon:'Q',installed:false,running:false,desc:'Modelos Qwen para código. Forte em multi-idiomas.'},
+  {id:'copilot',name:'GitHub Copilot',type:'GitHub',adapter:'stdio',icon:'GH',installed:false,running:false,desc:'CLI do GitHub Copilot. Integração com repositórios.'},
+  {id:'hermes',name:'Hermes',type:'ACP',adapter:'acp',icon:'H',installed:false,running:false,desc:'Agent Communication Protocol. Comunicação padronizada entre agentes.'},
+  {id:'kimi',name:'Kimi CLI',type:'Moonshot',adapter:'acp',icon:'K',installed:false,running:false,desc:'Moonshot AI. Modelos para long context.'},
+  {id:'pi',name:'Pi AI',type:'RPC',adapter:'rpc',icon:'Pi',installed:false,running:false,desc:'Mario Zechner. RPC adapter para comunicação remota.'},
+  {id:'kiro',name:'Kiro CLI',type:'ACP',adapter:'acp',icon:'Kr',installed:false,running:false,desc:'kiro.dev. Agente via ACP.'},
+];
+
+function renderAgents() {
+  let active = 0;
+  document.getElementById('agentGrid').innerHTML = agents.map(a => {
+    const st = a.running ? (a.cpu > 100 ? 'active' : 'idle') : 'off';
+    if (a.running && a.cpu > 100) active++;
+    const barW = a.running ? Math.min(a.cpu / 50, 100) : 0;
+    const barC = a.cpu > 300 ? 'var(--red)' : a.cpu > 100 ? 'var(--yellow)' : 'var(--green)';
+    return `<div class="agent-card" onclick="openAgentModal('${a.id}')">
+      <div class="agent-icon ${st}">${a.icon}</div>
+      <div class="agent-body">
+        <div class="agent-name">${a.name}</div>
+        <div class="agent-meta">${a.type} · ${a.adapter}${a.ver ? ' · v'+a.ver : ''}</div>
+        <div class="progress" style="margin-top:8px"><div class="progress-fill" style="width:${barW}%;background:${barC}"></div></div>
+        <div class="agent-stats">
+          <div class="agent-stat">Status: <strong>${a.running ? (a.cpu>100?'Ativo':'Ocioso'):'Indisponível'}</strong></div>
+          ${a.running ? `<div class="agent-stat">CPU: <strong>${a.cpu}ms</strong></div><div class="agent-stat">Mem: <strong>${a.mem||'—'}</strong></div>` : ''}
+        </div>
+      </div>
+      <div class="agent-pulse ${a.running?(a.cpu>100?'on':'wait'):'off'}"></div>
+    </div>`;
+  }).join('');
+  document.getElementById('mActive').textContent = active;
+}
+
+function openAgentModal(id) {
+  const a = agents.find(x => x.id === id);
+  openModal(a.name, `
+    <p>${a.desc}</p>
+    <h4>Especificações</h4>
+    <p>Tipo: <code>${a.type}</code> · Adapter: <code>${a.adapter}</code>${a.ver ? ' · Versão: <code>v'+a.ver+'</code>' : ''}</p>
+    <p>Status: <strong style="color:${a.running?'var(--green)':'var(--text-3)'}">${a.running?'Ativo':'Indisponível'}</strong></p>
+    ${a.running ? `<p>PID: <code>${a.pid}</code> · CPU: <code>${a.cpu}ms</code> · Memória: <code>${a.mem}</code></p>` : ''}
+    ${a.usage ? `<h4>Uso no Open Design</h4><p>${a.usage}</p>` : ''}
+    <h4>Comando</h4>
+    <p><code>${a.id}</code> — detectado automaticamente no PATH</p>
+  `);
+}
+
+// ===== SKILLS =====
+const skills = [
+  {name:'web-prototype',mode:'prototype',scenario:'design',fidelity:'high',desc:'Página única HTML — landings, marketing, hero pages. Default para prototype.',prompt:'Crie uma landing page para [produto] com hero, features e CTA.',example:'hero-section + features-grid + pricing + footer'},
+  {name:'saas-landing',mode:'prototype',scenario:'marketing',fidelity:'high',desc:'Layout de marketing SaaS com hero / features / pricing / CTA.',prompt:'Monte uma landing page de produto SaaS com seção de preços.',example:'hero + social-proof + features + pricing-table + testimonials + CTA'},
+  {name:'dashboard',mode:'prototype',scenario:'operation',fidelity:'high',desc:'Painel admin/analytics com sidebar, topbar e layout de dados denso.',prompt:'Crie um dashboard de analytics com sidebar e métricas.',example:'sidebar + topbar + KPI-cards + charts + table'},
+  {name:'mobile-app',mode:'prototype',scenario:'design',fidelity:'high',desc:'Tela(s) de app emolduradas em iPhone 15 Pro / Pixel com chrome real.',prompt:'Protótipo de tela de app mobile para [purpose].',example:'status-bar + content + tab-bar dentro de device-frame'},
+  {name:'mobile-onboarding',mode:'prototype',scenario:'design',fidelity:'medium',desc:'Fluxo de onboarding multi-tela: splash → value-prop → sign-in.',prompt:'Crie um onboarding de 3 telas para app mobile.',example:'splash-screen + value-props + sign-in-form'},
+  {name:'gamified-app',mode:'prototype',scenario:'personal',fidelity:'medium',desc:'Protótipo gamificado em 3 frames: capa, missões com XP, detalhe.',prompt:'App gamificado com sistema de missões e XP.',example:'cover + missions-with-xp-bars + mission-detail'},
+  {name:'email-marketing',mode:'prototype',scenario:'marketing',fidelity:'medium',desc:'E-mail HTML de lançamento com fallback de tabela seguro.',prompt:'Email de lançamento de produto com CTA.',example:'masthead + hero-image + title + CTA + specs-grid'},
+  {name:'social-carousel',mode:'prototype',scenario:'marketing',fidelity:'medium',desc:'Carrossel 1080×1080 em 3 cards cinematográficos.',prompt:'Carrossel de 3 posts para Instagram sobre [tema].',example:'3-cards-1080x1080 com títulos display conectados'},
+  {name:'magazine-poster',mode:'prototype',scenario:'marketing',fidelity:'high',desc:'Poster de página única estilo revista com hierarquia editorial.',prompt:'Poster estilo revista para [evento/produto].',example:'headline + subhead + body + image + pull-quote'},
+  {name:'motion-frames',mode:'prototype',scenario:'marketing',fidelity:'medium',desc:'Hero com animações CSS em loop — anel rotativo, globo animado.',prompt:'Hero section com motion design e animações CSS.',example:'rotating-type + animated-globe + pulsing-timer'},
+  {name:'sprite-animation',mode:'prototype',scenario:'marketing',fidelity:'medium',desc:'Slide pixel art / 8-bit com mascote animado e keyframes.',prompt:'Slide explicador estilo pixel art.',example:'pixel-mascote + kinetic-japanese-type + css-keyframes'},
+  {name:'dating-web',mode:'prototype',scenario:'personal',fidelity:'high',desc:'Dashboard de namoro com nav lateral, ticker, KPIs, gráfico.',prompt:'Dashboard de plataforma de namoro.',example:'sidebar + ticker + KPIs + match-chart + tipografia-editorial'},
+  {name:'pricing-page',mode:'prototype',scenario:'sale',fidelity:'high',desc:'Tabelas de pricing standalone com comparação de planos.',prompt:'Página de preços com 3 planos.',example:'pricing-tiers + feature-comparison + CTA'},
+  {name:'docs-page',mode:'prototype',scenario:'engineering',fidelity:'medium',desc:'Layout de documentação em 3 colunas com navegação.',prompt:'Página de documentação técnica.',example:'sidebar-nav + content-area + on-this-page'},
+  {name:'blog-post',mode:'prototype',scenario:'marketing',fidelity:'medium',desc:'Long-form editorial com tipografia de leitura.',prompt:'Post de blog editorial sobre [tema].',example:'hero-image + headline + byline + body + pull-quotes'},
+  {name:'digital-eguide',mode:'prototype',scenario:'marketing',fidelity:'medium',desc:'E-guia digital em duas spreads — capa + aula.',prompt:'E-guia digital de 2 páginas sobre [tema].',example:'cover-spread + lesson-spread'},
+  {name:'wireframe-sketch',mode:'prototype',scenario:'design',fidelity:'low',desc:'Sketch de ideação desenhado à mão — para protótipo inicial.',prompt:'Wireframe sketch de [página].',example:'hand-drawn-blocks + annotations'},
+  {name:'critique',mode:'prototype',scenario:'design',fidelity:'medium',desc:'Folha de auto-crítica 5 dimensões: Filosofia · Hierarquia · Detalhe · Função · Inovação.',prompt:'Analise este design em 5 dimensões.',example:'5-dimension-checklist + scores + recommendations'},
+  {name:'tweaks',mode:'prototype',scenario:'design',fidelity:'medium',desc:'Painel de ajustes emitidos pela IA — parâmetros para refinar.',prompt:'Sugira tweaks para melhorar este design.',example:'parameter-panel + before-after + apply-button'},
+  {name:'guizang-ppt',mode:'deck',scenario:'design',fidelity:'high',desc:'Web PPT estilo revista — layouts premium, hero WebGL, saída HTML.',prompt:'Apresentação estilo revista sobre [tema].',example:'magazine-layouts + hero-webgl + speaker-notes'},
+  {name:'simple-deck',mode:'deck',scenario:'design',fidelity:'medium',desc:'Deck minimalista com swipe horizontal.',prompt:'Apresentação minimalista sobre [tema].',example:'clean-slides + swipe-navigation + transitions'},
+  {name:'replit-deck',mode:'deck',scenario:'design',fidelity:'medium',desc:'Deck de walkthrough de produto estilo Replit.',prompt:'Walkthrough do produto [nome].',example:'product-tour + feature-highlight + demo-flow'},
+  {name:'weekly-update',mode:'deck',scenario:'design',fidelity:'low',desc:'Cadência semanal de equipe como deck de swipe.',prompt:'Update semanal da equipe.',example:'progress + blockers + next-steps + metrics'},
+  {name:'pm-spec',mode:'prototype',scenario:'product',fidelity:'high',doc:true,desc:'Documento de especificação de PM com TOC e log de decisões.',prompt:'Spec de produto para [feature].',example:'overview + requirements + decisions + timeline'},
+  {name:'team-okrs',mode:'prototype',scenario:'product',fidelity:'medium',doc:true,desc:'Folha de pontuação de OKRs da equipe.',prompt:'OKRs do time para Q[x].',example:'objectives + key-results + scores + owners'},
+  {name:'eng-runbook',mode:'prototype',scenario:'engineering',fidelity:'medium',doc:true,desc:'Runbook de incidentes com steps de resolution.',prompt:'Runbook para incidente de [tipo].',example:'severity + symptoms + steps + rollback'},
+  {name:'finance-report',mode:'prototype',scenario:'finance',fidelity:'medium',doc:true,desc:'Sumário executivo financeiro com KPIs.',prompt:'Relatório financeiro mensal.',example:'revenue + expenses + burn-rate + runway'},
+  {name:'invoice',mode:'prototype',scenario:'finance',fidelity:'low',doc:true,desc:'Fatura de página única com detalhes de cobrança.',prompt:'Fatura para [cliente].',example:'header + line-items + totals + payment-info'},
+  {name:'hr-onboarding',mode:'prototype',scenario:'hr',fidelity:'low',doc:true,desc:'Plano de onboarding de cargo com timeline.',prompt:'Plano de onboarding para [cargo].',example:'week-1 + week-2 + week-3 + milestones'},
+  {name:'meeting-notes',mode:'prototype',scenario:'operation',fidelity:'low',doc:true,desc:'Log de decisões de reunião com participantes.',prompt:'Notas da reunião de [data].',example:'attendees + decisions + action-items + next-meeting'},
+  {name:'kanban-board',mode:'prototype',scenario:'operation',fidelity:'low',doc:true,desc:'Snapshot de board kanban com colunas e cards.',prompt:'Board kanban do projeto [nome].',example:'todo + in-progress + review + done'},
+];
+
+function renderSkills() {
+  const scenarios = [...new Set(skills.map(s => s.scenario))];
+  const icons = {design:'🎨',marketing:'📣',operation:'⚙️',product:'📦',engineering:'🔧',finance:'💰',hr:'👥',sale:'🏷️',personal:'✨'};
+  document.getElementById('skillsContent').innerHTML = scenarios.map(sc => {
+    const items = skills.filter(s => s.scenario === sc);
+    return `<h3 style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin:var(--sp-6) 0 var(--sp-3)">${icons[sc]||'📋'} ${sc}</h3>
+    <div class="grid g3">${items.map(s => `<div class="skill-card" onclick="openSkillModal('${s.name}')">
+      <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:4px">
+        <h4>${s.name}</h4>
+        <span class="tag tag-${s.mode==='deck'?'purple':'lime'}">${s.mode}</span>
+      </div>
+      <p>${s.desc}</p>
+    </div>`).join('')}</div>`;
+  }).join('');
+}
+
+function openSkillModal(name) {
+  const s = skills.find(x => x.name === name);
+  openModal(s.name, `
+    <p>${s.desc}</p>
+    <h4>Modo</h4>
+    <p><span class="tag tag-${s.mode==='deck'?'purple':'lime'}">${s.mode}</span> · Cenário: <code>${s.scenario}</code> · Fidelidade: <code>${s.fidelity}</code></p>
+    <h4>Exemplo de Prompt</h4>
+    <p><code>${s.prompt}</code></p>
+    <h4>O que produz</h4>
+    <p>${s.example}</p>
+    ${s.doc ? '<h4>Tipo</h4><p>Documento / Template de office</p>' : ''}
+    <h4>Uso</h4>
+    <p>Selecione esta skill no Open Design e forneça o briefing. O agente usará o template como base e adaptará ao seu conteúdo.</p>
+  `);
+}
+
+// ===== DESIGN SYSTEMS =====
+const dsData = [
+  {name:'Linear',colors:['#5E6AD2','#1A1A2E','#F2F2F5','#A0AEC0'],cat:'Productivity'},
+  {name:'Stripe',colors:['#635BFF','#0A2540','#F6F9FC','#425466'],cat:'Payments'},
+  {name:'Vercel',colors:['#000000','#FFFFFF','#0070F3','#333333'],cat:'DevTools'},
+  {name:'Airbnb',colors:['#FF5A5F','#000000','#FFFFFF','#484848'],cat:'Travel'},
+  {name:'Tesla',colors:['#E82127','#000000','#FFFFFF','#333333'],cat:'Automotive'},
+  {name:'Notion',colors:['#000000','#FFFFFF','#37352F','#787774'],cat:'Productivity'},
+  {name:'Apple',colors:['#000000','#FFFFFF','#0071E3','#86868B'],cat:'Tech'},
+  {name:'Anthropic',colors:['#D4A574','#191919','#FAFAF9','#A37553'],cat:'AI'},
+  {name:'Cursor',colors:['#000000','#FFFFFF','#7C3AED','#A78BFA'],cat:'DevTools'},
+  {name:'Supabase',colors:['#3ECF8E','#1C1C1C','#FFFFFF','#68D391'],cat:'Database'},
+  {name:'Figma',colors:['#A259FF','#1E1E1E','#F24E1E','#0ACF83'],cat:'Design'},
+  {name:'Spotify',colors:['#1DB954','#191414','#FFFFFF','#535353'],cat:'Music'},
+  {name:'Resend',colors:['#000000','#FFFFFF','#8B5CF6','#3B82F6'],cat:'Email'},
+  {name:'Raycast',colors:['#FF6363','#1A1A2E','#FFFFFF','#FF4757'],cat:'Productivity'},
+  {name:'Lovable',colors:['#FF6B6B','#1A1A2E','#FFFFFF','#4ECDC4'],cat:'AI'},
+  {name:'GitHub',colors:['#24292E','#FFFFFF','#0366D6','#6A737D'],cat:'DevTools'},
+  {name:'Slack',colors:['#4A154B','#FFFFFF','#36C5F0','#2EB67D'],cat:'Communication'},
+  {name:'Discord',colors:['#5865F2','#2C2F33','#FFFFFF','#99AAB5'],cat:'Communication'},
+  {name:'Framer',colors:['#0055FF','#000000','#FFFFFF','#BBFF00'],cat:'Design'},
+  {name:'Webflow',colors:['#4353FF','#141414','#FFFFFF','#E6E6E6'],cat:'DevTools'},
+  {name:'Sentry',colors:['#362D59','#1A1425','#FFFFFF','#E1567C'],cat:'Monitoring'},
+  {name:'PostHog',colors:['#1D4AFF','#151515','#FFFFFF','#F54E00'],cat:'Analytics'},
+  {name:'MongoDB',colors:['#00ED64','#111111','#FFFFFF','#00684A'],cat:'Database'},
+  {name:'Cal',colors:['#7C3AED','#000000','#FFFFFF','#A78BFA'],cat:'Scheduling'},
+  {name:'Replicate',colors:['#000000','#FFFFFF','#6366F1','#818CF8'],cat:'AI'},
+  {name:'X.AI',colors:['#000000','#FFFFFF','#1DA1F2','#657786'],cat:'AI'},
+  {name:'Canva',colors:['#00C4CC','#000000','#FFFFFF','#7D2AE8'],cat:'Design'},
+  {name:'Clay',colors:['#2563EB','#111827','#F9FAFB','#60A5FA'],cat:'CRM'},
+  {name:'Cloudflare',colors:['#F38020','#1B1B1B','#FFFFFF','#FBAD41'],cat:'Infrastructure'},
+  {name:'ClickHouse',colors:['#FFCC00','#1A1A2E','#FFFFFF','#FADB14'],cat:'Database'},
+];
+
+function renderDS() {
+  document.getElementById('dsGrid').innerHTML = dsData.map(d => `
+    <div class="ds-card" onclick="openDSModal('${d.name}')">
+      <div class="ds-colors">${d.colors.map(c => `<div class="ds-color" style="background:${c}"></div>`).join('')}</div>
+      <div class="ds-name">${d.name}</div>
+      <div style="font-size:10px;color:var(--text-4);margin-top:2px">${d.cat}</div>
+    </div>
+  `).join('');
+}
+
+function openDSModal(name) {
+  const d = dsData.find(x => x.name === name);
+  openModal(d.name, `
+    <p>Categoria: <code>${d.cat}</code></p>
+    <h4>Paleta de Cores</h4>
+    <div style="display:flex;gap:8px;margin:8px 0">${d.colors.map(c => `
+      <div style="text-align:center">
+        <div style="width:48px;height:48px;border-radius:8px;background:${c};border:2px solid var(--bg-3)"></div>
+        <div style="font-size:10px;font-family:var(--mono);color:var(--text-3);margin-top:4px">${c}</div>
+      </div>
+    `).join('')}</div>
+    <h4>Como usar no Open Design</h4>
+    <p>Selecione <code>${d.name}</code> no seletor de Design Systems. O agente usará esta paleta como base para todas as cores do artefato gerado.</p>
+    <h4>Arquivo</h4>
+    <p><code>design-systems/${d.name.toLowerCase()}/DESIGN.md</code></p>
+    <p>O DESIGN.md contém 9 seções: cor, tipografia, espaçamento, layout, componentes, motion, voz, marca, anti-padrões.</p>
+  `);
+}
+
+// ===== REFERENCES =====
+const refs = [
+  {name:'lando-norris',site:'landonorris.com',nicho:'Atleta / Personalidade',patterns:'Fluid scaling, marquee, split-text, SVG masks, hover reveal',transfer:'Layout, animações, sistema de cores, nav theme switching',proprietary:'Rive animations, WebGL, imagens do atleta'},
+  {name:'rockstar-gta6',site:'rockstargames.com/VI',nicho:'Entretenimento / Games',patterns:'Hero fullscreen, tipografia massiva, parallax, video embed',transfer:'Tipografia display, parallax, video sections',proprietary:'WebGL Three.js, assets Rockstar Games'},
+  {name:'realfood-gov',site:'realfood.gov',nicho:'Governo / Saúde',patterns:'Sticky sections, stats animados, FAQ accordion, scroll text',transfer:'Stats bars animados, FAQ, scroll-triggered text',proprietary:'Vídeos .gov, conteúdo institucional US'},
+  {name:'revelo-framer',site:'revelo.darkroom.engineering',nicho:'Product Showcase',patterns:'Text reveal, dark theme, variable fonts, pricing',transfer:'Dark theme, text reveal, pricing table',proprietary:'Framer runtime, componente proprietário'},
+  {name:'telescope-fyi',site:'telescope.fyi',nicho:'Discovery / Curadoria',patterns:'SPA minimal, lime accent, card grid',transfer:'Card grid, accent color system',proprietary:'SPA content via JavaScript'},
+  {name:'crav-burgers',site:'cravburgers.shop',nicho:'Restaurante / Food',patterns:'Hero gigante, jelly wave, blob buttons, text stroke',transfer:'Wave dividers, blob buttons, text stroke effect',proprietary:'Imagens food, Tailwind config'},
+  {name:'decathlon-yestalgia',site:'decathlonyestalgia.com',nicho:'Moda Esportiva / Retro',patterns:'Retro/vintage, SVG illustrations, menu fullscreen',transfer:'Retro palette, fullscreen menu, product grid',proprietary:'Mascot OLAF SVG, conteúdo Decathlon'},
+  {name:'mariafilo',site:'mariafilo.com.br',nicho:'Moda Feminina',patterns:'Split hero, horizontal scroll, manifesto, product highlight',transfer:'Split layout, manifesto section, product stack',proprietary:'Imagens produto, conteúdo marca Maria Filó'},
+];
+
+function renderRefs() {
+  document.querySelector('#refsTable tbody').innerHTML = refs.map(r => `
+    <tr>
+      <td style="font-weight:600">${r.name}</td>
+      <td style="font-family:var(--mono);font-size:11px;color:var(--text-3)">${r.site}</td>
+      <td><span class="tag tag-neutral">${r.nicho}</span></td>
+      <td style="font-size:12px">${r.patterns}</td>
+      <td style="font-size:12px">${r.transfer}</td>
+      <td><button onclick="openRefModal('${r.name}')" style="font-size:11px;color:var(--lime);background:none;border:none;cursor:pointer;font-weight:500">Explorar →</button></td>
+    </tr>
+  `).join('');
+}
+
+function openRefModal(name) {
+  const r = refs.find(x => x.name === name);
+  openModal(r.name, `
+    <p><strong>Site:</strong> <code>${r.site}</code></p>
+    <p><strong>Nicho:</strong> ${r.nicho}</p>
+    <h4>Padrões Visuais</h4>
+    <p>${r.patterns}</p>
+    <h4>O que é Transferível</h4>
+    <p>${r.transfer}</p>
+    <h4>O que é Proprietário</h4>
+    <p>${r.proprietary}</p>
+    <h4>Arquivos</h4>
+    <p><code>references/${r.name}/index.html</code> · <code>styles.css</code> · <code>assets.md</code> · <code>README.md</code></p>
+    <h4>Como usar</h4>
+    <p>Leia o <code>README.md</code> da pasta para entender os padrões. Use o <code>styles.css</code> como base para adaptar cores e tipografia ao seu projeto.</p>
+  `);
+}
+
+// ===== LOGS =====
+const logs = [
+  {ts:'22:41:03',level:'ok',msg:'Sistema Open Design inicializado'},
+  {ts:'22:41:04',level:'info',msg:'Node.js v26.3.1 · pnpm v10.33.2 detectados'},
+  {ts:'22:41:05',level:'ok',msg:'Claude Code v2.1.200 detectado no PATH — PID 16520'},
+  {ts:'22:41:05',level:'warn',msg:'Codex CLI não encontrado no PATH'},
+  {ts:'22:41:05',level:'warn',msg:'Gemini CLI não encontrado no PATH'},
+  {ts:'22:41:05',level:'warn',msg:'Cursor Agent não encontrado no PATH'},
+  {ts:'22:41:06',level:'ok',msg:'Playwright + Chromium instalados e funcionais'},
+  {ts:'22:41:06',level:'ok',msg:'Script extract.mjs carregado — ~/.mimocode/scripts/'},
+  {ts:'22:41:07',level:'info',msg:'8 referências carregadas de references/'},
+  {ts:'22:41:07',level:'info',msg:'31 skills registradas — 27 prototype + 4 deck'},
+  {ts:'22:41:08',level:'ok',msg:'72+ design systems disponíveis no catálogo'},
+  {ts:'22:41:08',level:'info',msg:'Agent status: 1 ativo, 10 indisponíveis'},
+  {ts:'22:41:09',level:'ok',msg:'Dashboard operacional carregado'},
+];
+
+function renderLogs() {
+  const html = logs.map(l => `<div class="log-line"><span class="log-ts">${l.ts}</span><span class="log-level ${l.level}">${l.level}</span><span class="log-msg">${l.msg}</span></div>`).join('');
+  document.getElementById('overviewLog').innerHTML = html;
+  document.getElementById('fullLog').innerHTML = html;
+}
+
+// ===== INIT =====
+renderAgents();
+renderSkills();
+renderDS();
+renderRefs();
+renderLogs();
+
+// Simulate agent updates
+setInterval(() => {
+  const a = agents.find(x => x.id === 'claude');
+  if (a) { a.cpu = Math.floor(2000 + Math.random() * 3000); a.mem = Math.floor(120 + Math.random() * 80) + 'MB'; renderAgents(); }
+}, 3000);
+</script>
+</body>
+</html>
