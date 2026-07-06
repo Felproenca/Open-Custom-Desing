@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maria Filó — Moda Feminina com Elegância e Protagonismo</title>
+  <meta name="description" content="Conheça uma moda que valoriza o tempo, a delicadeza dos detalhes e a força de ser quem se é.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================
+       MARIA FILÓ — Remodelado
+       Design System Extraído + Premium Upgrade
+       ============================================ */
+
+    :root {
+      /* Cores do brand */
+      --brand-dark: #2d2d30;
+      --brand-gold: #bb8f59;
+      --brand-beige: #f6ead6;
+      --brand-beige-light: #ece6e0;
+      --brand-cream: #faf6f0;
+      --brand-white: #ffffff;
+      --brand-black: #1a1a1a;
+
+      /* Neutros */
+      --gray-100: #f8f7f5;
+      --gray-200: #ece6e0;
+      --gray-300: #ccc;
+      --gray-400: #999;
+      --gray-500: #757575;
+      --gray-600: #595959;
+      --gray-700: #3d3d3d;
+      --gray-800: #2d2d30;
+
+      /* Tipografia */
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
+
+      /* Espaçamento */
+      --section-padding: clamp(4rem, 8vw, 8rem);
+      --container-max: 1400px;
+      --container-padding: clamp(1.5rem, 4vw, 3rem);
+
+      /* Transições */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --duration: 0.6s;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--gray-700);
+      background: var(--brand-white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: var(--brand-beige);
+      color: var(--brand-dark);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    button { background: none; border: none; cursor: pointer; font-family: inherit; }
+
+    .container {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+    }
+
+    /* --------------------------------------- ANNOUNCEMENT BAR */
+    .announcement {
+      background: var(--brand-dark);
+      color: var(--brand-white);
+      text-align: center;
+      padding: 0.6rem 1rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .announcement a {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* --------------------------------------- NAV */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--gray-200);
+      transition: all var(--duration) var(--ease-out);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--brand-dark);
+      line-height: 1;
+    }
+
+    .nav-logo span {
+      display: block;
+      font-size: 0.55rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      font-family: var(--font-body);
+      font-weight: 400;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--gray-600);
+      transition: color var(--duration) var(--ease-out);
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--brand-gold);
+      transition: width var(--duration) var(--ease-out);
+    }
+
+    .nav-links a:hover { color: var(--brand-dark); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-icons {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-icons button, .nav-icons a {
+      color: var(--gray-600);
+      transition: color var(--duration) var(--ease-out);
+    }
+
+    .nav-icons button:hover, .nav-icons a:hover {
+      color: var(--brand-dark);
+    }
+
+    .nav-icons svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    /* --------------------------------------- HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 85vh;
+      position: relative;
+    }
+
+    .hero-image {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 8s var(--ease-out);
+    }
+
+    .hero:hover .hero-image img {
+      transform: scale(1.03);
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(3rem, 6vw, 6rem);
+      background: var(--brand-cream);
+      position: relative;
+    }
+
+    .hero-content::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--brand-gold), transparent);
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--brand-gold);
+      margin-bottom: 2rem;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--brand-dark);
+      margin-bottom: 2rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--brand-gold);
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--gray-500);
+      max-width: 420px;
+      margin-bottom: 3rem;
+      font-weight: 300;
+    }
+
+    .hero-description strong {
+      color: var(--brand-dark);
+      font-weight: 500;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--brand-dark);
+      padding: 1rem 2.5rem;
+      border: 1px solid var(--brand-dark);
+      transition: all var(--duration) var(--ease-out);
+      width: fit-content;
+    }
+
+    .btn-primary:hover {
+      background: var(--brand-dark);
+      color: var(--brand-white);
+    }
+
+    .btn-primary svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      transition: transform var(--duration) var(--ease-out);
+    }
+
+    .btn-primary:hover svg {
+      transform: translateX(4px);
+    }
+
+    /* --------------------------------------- BRAND STRIP */
+    .brand-strip {
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--gray-200);
+      overflow: hidden;
+    }
+
+    .brand-strip-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4rem;
+      animation: scroll-strip 20s linear infinite;
+    }
+
+    @keyframes scroll-strip {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .brand-strip span {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .brand-strip .dot {
+      width: 4px;
+      height: 4px;
+      background: var(--brand-gold);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* --------------------------------------- COLLECTIONS */
+    .collections {
+      padding: var(--section-padding) 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-header .eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--brand-gold);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .section-header h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 300;
+      color: var(--brand-dark);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .collections-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .collection-card {
+      position: relative;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .collection-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--duration) var(--ease-out);
+    }
+
+    .collection-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .collection-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+      opacity: 0;
+      transition: opacity var(--duration) var(--ease-out);
+    }
+
+    .collection-card:hover .collection-card-overlay {
+      opacity: 1;
+    }
+
+    .collection-card-overlay h3 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--brand-white);
+      margin-bottom: 0.5rem;
+    }
+
+    .collection-card-overlay p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.8);
+      letter-spacing: 0.05em;
+    }
+
+    /* --------------------------------------- ABOUT / MANIFESTO */
+    .manifesto {
+      padding: var(--section-padding) 0;
+      background: var(--brand-cream);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .manifesto::before {
+      content: '"';
+      position: absolute;
+      top: -2rem;
+      left: 5%;
+      font-family: var(--font-display);
+      font-size: 20rem;
+      color: var(--brand-beige);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .manifesto-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .manifesto-text .eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--brand-gold);
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .manifesto-text h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      color: var(--brand-dark);
+      line-height: 1.15;
+      margin-bottom: 2rem;
+    }
+
+    .manifesto-text h2 em {
+      font-style: italic;
+      color: var(--brand-gold);
+    }
+
+    .manifesto-text p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--gray-500);
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+    }
+
+    .manifesto-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .manifesto-images img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+    }
+
+    .manifesto-images img:first-child {
+      margin-top: 3rem;
+    }
+
+    /* --------------------------------------- PRODUCT HIGHLIGHT */
+    .product-highlight {
+      padding: var(--section-padding) 0;
+    }
+
+    .product-highlight-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .product-image-stack {
+      position: relative;
+      height: 600px;
+    }
+
+    .product-image-stack img {
+      position: absolute;
+      width: 70%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 2px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    }
+
+    .product-image-stack img:first-child {
+      top: 0;
+      left: 0;
+      z-index: 2;
+    }
+
+    .product-image-stack img:last-child {
+      bottom: 0;
+      right: 0;
+      z-index: 1;
+    }
+
+    .product-info .eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--brand-gold);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .product-info h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      color: var(--brand-dark);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .product-info p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--gray-500);
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .product-price {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--brand-dark);
+      margin-bottom: 2rem;
+    }
+
+    /* --------------------------------------- MARQUEE */
+    .marquee-section {
+      padding: 4rem 0;
+      border-top: 1px solid var(--gray-200);
+      border-bottom: 1px solid var(--gray-200);
+      overflow: hidden;
+    }
+
+    .marquee-track {
+      display: flex;
+      animation: marquee 30s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-track:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .marquee-item {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 300;
+      color: var(--gray-300);
+      white-space: nowrap;
+      padding: 0 2rem;
+      transition: color var(--duration) var(--ease-out);
+    }
+
+    .marquee-item:hover {
+      color: var(--brand-gold);
+    }
+
+    .marquee-item .separator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: var(--brand-gold);
+      border-radius: 50%;
+      margin: 0 2rem;
+      vertical-align: middle;
+    }
+
+    /* --------------------------------------- NEWSLETTER */
+    .newsletter {
+      padding: var(--section-padding) 0;
+      background: var(--brand-dark);
+      color: var(--brand-white);
+      text-align: center;
+    }
+
+    .newsletter .eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--brand-gold);
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .newsletter h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+
+    .newsletter p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    .newsletter-form {
+      display: flex;
+      max-width: 500px;
+      margin: 0 auto;
+      gap: 0;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: transparent;
+      color: var(--brand-white);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color var(--duration) var(--ease-out);
+    }
+
+    .newsletter-form input::placeholder {
+      color: rgba(255,255,255,0.4);
+    }
+
+    .newsletter-form input:focus {
+      border-color: var(--brand-gold);
+    }
+
+    .newsletter-form button {
+      padding: 1rem 2rem;
+      background: var(--brand-gold);
+      color: var(--brand-dark);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all var(--duration) var(--ease-out);
+    }
+
+    .newsletter-form button:hover {
+      background: var(--brand-white);
+    }
+
+    /* --------------------------------------- FOOTER */
+    .footer {
+      padding: 4rem 0 2rem;
+      border-top: 1px solid var(--gray-200);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 4rem;
+    }
+
+    .footer-brand .logo {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: var(--brand-dark);
+      margin-bottom: 1rem;
+    }
+
+    .footer-brand p {
+      font-size: 0.85rem;
+      color: var(--gray-500);
+      line-height: 1.7;
+      max-width: 300px;
+      font-weight: 300;
+    }
+
+    .footer-col h4 {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--brand-dark);
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-col ul li a {
+      font-size: 0.85rem;
+      color: var(--gray-500);
+      transition: color var(--duration) var(--ease-out);
+      font-weight: 300;
+    }
+
+    .footer-col ul li a:hover {
+      color: var(--brand-gold);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      border-top: 1px solid var(--gray-200);
+    }
+
+    .footer-bottom p {
+      font-size: 0.75rem;
+      color: var(--gray-400);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-social a {
+      color: var(--gray-400);
+      transition: color var(--duration) var(--ease-out);
+    }
+
+    .footer-social a:hover {
+      color: var(--brand-gold);
+    }
+
+    .footer-social svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    /* --------------------------------------- RESPONSIVE */
+    @media (max-width: 1024px) {
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-image { height: 60vh; }
+      .hero-content { padding: 3rem var(--container-padding); }
+      .collections-grid { grid-template-columns: 1fr 1fr; }
+      .manifesto-inner { grid-template-columns: 1fr; }
+      .product-highlight-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .collections-grid { grid-template-columns: 1fr; }
+      .manifesto-images { grid-template-columns: 1fr; }
+      .manifesto-images img:first-child { margin-top: 0; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .newsletter-form { flex-direction: column; }
+      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+    /* --------------------------------------- ANIMATIONS */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+  </style>
+</head>
+<body>
+
+  <!-- ANNOUNCEMENT -->
+  <div class="announcement">
+    Frete grátis para compras acima de R$ 299 | <a href="#">Novidades Verão 27</a>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        MARIA
+        <span>FILÓ</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#">SALE</a></li>
+        <li><a href="#">Preview</a></li>
+        <li><a href="#">Roupas</a></li>
+        <li><a href="#">Linhas & Acessórios</a></li>
+        <li><a href="#">Nosso Universo</a></li>
+      </ul>
+
+      <div class="nav-icons">
+        <button aria-label="Buscar">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <a href="#" aria-label="Minha conta">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </a>
+        <a href="#" aria-label="Favoritos">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </a>
+        <a href="#" aria-label="Sacola">
+          <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-image">
+      <img src="assets/images/d91aebcd-47e7-4b9f-b3ab-0029e5750d67___e8cfad7f789032a7334e7648538e1fb2.jpg" alt="Maria Filó Coleção Verão">
+    </div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">Preview Verão 27</span>
+      <h1>Moda que <em>protagoniza</em></h1>
+      <p class="hero-description">
+        As primeiras apostas do <strong>Verão 27</strong> dão início à temporada mais quente. 
+        Peças que valorizam o tempo, a delicadeza dos detalhes e a força de ser quem se é.
+      </p>
+      <a href="#" class="btn-primary">
+        Descubra a Coleção
+        <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- BRAND STRIP -->
+  <div class="brand-strip">
+    <div class="brand-strip-inner">
+      <span>Elegância</span><div class="dot"></div>
+      <span>Protagonismo</span><div class="dot"></div>
+      <span>Design Autoral</span><div class="dot"></div>
+      <span>Qualidade</span><div class="dot"></div>
+      <span>Feminilidade</span><div class="dot"></div>
+      <span>Conforto</span><div class="dot"></div>
+      <span>Elegância</span><div class="dot"></div>
+      <span>Protagonismo</span><div class="dot"></div>
+      <span>Design Autoral</span><div class="dot"></div>
+      <span>Qualidade</span><div class="dot"></div>
+      <span>Feminilidade</span><div class="dot"></div>
+      <span>Conforto</span><div class="dot"></div>
+    </div>
+  </div>
+
+  <!-- COLLECTIONS -->
+  <section class="collections">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="eyebrow">Coleções</span>
+        <h2>Descubra Nossas Linhas</h2>
+      </div>
+      <div class="collections-grid">
+        <div class="collection-card fade-up delay-1">
+          <img src="assets/images/cb1d34b2-4614-4d24-86fb-55e9d3d3a338___a23c8412ef736e0debe652d08ae01932.jpg" alt="Vestidos">
+          <div class="collection-card-overlay">
+            <h3>Vestidos</h3>
+            <p>Elegância em cada detalhe</p>
+          </div>
+        </div>
+        <div class="collection-card fade-up delay-2">
+          <img src="assets/images/6e850513-68f9-4ba4-96cf-0026133758c9___8e9987458bc0b45e272dc1fbeeb1544f.jpg" alt="Saias">
+          <div class="collection-card-overlay">
+            <h3>Saias</h3>
+            <p>Movimento e personalidade</p>
+          </div>
+        </div>
+        <div class="collection-card fade-up delay-3">
+          <img src="assets/images/11225b40-969e-4c61-90d3-7b1c04413328___74f424883772d3ddb80f4af0676ca883.jpg" alt="Blusas">
+          <div class="collection-card-overlay">
+            <h3>Blusas & Camisas</h3>
+            <p>Peças que transformam</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section class="manifesto">
+    <div class="container">
+      <div class="manifesto-inner">
+        <div class="manifesto-text fade-up">
+          <span class="eyebrow">Nossa Essência</span>
+          <h2>Uma moda que valoriza o <em>tempo</em> e a <em>delicadeza</em></h2>
+          <p>
+            Conheça uma moda que valoriza o tempo, a delicadeza dos detalhes e a força de ser quem se é. 
+            Na Maria Filó, cada peça nasce para vestir mulheres que protagonizam suas escolhas com elegância e personalidade.
+          </p>
+          <p>
+            Tecidos nobres, estampas próprias, shapes atemporais e detalhes marcantes são parte da nossa essência. 
+            Do design autoral aos tecidos de alta qualidade, tudo é pensado para acompanhar a mulher em sua rotina, 
+            com leveza e beleza.
+          </p>
+          <a href="#" class="btn-primary">
+            Conheça Mais
+            <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+        <div class="manifesto-images fade-up delay-2">
+          <img src="assets/images/ea894705-0ec2-4fa5-8116-17e326869725___c257d59a0b7fddb458b3f5d964a1390a.jpg" alt="Detalhe 1">
+          <img src="assets/images/0806abee-d02f-49eb-befb-ebbdf8c5c5b7___5b643f18f8cad4186de5593282222291.jpg" alt="Detalhe 2">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCT HIGHLIGHT -->
+  <section class="product-highlight">
+    <div class="container">
+      <div class="product-highlight-grid">
+        <div class="product-image-stack fade-up">
+          <img src="assets/images/189353ae-d878-481b-9b5e-42b9d1780e5b___5614f94c6e4e124df89f84c7cffc92c4.jpg" alt="Produto 1">
+          <img src="assets/images/7cdc8a38-6f2e-41b1-93f0-a5084c7fce11___5282ecda34a19f586471ffc4b8a0cd3c.jpg" alt="Produto 2">
+        </div>
+        <div class="product-info fade-up delay-2">
+          <span class="eyebrow">Destaque da Temporada</span>
+          <h2>Vestido Easy-Chic com Estampa Exclusiva</h2>
+          <p>
+            Com shapes fáceis de combinar, tecidos leves e design pensado nos detalhes, 
+            nossos vestidos são ideais para quem busca um visual elegante sem esforço. 
+            Do clássico ao moderno, das estampas exclusivas aos lisos atemporais.
+          </p>
+          <div class="product-price">R$ 389,90</div>
+          <a href="#" class="btn-primary">
+            Ver Produto
+            <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-section">
+    <div class="marquee-track">
+      <span class="marquee-item">Vestidos <span class="separator"></span></span>
+      <span class="marquee-item">Saias <span class="separator"></span></span>
+      <span class="marquee-item">Blusas <span class="separator"></span></span>
+      <span class="marquee-item">Camisas <span class="separator"></span></span>
+      <span class="marquee-item">Calças <span class="separator"></span></span>
+      <span class="marquee-item">Tricôs <span class="separator"></span></span>
+      <span class="marquee-item">Acessórios <span class="separator"></span></span>
+      <span class="marquee-item">Vestidos <span class="separator"></span></span>
+      <span class="marquee-item">Saias <span class="separator"></span></span>
+      <span class="marquee-item">Blusas <span class="separator"></span></span>
+      <span class="marquee-item">Camisas <span class="separator"></span></span>
+      <span class="marquee-item">Calças <span class="separator"></span></span>
+      <span class="marquee-item">Tricôs <span class="separator"></span></span>
+      <span class="marquee-item">Acessórios <span class="separator"></span></span>
+    </div>
+  </div>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter">
+    <div class="container">
+      <span class="eyebrow">Fique por dentro</span>
+      <h2>Receba Novidades em Primeira Mão</h2>
+      <p>Seja a primeira a conhecer nossas coleções e lançamentos exclusivos.</p>
+      <form class="newsletter-form" onsubmit="return false;">
+        <input type="email" placeholder="Seu melhor e-mail">
+        <button type="submit">Inscrever</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">MARIA FILÓ</div>
+          <p>Moda feminina com elegância e protagonismo. Peças que acompanham a mulher em cada capítulo da sua história.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Loja</h4>
+          <ul>
+            <li><a href="#">Vestidos</a></li>
+            <li><a href="#">Saias</a></li>
+            <li><a href="#">Blusas</a></li>
+            <li><a href="#">Camisas</a></li>
+            <li><a href="#">Calças</a></li>
+            <li><a href="#">Acessórios</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Institucional</h4>
+          <ul>
+            <li><a href="#">Sobre Nós</a></li>
+            <li><a href="#">Política de Privacidade</a></li>
+            <li><a href="#">Termos de Uso</a></li>
+            <li><a href="#">Trocas e Devoluções</a></li>
+            <li><a href="#">Contato</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Atendimento</h4>
+          <ul>
+            <li><a href="#">Central de Ajuda</a></li>
+            <li><a href="#">Minha Conta</a></li>
+            <li><a href="#">Meus Pedidos</a></li>
+            <li><a href="#">Frete e Entrega</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Maria Filó. Todos os direitos reservados.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="#" aria-label="Pinterest">
+            <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
