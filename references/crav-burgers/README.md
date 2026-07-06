@@ -1,32 +1,19 @@
 # CRAV Burgers — cravburgers.shop
 
-**Site original:** https://www.cravburgers.shop
-**Plataforma:** Next.js (App Router) + Tailwind CSS
-**Extraído em:** 2026-07-05
+**Nicho:** Restaurante / Food & Beverage / E-commerce de comida artesanal
 
-## Perfil de nicho
+## Padrões visuais
 
-**Tipo:** Restaurante / Food & Beverage / E-commerce de comida
-**Atende:** Sites de restaurantes, delivery, food trucks, marcas de comida artesanal
-
-## Arquivos
-
-- `index.html` — HTML completo (Next.js SSR + Tailwind)
-
-## Padrões visuais (transferíveis)
-
-| Padrão | Descrição | Transferível? |
-|--------|-----------|---------------|
-| **Animated loader** | Tela de loading com SVG de hamburger | Sim |
-| **Hero com texto gigante** | Título 30vw+ com stroke | Sim |
-| **Sticker peel effect** | Efeito de sticker com peel-back | Sim |
-| **Jelly wave divider** | Divisor orgânico ondulado | Sim |
-| **Rotating media grid** | Grid de imagens com rotação | Sim |
-| **Blob button** | Botão com forma orgânica SVG | Sim |
-| **Menu dropdown** | Menu com animação de entrada | Sim |
-| **Text stroke** | Texto com contorno (text-stroke) | Sim |
-| **Tailwind utilities** | Classes utilitárias | Sim |
-| **Scroll-triggered reveals** | Animações no scroll | Sim |
+| Padrão | Transferível? | Descrição |
+|--------|---------------|-----------|
+| Hero gigante com tipografia display | Sim | Título 30vw+ com stroke, fundo de imagem |
+| Jelly wave dividers | Sim | Divisores orgânicos ondulados via SVG path |
+| Blob buttons | Sim | Botões com forma orgânica SVG animada |
+| Text stroke | Sim | Texto com contorno (text-stroke / -webkit-text-stroke) |
+| Animated loader | Parcial | Tela de loading com SVG de hamburger em camadas |
+| Sticker peel effect | Não | Requer GSAP/JS para efeito de descolar sticker |
+| Menu dropdown animado | Sim | Menu com animação de entrada |
+| Tailwind utilities | Sim | Classes utilitárias CSS |
 
 ## Cores do sistema
 
@@ -41,18 +28,20 @@
 
 ## Tipografia
 
-- **Display:** Modak (Google Fonts)
-- **Body:** Mouse Memoirs (Google Fonts)
-- **UI:** Tailwind defaults
+- **Modak** — display/títulos (Google Fonts, lúdica)
+- **Mouse Memoirs** — body/UI (Google Fonts, humanista)
 
-## Fonte de assets
+## Arquivos
 
-- Imagens: `/_next/image` (Next.js Image Optimization)
-- SVGs inline (hamburger layers, wave dividers)
+- `index.html` — HTML completo renderizado
+- `styles.css` — CSS extraído via Playwright (55KB)
+- `assets/` — 10 imagens, 3 fonts, 20 JS bundles
+- `assets.md` — Mapa completo de assets
 
-## O que NÃO transferir
+## Nichos compatíveis
 
-- Conteúdo proprietário (CRAV brand, menu items)
-- Next.js Image component paths
-- Tailwind config específico
-- Sticker peel effect (requer JS/GSAP)
+- Restaurantes e food trucks
+- Food delivery
+- Marcas de comida artesanal
+- Cafeterias e padarias
+- Food trucks e eventos gastronômicos

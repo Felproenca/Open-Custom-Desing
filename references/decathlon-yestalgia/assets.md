@@ -2,32 +2,29 @@
 
 **URL:** https://decathlonyestalgia.com
 **Plataforma:** WordPress + Blueprint theme
-**Extraído em:** 2026-07-05
+**Extraído em:** 2026-07-05 (re-extraído com Playwright)
 
 ## Assets capturados
 
-| Tipo | Qtd | Status |
-|------|-----|--------|
+| Tipo | Qtd | Tamanho |
+|------|-----|---------|
 | HTML | 1 | index.html (PHP renderizado) |
-| CSS | 1 | app.DEmn3dlJ.css |
-| JS | 0 | Via WP Rocket |
-| Imagens | 0 | Via WordPress Media |
-| Fonts | 1 | Roboto Flex (variable) |
+| CSS | 1 | app.DEmn3dlJ.css (78.9KB) |
+| JS | 4 | WP Rocket + app bundles (~574KB) |
+| Imagens | 38 | WebP/PNG (produtos, mascote, backgrounds) |
+| Fonts | 1 | NaNeepOXO (variable, 190KB) |
+| SVG | 1 | og2k.svg (12.7KB) |
+| **Total** | **45** | **~2.16MB** |
 
-## SVGs inline
+## CSS extraído
 
-- Logo OLAF mascot (4 camadas, ~300 linhas SVG)
-- Menu tape shapes (cada item com SVG próprio)
-- Olympic rings
+- `app.DEmn3dlJ.css` (78.9KB) — CSS completo do tema Blueprint
 
 ## Fonts
 
-- **Roboto Flex** (variable: opsz, wdth, wght, XOPQ, XTRA, YOPQ)
-- CDN Google Fonts
+- **Roboto Flex** (variable: opsz, wdth, wght) — CDN Google Fonts
+- **NaNeepOXO** — fonte custom do tema (190KB)
 
-## Notas
+## SVGs
 
-- WordPress com tema custom (Blueprint)
-- Swup para transições de página
-- Multi-idioma (7 idiomas)
-- WP Rocket para cache
+- og2k.svg — ilustração decorativa

@@ -2,32 +2,34 @@
 
 **URL:** https://revelo.darkroom.engineering
 **Plataforma:** Framer
-**Extraído em:** 2026-07-05
+**Extraído em:** 2026-07-05 (re-extraído com Playwright)
 
 ## Assets capturados
 
-| Tipo | Qtd | Status |
-|------|-----|--------|
+| Tipo | Qtd | Tamanho |
+|------|-----|---------|
 | HTML | 1 | index.html (Framer export) |
-| CSS | 0 | Embarcado no Framer runtime |
-| JS | 0 | Framer bootstrap |
-| Imagens | 0 | Via Framer CDN |
-| Fonts | 10+ | Google Fonts (Abel, Inter, Anton, Bangers, etc) |
+| CSS | 1 | lenis.css (0.4KB) |
+| JS | 22 | Framer runtime + modules (~1.3MB) |
+| Imagens | 6 | PNG (mockups, screenshots) |
+| Fonts | 3 | IBM Plex Mono, Anton, Ballet (~125KB) |
+| **Total** | **33** | **~1.64MB** |
 
-## Fonts referenciadas
+## CSS extraído
 
-- Abel
-- IBM Plex Mono
-- Bubbler One
-- Bangers
-- Inter (400-900)
-- Anton
-- Ballet
-- Mattone
-- audio junglism
+- `lenis.css` (0.4KB) — smooth scroll base
 
-## Notas
+## Fonts
 
-- Site é SPA do Framer (componentes React)
-- CSS gerenciado pelo Framer runtime
-- Conteúdo do produto (Revelo text reveal component)
+- **IBM Plex Mono** — código/mono
+- **Anton** — display/títulos
+- **Ballet** — display decorativo
+- **Inter** (400-900) — body/UI
+- **Abel** — display alternativo
+- **Bubbler One** — display decorativo
+- **Cindie Mono B** — mono alternativo
+
+## Imagens
+
+- Mockups do componente Revelo
+- Screenshots de demonstração

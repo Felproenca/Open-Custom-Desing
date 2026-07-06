@@ -6,33 +6,37 @@ Cada pasta contém o código fonte extraído de um site premium, organizado para
 
 ```
 referencia-nome/
-├── index.html          # HTML completo extraído
-├── styles.css          # CSS customizado (cores, tipografia, variáveis)
-├── assets.md           # Mapa de assets (imagens, SVGs, fonts)
+├── index.html          # HTML completo extraído com Playwright
+├── styles.css          # CSS real extraído do site (ou variáveis se CSS bundlado)
+├── assets/             # Imagens, fonts, SVGs, JS baixados
+├── assets.md           # Mapa de assets com quantidades e tamanhos
 └── README.md           # Perfil: nicho, padrões, transferível vs proprietário
 ```
 
 ## Índice
 
-| # | Referência | Site | Nicho | Padrões principais |
-|---|-----------|------|-------|-------------------|
-| 1 | [lando-norris](./lando-norris/) | landonorris.com | Atleta/Personalidade | Fluid scaling, marquee, split-text, SVG masks, hover reveal |
-| 2 | [rockstar-gta6](./rockstar-gta6/) | rockstargames.com/VI | Entretenimento/Games | Hero fullscreen, tipografia massiva, parallax, video embed |
-| 3 | [realfood-gov](./realfood-gov/) | realfood.gov | Governo/Saúde | Sticky sections, stats animados, FAQ accordion, scroll text |
-| 4 | [revelo-framer](./revelo-framer/) | revelo.darkroom.engineering | Product showcase | Text reveal, dark theme, variable fonts, pricing |
-| 5 | [telescope-fyi](./telescope-fyi/) | telescope.fyi | Discovery/Curadoria | SPA minimal, lime accent, card grid |
-| 6 | [crav-burgers](./crav-burgers/) | cravburgers.shop | Restaurante/Food | Hero gigante, jelly wave, blob buttons, text stroke, marquee |
-| 7 | [decathlon-yestalgia](./decathlonyestalgia/) | decathlonyestalgia.com | Moda esportiva/Retro | Retro/vintage, SVG illustrations, menu fullscreen, product grid |
-| 8 | [mariafilo](./mariafilo/) | mariafilo.com.br | Moda feminina | Split hero, horizontal scroll, manifesto, product highlight |
+| # | Referência | Nicho | CSS | Assets | Transferível |
+|---|-----------|-------|-----|--------|-------------|
+| 1 | [lando-norris](./lando-norris/) | Atleta/Personalidade | ✅ Completo | ✅ | Layout, animações, cores |
+| 2 | [crav-burgers](./crav-burgers/) | Restaurante/Food | ✅ 55KB | ✅ 36 | Hero gigante, waves, text stroke |
+| 3 | [decathlon-yestalgia](./decathlon-yestalgia/) | Moda Esportiva/Retro | ✅ 79KB | ✅ 45 | Retro palette, menu fullscreen |
+| 4 | [realfood-gov](./realfood-gov/) | Governo/Saúde | ✅ 197KB | ✅ 64 | Stats animados, FAQ, scroll text |
+| 5 | [revelo-framer](./revelo-framer/) | Product Showcase | ✅ Lenis | ✅ 33 | Dark theme, text reveal, pricing |
+| 6 | [mariafilo](./mariafilo/) | Moda Feminina | ✅ CDN | ✅ 113 | Split hero, horizontal scroll |
+| 7 | [rockstar-gta6](./rockstar-gta6/) | Entretenimento/Games | ❌ WebGL | ⚠️ Conceitual | Tipografia, parallax (conceito) |
+| 8 | [telescope-fyi](./telescope-fyi/) | Discovery/Curadoria | ❌ SPA vazia | ⚠️ Conceitual | Card grid, accent (conceito) |
 
 ## Como usar
 
 1. Identificar o nicho do prospect
 2. Escolher referência mais próxima (coluna "Nicho")
-3. Ler `README.md` da pasta para padrões transferíveis
-4. Ler `styles.css` para variáveis de cores e tipografia
-5. Ler `assets.md` para mapear assets disponíveis
-6. Adaptar: substituir cores, fontes, conteúdo, imagens
+3. Ler `README.md` para padrões transferíveis
+4. Ler `styles.css` para CSS real (ou `assets.md` para paleta)
+5. Adaptar: substituir cores, fontes, conteúdo, imagens
+
+## Referências conceituais
+
+**rockstar-gta6** e **telescope-fyi** não têm CSS extraível — o primeiro usa WebGL/Three.js, o segundo é SPA pura com HTML vazio. Funcionam como referência visual/conceitual, mas o template precisa ser recriado do zero inspirado nos padrões.
 
 ## Padrões transferíveis (universais)
 
@@ -46,8 +50,8 @@ referencia-nome/
 ### Typography
 - Impact text (font-family display separada)
 - Text stroke
-- Variable fonts (um eixo = multi-pesos)
-- Split text animation (char por char)
+- Variable fonts
+- Split text animation
 
 ### Visual
 - Hover reveal com clip-path
