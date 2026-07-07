@@ -1022,6 +1022,18 @@ export function ProjectView({
     [skills, project.skillId],
   );
 
+  const handleCaptureThumbnail = useCallback(
+    (dataUrl: string) => {
+      const thumb = project.metadata?.thumbnail;
+      if (thumb === dataUrl) return;
+      const nextMeta = { ...(project.metadata ?? { kind: 'other' as const }), thumbnail: dataUrl };
+      const updated: Project = { ...project, metadata: nextMeta };
+      onProjectChange(updated);
+      void patchProject(project.id, { metadata: nextMeta });
+    },
+    [project, onProjectChange],
+  );
+
   // Hand the pending prompt to ChatPane exactly once. We snapshot the value
   // into local state on mount so it survives the ChatPane remount triggered
   // when `activeConversationId` resolves from `null` to a real id (the
@@ -1123,6 +1135,7 @@ export function ProjectView({
           openRequest={openRequest}
           tabsState={openTabsState}
           onTabsStateChange={persistTabsState}
+          onCaptureThumbnail={handleCaptureThumbnail}
         />
       </div>
     </div>

@@ -43,3 +43,6 @@ tsconfig.tsbuildinfo
 task.md
 specs/change/active
 .ralph/
+
+# Generated graphify output
+graphify-out/

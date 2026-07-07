@@ -115,6 +115,12 @@ export interface Dict {
   'settings.mediaProviderClear': string;
   'settings.mediaProviderPlaceholder': string;
   'settings.mediaProviderBaseUrlPlaceholder': string;
+  'settings.appearance': string;
+  'settings.appearanceHint': string;
+  'settings.themeLight': string;
+  'settings.themeLightMeta': string;
+  'settings.themeDark': string;
+  'settings.themeDarkMeta': string;
   'settings.about': string;
   'settings.aboutHint': string;
   'settings.appVersion': string;

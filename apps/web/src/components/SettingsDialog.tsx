@@ -20,6 +20,8 @@ interface Props {
   daemonLive: boolean;
   appVersionInfo: AppVersionInfo | null;
   welcome?: boolean;
+  theme: 'light' | 'dark';
+  onToggleTheme: () => void;
   onSave: (cfg: AppConfig) => void;
   onClose: () => void;
   onRefreshAgents: () => void;
@@ -38,6 +40,8 @@ export function SettingsDialog({
   daemonLive,
   appVersionInfo,
   welcome,
+  theme,
+  onToggleTheme,
   onSave,
   onClose,
   onRefreshAgents,
@@ -46,7 +50,7 @@ export function SettingsDialog({
   const [cfg, setCfg] = useState<AppConfig>(initial);
   const [showApiKey, setShowApiKey] = useState(false);
   const [languageOpen, setLanguageOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<'execution' | 'media' | 'language' | 'about'>('execution');
+  const [activeSection, setActiveSection] = useState<'execution' | 'media' | 'language' | 'appearance' | 'about'>('execution');
   const [languageMenuRect, setLanguageMenuRect] = useState<DOMRect | null>(null);
   const languageRef = useRef<HTMLDivElement | null>(null);
 
@@ -153,6 +157,17 @@ export function SettingsDialog({
               <span>
                 <strong>{t('settings.language')}</strong>
                 <small>{t('settings.languageHint')}</small>
+              </span>
+            </button>
+            <button
+              type="button"
+              className={`settings-nav-item${activeSection === 'appearance' ? ' active' : ''}`}
+              onClick={() => setActiveSection('appearance')}
+            >
+              <Icon name="eye" size={18} />
+              <span>
+                <strong>{t('settings.appearance')}</strong>
+                <small>{t('settings.appearanceHint')}</small>
               </span>
             </button>
             <button
@@ -518,6 +533,39 @@ export function SettingsDialog({
                   })}
                 </div>
               ) : null}
+            </div>
+          </section>
+          ) : null}
+
+          {activeSection === 'appearance' ? (
+          <section className="settings-section">
+            <div className="section-head">
+              <div>
+                <h3>{t('settings.appearance')}</h3>
+                <p className="hint">{t('settings.appearanceHint')}</p>
+              </div>
+            </div>
+            <div className="seg-control" role="tablist" aria-label="Theme">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={theme === 'light'}
+                className={'seg-btn' + (theme === 'light' ? ' active' : '')}
+                onClick={() => { if (theme !== 'light') onToggleTheme(); }}
+              >
+                <span className="seg-title">{t('settings.themeLight')}</span>
+                <span className="seg-meta">{t('settings.themeLightMeta')}</span>
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={theme === 'dark'}
+                className={'seg-btn' + (theme === 'dark' ? ' active' : '')}
+                onClick={() => { if (theme !== 'dark') onToggleTheme(); }}
+              >
+                <span className="seg-title">{t('settings.themeDark')}</span>
+                <span className="seg-meta">{t('settings.themeDarkMeta')}</span>
+              </button>
             </div>
           </section>
           ) : null}

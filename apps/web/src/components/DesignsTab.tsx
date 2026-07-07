@@ -174,7 +174,16 @@ export function DesignsTab({ projects, skills, designSystems, onOpen, onDelete }
                 >
                   <Icon name="close" size={12} />
                 </button>
-                <div className="design-card-thumb" aria-hidden />
+                {p.metadata?.thumbnail ? (
+                  <img
+                    className="design-card-thumb-img"
+                    src={p.metadata.thumbnail}
+                    alt=""
+                    aria-hidden
+                  />
+                ) : (
+                  <div className="design-card-thumb" aria-hidden />
+                )}
                 <div className="design-card-meta-block">
                   <div className="design-card-name" title={p.name}>{p.name}</div>
                   <div className="design-card-meta">

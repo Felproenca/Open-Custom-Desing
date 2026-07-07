@@ -32,19 +32,15 @@
     "@open-design/platform": "workspace:0.1.0",
     "@open-design/sidecar": "workspace:0.1.0",
     "@open-design/sidecar-proto": "workspace:0.1.0",
-    "animejs": "^4.5.0",
-    "gsap": "^3.15.0",
     "next": "^16.2.4",
     "openai": "^6.35.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "three": "^0.185.0"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@types/node": "^20.17.10",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
-    "@types/three": "^0.185.0",
     "typescript": "^5.6.3",
     "vitest": "^2.1.8"
   },

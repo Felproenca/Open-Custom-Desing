@@ -60,6 +60,120 @@
   --mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
 }
 
+/* ============================================================
+   Dark mode — [data-theme="dark"] on <html>
+   Warm dark surfaces; burnt-sienna accent preserved, desaturated
+   slightly. Depth via surface lightness, not shadow.
+   ============================================================ */
+[data-theme="dark"] {
+  /* Surface palette — warm dark, 3-step elevation */
+  --bg: #1a1714;
+  --bg-app: #1a1714;
+  --bg-panel: #201d1a;
+  --bg-subtle: #26221f;
+  --bg-muted: #2e2a26;
+  --bg-elevated: #332f2a;
+  --border: #3a352f;
+  --border-strong: #4a443c;
+  --border-soft: #302c27;
+
+  --text: #ede9e3;
+  --text-strong: #f8f5f1;
+  --text-muted: #a09890;
+  --text-soft: #7a736b;
+  --text-faint: #5c5650;
+
+  /* Accent — burnt sienna, slightly desaturated for dark bg */
+  --accent: oklch(62% 0.14 45);
+  --accent-strong: oklch(56% 0.14 45);
+  --accent-soft: oklch(62% 0.14 45 / 0.18);
+  --accent-tint: oklch(62% 0.14 45 / 0.10);
+  --accent-hover: oklch(66% 0.15 45);
+
+  /* Semantic accent tints — dark-adapted */
+  --green: oklch(72% 0.16 155);
+  --green-bg: oklch(72% 0.16 155 / 0.12);
+  --green-border: oklch(72% 0.16 155 / 0.28);
+  --blue: oklch(70% 0.14 260);
+  --blue-bg: oklch(70% 0.14 260 / 0.12);
+  --blue-border: oklch(70% 0.14 260 / 0.28);
+  --purple: oklch(70% 0.14 300);
+  --purple-bg: oklch(70% 0.14 300 / 0.12);
+  --purple-border: oklch(70% 0.14 300 / 0.28);
+  --red: oklch(65% 0.18 25);
+  --red-bg: oklch(65% 0.18 25 / 0.12);
+  --red-border: oklch(65% 0.18 25 / 0.28);
+  --amber: oklch(75% 0.14 70);
+  --amber-bg: oklch(75% 0.14 70 / 0.12);
+
+  /* Shadows — subtle on dark */
+  --shadow-xs: 0 1px 0 rgba(0, 0, 0, 0.20);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28), 0 1px 3px rgba(0, 0, 0, 0.20);
+  --shadow-md: 0 6px 24px rgba(0, 0, 0, 0.36), 0 2px 6px rgba(0, 0, 0, 0.20);
+  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.50), 0 8px 16px rgba(0, 0, 0, 0.36);
+}
+
+/* Reduce text weight in dark mode for lighter-on-dark readability */
+[data-theme="dark"] body {
+  font-weight: 350;
+}
+
+/* Ensure button primary/ghost colors read well on dark */
+[data-theme="dark"] button.primary {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.20) inset, var(--shadow-xs);
+}
+[data-theme="dark"] button.primary-ghost {
+  background: var(--bg-panel);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+[data-theme="dark"] button.primary-ghost:hover:not(:disabled) {
+  background: var(--accent-tint);
+}
+
+/* Brand marks that use hardcoded light gradients */
+[data-theme="dark"] .topbar .brand-mark,
+[data-theme="dark"] .entry-brand-mark {
+  background: linear-gradient(135deg, oklch(28% 0.06 45) 0%, oklch(22% 0.08 45) 100%);
+}
+[data-theme="dark"] .env-pill-dot {
+  background: linear-gradient(135deg, oklch(45% 0.12 45) 0%, oklch(38% 0.12 45) 100%);
+}
+[data-theme="dark"] .env-pill-dot[data-mode="api"] {
+  background: linear-gradient(135deg, #2a2826 0%, #4b4948 100%);
+}
+
+/* Active agent card — dark tint instead of white-to-cream */
+[data-theme="dark"] .agent-card.active {
+  background: linear-gradient(180deg, var(--bg-panel) 0%, oklch(20% 0.03 45) 100%);
+}
+
+/* Settings language icon gradient */
+[data-theme="dark"] .settings-language-icon {
+  background: linear-gradient(135deg, var(--bg-subtle) 0%, var(--bg-muted) 100%);
+}
+
+/* Modal backdrop — darker for dark mode */
+[data-theme="dark"] .modal-backdrop {
+  background: rgba(0, 0, 0, 0.60);
+}
+
+/* Avatar button gradient */
+[data-theme="dark"] .avatar-btn {
+  background: linear-gradient(135deg, oklch(28% 0.06 45) 0%, oklch(22% 0.08 45) 100%);
+}
+
+/* Segmented control active hover */
+[data-theme="dark"] .seg-btn:hover:not(:disabled):not(.active) {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* Toggle switch knob */
+[data-theme="dark"] .toggle-row-switch::after {
+  background: var(--bg-panel);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.30);
+}
+
 * { box-sizing: border-box; }
 
 html, body, #root { height: 100%; margin: 0; }
@@ -2593,6 +2707,14 @@ code {
   border-radius: 4px 4px 0 0;
   margin-top: -52px;
   margin-left: -26px;
+}
+.design-card-thumb-img {
+  flex: 1;
+  min-height: 100px;
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  background: var(--bg-subtle);
 }
 .design-card-meta-block {
   padding: 10px 12px 12px;

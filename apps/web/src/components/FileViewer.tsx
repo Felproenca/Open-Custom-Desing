@@ -17,6 +17,7 @@ import {
 import type { ProjectFilePreview } from '../providers/registry';
 import { exportAsHtml, exportAsPdf, exportAsZip } from '../runtime/exports';
 import { buildSrcdoc } from '../runtime/srcdoc';
+import { captureThumbnail } from '../utils/thumbnail';
 import { saveTemplate } from '../state/projects';
 import type { DeployConfigResponse, DeployProjectFileResponse, ProjectFile } from '../types';
 import { Icon } from './Icon';
@@ -30,6 +31,7 @@ interface Props {
   isDeck?: boolean;
   onExportAsPptx?: ((fileName: string) => void) | undefined;
   streaming?: boolean;
+  onCaptureThumbnail?: (dataUrl: string) => void;
 }
 
 export function FileViewer({
@@ -39,6 +41,7 @@ export function FileViewer({
   isDeck,
   onExportAsPptx,
   streaming,
+  onCaptureThumbnail,
 }: Props) {
   const rendererMatch = artifactRendererRegistry.resolve({
     file,
@@ -54,6 +57,7 @@ export function FileViewer({
         isDeck={rendererMatch.renderer.id === 'deck-html'}
         onExportAsPptx={onExportAsPptx}
         streaming={Boolean(streaming)}
+        onCaptureThumbnail={onCaptureThumbnail}
       />
     );
   }
@@ -211,6 +215,7 @@ function HtmlViewer({
   isDeck,
   onExportAsPptx,
   streaming,
+  onCaptureThumbnail,
 }: {
   projectId: string;
   file: ProjectFile;
@@ -218,6 +223,7 @@ function HtmlViewer({
   isDeck: boolean;
   onExportAsPptx?: ((fileName: string) => void) | undefined;
   streaming: boolean;
+  onCaptureThumbnail?: (dataUrl: string) => void;
 }) {
   const t = useT();
   const [mode, setMode] = useState<'preview' | 'source'>('preview');
@@ -316,6 +322,26 @@ function HtmlViewer({
     }) : ''),
     [previewSource, effectiveDeck, projectId, file.name],
   );
+
+  // Capture a thumbnail of the artifact preview once per file, so the
+  // project gallery can display a visual preview instead of the generic
+  // folder icon.  The capture runs off the visible iframe by cloning the
+  // srcdoc into a temporary unsandboxed iframe (sandboxed iframes taint
+  // the canvas).
+  const thumbnailCapturedRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (!srcDoc || !onCaptureThumbnail) return;
+    if (thumbnailCapturedRef.current === file.name) return;
+    let cancelled = false;
+    const timer = setTimeout(() => {
+      if (cancelled) return;
+      thumbnailCapturedRef.current = file.name;
+      void captureThumbnail(srcDoc).then((dataUrl) => {
+        if (!cancelled && dataUrl) onCaptureThumbnail(dataUrl);
+      });
+    }, 300);
+    return () => { cancelled = true; clearTimeout(timer); };
+  }, [srcDoc, file.name, onCaptureThumbnail]);
 
   useEffect(() => {
     if (!effectiveDeck) {

@@ -25,6 +25,7 @@ interface Props {
   // daemon's SQLite store can hold the source of truth and survive reloads.
   tabsState: OpenTabsState;
   onTabsStateChange: (next: OpenTabsState) => void;
+  onCaptureThumbnail?: (dataUrl: string) => void;
 }
 
 interface SketchState {
@@ -47,6 +48,7 @@ export function FileWorkspace({
   openRequest,
   tabsState,
   onTabsStateChange,
+  onCaptureThumbnail,
 }: Props) {
   const t = useT();
   // Persisted tabs come from the parent. Active tab can transiently point
@@ -392,6 +394,7 @@ export function FileWorkspace({
             isDeck={isDeck}
             onExportAsPptx={onExportAsPptx}
             streaming={streaming}
+            onCaptureThumbnail={onCaptureThumbnail}
           />
         ) : (
           <div className="viewer-empty">

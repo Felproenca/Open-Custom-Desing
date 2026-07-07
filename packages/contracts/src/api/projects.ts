@@ -78,6 +78,10 @@ export interface ProjectMetadata {
   // New Project panel. Treated by the system-prompt composer as a stylistic
   // and structural reference for the generation request.
   promptTemplate?: PromptTemplateMetadata;
+  // Client-side thumbnail captured from the rendered artifact preview.
+  // Stored as a small data-URL so the project gallery can show a visual
+  // preview instead of the generic folder icon.
+  thumbnail?: string;
 }
 
 export interface Project {
