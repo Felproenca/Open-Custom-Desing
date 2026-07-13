@@ -1,0 +1,122 @@
+{
+  "_meta": {
+    "reference": "lando-norris-v2",
+    "stack": "Webflow + Lenis smooth scroll + Tram (Webflow animation engine)",
+    "extracted": "2026-07-13",
+    "source": "CSS custom properties in index.html + inline styles + JS bundle analysis"
+  },
+
+  "global_defaults": {
+    "cubic_default": "cubic-bezier(0.65, 0.05, 0, 1)",
+    "duration_default": "0.75s",
+    "animation_default": "0.75s cubic-bezier(0.65, 0.05, 0, 1)",
+    "note": "Todas as transições do site usam --animation-default como shorthand. A curva 0.65,0.05,0,1 é um ease-out exponencial — começa rápido, desacelera suavemente.",
+    "confidence": "alta — valor literal no CSS custom property"
+  },
+
+  "nav_menu_toggle": {
+    "trigger": "click no botão hamburger",
+    "property": "clip-path",
+    "from": "ellipse(120% 0% at 50% 0%)",
+    "to": "ellipse(120% 100% at 50% 0%)",
+    "duration": "0.75s",
+    "easing": "cubic-bezier(0.65, 0.05, 0, 1)",
+    "description": "Menu abre como uma elipse que cresce de cima pra baixo — efeito dramático de revelação",
+    "confidence": "alta — clip-path transition no CSS"
+  },
+
+  "nav_images_reveal": {
+    "trigger": "abertura do menu",
+    "property": "transform",
+    "from": "translate(0px, 25px)",
+    "to": "translate(0px, 0px)",
+    "duration": "0.75s",
+    "easing": "cubic-bezier(0.65, 0.05, 0, 1)",
+    "description": "Imagens do menu sobem 25px enquanto o clip-path revela — efeito combinado de translate + clip",
+    "confidence": "alta — transform inline no HTML"
+  },
+
+  "nav_links_reveal": {
+    "trigger": "abertura do menu",
+    "property": "clip-path",
+    "from": "ellipse(30% 0% at 50% 0%)",
+    "to": "ellipse(30% 100% at 50% 0%)",
+    "duration": "0.75s",
+    "easing": "cubic-bezier(0.65, 0.05, 0, 1)",
+    "description": "Links do menu revelam por clip-path ellipse — cada link tem seu próprio delay stagger (estimado ~50ms entre links)",
+    "confidence": "alta — clip-path no CSS + inline"
+  },
+
+  "text_hover": {
+    "trigger": "hover",
+    "property": "color",
+    "duration": "0.75s",
+    "easing": "cubic-bezier(0.65, 0.05, 0, 1)",
+    "description": "Mudança de cor suave em links e textos com data-anim='text-hover'",
+    "confidence": "alta — transition: color var(--animation-default)"
+  },
+
+  "button_hover": {
+    "trigger": "hover",
+    "property": "border-color, background-color",
+    "duration": "0.75s",
+    "easing": "cubic-bezier(0.65, 0.05, 0, 1)",
+    "description": "Botões mudam cor de borda e fundo no hover",
+    "confidence": "alta — transition no CSS"
+  },
+
+  "image_hover_scale": {
+    "trigger": "hover em cards/imagens",
+    "property": "transform",
+    "from": "scale(1)",
+    "to": "scale(1.1)",
+    "duration": "0.75s",
+    "easing": "cubic-bezier(0.65, 0.05, 0, 1)",
+    "description": "Imagens fazem zoom suave no hover (scale 1 → 1.1)",
+    "confidence": "alta — transform scale no CSS"
+  },
+
+  "image_clip_reveal": {
+    "trigger": "scroll / carregamento",
+    "property": "clip-path, transform",
+    "clip_path_from": "ellipse(0% 0% at 50% 100%)",
+    "clip_path_to": "ellipse(100% 100% at 50% 50%)",
+    "transform_from": "scale(1.1)",
+    "transform_to": "scale(1)",
+    "duration": "0.75s",
+    "easing": "cubic-bezier(0.65, 0.05, 0, 1)",
+    "description": "Imens revelam por clip-path ellipse que cresce do centro, combinado com scale-down de 1.1 para 1 — efeito de 'cortina' orgânico",
+    "confidence": "alta — combinado de transition: clip-path + transform"
+  },
+
+  "spinner": {
+    "trigger": "carregamento",
+    "property": "transform",
+    "animation": "spin",
+    "from": "rotate(0deg)",
+    "to": "rotate(360deg)",
+    "duration": "0.8s",
+    "easing": "linear",
+    "iteration": "infinite",
+    "description": "Loading spinner girando continuamente",
+    "confidence": "alta — @keyframes spin no CSS"
+  },
+
+  "lenis_smooth_scroll": {
+    "library": "Lenis",
+    "className": "lenis",
+    "description": "Smooth scroll global via Lenis — suaviza todo o scroll da página com easing customizado",
+    "duration": "assíncrono (Lenis controla)",
+    "easing": "Lenis default (smooth)",
+    "confidence": "alta — classe 'lenis' no <html> + CSS do Lenis no HTML"
+  },
+
+  "webflow_tram_engine": {
+    "library": "Tram (Webflow built-in)",
+    "default_duration": "500ms",
+    "default_easing": "ease",
+    "available_easings": ["ease", "ease-in", "ease-out", "ease-in-out", "linear", "ease-in-quad", "ease-out-quad", "ease-in-out-quad", "ease-in-cubic", "ease-out-cubic", "ease-in-out-cubic", "ease-in-quart", "ease-out-quart", "ease-in-out-quart", "ease-in-quint", "ease-out-quint", "ease-in-out-quint", "ease-in-sine", "ease-out-sine", "ease-in-out-sine", "ease-in-expo", "ease-out-expo", "ease-in-out-expo", "ease-in-circ", "ease-out-circ", "ease-in-out-circ", "ease-in-back", "ease-out-back", "ease-in-out-back"],
+    "note": "Tram é o motor de animação do Webflow — gerencia transições CSS via jQuery. As animações de scroll-trigger são controladas pelo Webflow Interactions (não visível no HTML estático, requer execução JS para capturar).",
+    "confidence": "alta — extraído do bundle JS"
+  }
+}
