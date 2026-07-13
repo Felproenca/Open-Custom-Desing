@@ -1,0 +1,176 @@
+{
+  "_meta": {
+    "reference": "crav-burgers",
+    "stack": "Next.js + GSAP + Lenis smooth scroll + Tailwind CSS",
+    "extracted": "2026-07-13",
+    "source": "JS bundle decompilation (0286ehihuc~da.js) + CSS custom properties inline + Tailwind classes"
+  },
+
+  "sticker_peel_effect": {
+    "description": "Efeito de sticker sendo descolado — a assinatura visual do site. SVG filters (pointLight, dropShadow) + clip-path + transform combinados.",
+    "css_custom_properties": {
+      "--sticker-rotate": "30deg",
+      "--sticker-p": "20%",
+      "--sticker-peelback-hover": "30%",
+      "--sticker-peelback-active": "40%",
+      "--sticker-peel-easing": "power3.out",
+      "--sticker-peel-hover-easing": "power2.out",
+      "--sticker-width": "100%",
+      "--sticker-shadow-opacity": "0.6",
+      "--sticker-lighting-constant": "0.1",
+      "--peel-direction": "0deg",
+      "--peel-amount": "0"
+    },
+    "easing_hover": "power3.out (GSAP)",
+    "easing_active": "power2.out (GSAP)",
+    "confidence": "alta — valores literais nas CSS custom properties do HTML"
+  },
+
+  "floating_ingredients": {
+    "description": "Ingredientes (lettuce, tomato, cheese, meat) flutuam com física de gravidade — sobem, atingem apogeu, caem com easing de gravidade, giram durante o voo. Loop infinito com delay aleatório entre repetições.",
+    "library": "GSAP (gsap.timeline + gsap.to + gsap.delayedCall)",
+    "desktop": {
+      "restVH": 18,
+      "apex_range": [40, 70],
+      "drift_start_range": [2, 7],
+      "drift_end_range": [8, 18],
+      "up_duration_range": [0.85, 1.2],
+      "gravity_ratio_range": [1.12, 1.45],
+      "spin_range": [220, 520],
+      "repeat_delay_range": [0.2, 0.8],
+      "stagger_start": 0.42
+    },
+    "mobile": {
+      "restVH": 8,
+      "apex_range": [16, 26],
+      "drift_start_range": [1, 3],
+      "drift_end_range": [5, 10],
+      "up_duration_range": [0.65, 0.9],
+      "gravity_ratio_range": [1.05, 1.18],
+      "spin_range": [80, 180],
+      "repeat_delay_range": [0.1, 0.35],
+      "stagger_start": 0.28
+    },
+    "timeline_phases": {
+      "phase_1_appear": {
+        "duration": 0.16,
+        "ease": "power1.out",
+        "properties": "opacity 0→1, scale 0.9→1"
+      },
+      "phase_2_rise": {
+        "duration": "upDur (random 0.85-1.2s desktop)",
+        "ease": "power2.out",
+        "properties": "y from 0 to -apex vh"
+      },
+      "phase_3_fall": {
+        "duration": "upDur × gravityRatio (random 1.12-1.45x desktop)",
+        "ease": "power2.in",
+        "properties": "y from apex back to restVH"
+      },
+      "phase_4_drift": {
+        "duration": "upDur + fallDur (combined)",
+        "ease": "sine.inOut",
+        "properties": "x drift from driftStart to driftEnd vw"
+      },
+      "phase_5_spin": {
+        "duration": "same as drift",
+        "ease": "none (linear)",
+        "properties": "rotation random 220-520deg desktop"
+      },
+      "phase_6_fadeout": {
+        "duration": 0.22,
+        "ease": "power1.in",
+        "properties": "opacity 1→0"
+      }
+    },
+    "reduced_motion": {
+      "duration": 0.35,
+      "ease": "power2.out",
+      "stagger": 0.08,
+      "properties": "opacity 0→1, scale 0.9→1 (sem física, apenas fade in)"
+    },
+    "confidence": "alta — parâmetros literais extraídos do bundle JS"
+  },
+
+  "text_pop_animation": {
+    "description": "Letras individuais (data-pop='true') fazem pop com scale + rotate + translate. Usado nos headings principais ('juicy cheesy fully Loaded', 'feel the Change', 'CRAV').",
+    "library": "GSAP",
+    "transform_origin": "50% 90%",
+    "properties_animated": ["scale", "rotate", "translate3d", "opacity"],
+    "sample_values_from_html": {
+      "feel": "translate3d(0, -3.22px, 0) rotate(-1.93deg) scale(1.17)",
+      "the": "translate3d(0, -3.17px, 0) rotate(1.43deg) scale(1.17)",
+      "Change": "translate3d(0, -3.92px, 0) rotate(-0.56deg) scale(1.13)"
+    },
+    "note": "Valores são do estado animado (scroll position). O estado inicial tem scale ~0.5-0.7, opacity baixa. GSAP anima de initial→final conforme scroll.",
+    "confidence": "alta — valores inline no HTML"
+  },
+
+  "line_reveal_scroll": {
+    "description": "Blocos de texto revelam linha por linha conforme scroll — cada linha está dentro de .line-mask (overflow: clip) e a .line interna traduz de translateY(100%) para translateY(0%).",
+    "mechanism": "GSAP ScrollTrigger + translateY",
+    "from": "translate(0px, 100%)",
+    "to": "translate(0px, 0%)",
+    "container_style": "overflow: clip",
+    "confidence": "alta — inline styles no HTML"
+  },
+
+  "link_hover_slide": {
+    "description": "Links do footer e nav têm efeito de slide-up: texto original sobe (translate-y-full) enquanto texto de hover sobe de baixo (translate-y-0). Dois spans sobrepostos.",
+    "library": "Tailwind CSS transitions",
+    "duration": "300ms",
+    "easing": "var(--default-transition-timing-function)",
+    "classes": "transition-all duration-300, group-hover:-translate-y-full, group-hover:translate-y-0",
+    "confidence": "alta — classes Tailwind no HTML"
+  },
+
+  "button_blob_morph": {
+    "description": "Botões 'Order Now' têm SVG blob path que morpha no hover. O path SVG é animado via GSAP com fill transition.",
+    "fill_transition": "transition-[fill] duration-200",
+    "svg_path": "Blob orgânico (não retangular) — viewBox 602×475",
+    "confidence": "alta — SVG inline + Tailwind transition no HTML"
+  },
+
+  "jelly_svg_wave": {
+    "description": "Divisor orgânico entre seções — SVG com path de onda que anima via GSAP (scale no eixo Y).",
+    "initial_transform": "scale(1, 1.5)",
+    "animated_transform": "translate3d + scale (visível nos inline styles)",
+    "library": "GSAP",
+    "confidence": "média — transform visível mas config completa não extraída do bundle"
+  },
+
+  "footer_divider_line": {
+    "description": "Linha horizontal no footer que cresce de scale(0,1) para scale(1,1) conforme scroll.",
+    "from": "scale(0, 1)",
+    "to": "scale(1, 1)",
+    "transform_origin": "0% 50%",
+    "confidence": "alta — inline styles no HTML"
+  },
+
+  "page_load_curtain": {
+    "description": "Curtain de carregamento com 3 camadas SVG (verde → laranja → amarelo) que revelam a página. Texto 'Craving...' centralizado.",
+    "layers": ["#f91814 (red)", "#EF6F2E (orange)", "#F4A804 (mustard)"],
+    "mechanism": "GSAP timeline com SVG path morphing",
+    "confidence": "média — SVGs visíveis mas animação completa requer execução JS"
+  },
+
+  "lenis_smooth_scroll": {
+    "library": "Lenis",
+    "className": "lenis",
+    "description": "Smooth scroll global — classe 'lenis' no <html>. Parâmetros Lenis default.",
+    "confidence": "alta — classe no HTML + CSS do Lenis"
+  },
+
+  "tailwind_animation_tokens": {
+    "description": "Tokens de duração do Tailwind usados no site",
+    "durations_used": {
+      "duration-200": "200ms (button fill transition)",
+      "duration-300": "300ms (link hover slide)"
+    },
+    "easings_available": {
+      "ease-out": "var(--ease-out)",
+      "custom": "cubic-bezier(.45,.85,.34,1.12) (definido no CSS)"
+    },
+    "confidence": "alta — classes Tailwind no CSS"
+  }
+}
