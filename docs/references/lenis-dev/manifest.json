@@ -1,0 +1,338 @@
+{
+  "url": "https://www.lenis.dev/",
+  "extractedAt": "2026-07-06T22:46:44.387Z",
+  "totalAssets": 46,
+  "totalSize": 12269819,
+  "categories": {
+    "images": 6,
+    "fonts": 3,
+    "svg": 0,
+    "css": 3,
+    "js": 31,
+    "video": 3
+  },
+  "assets": [
+    {
+      "url": "https://www.lenis.dev/_next/image?url=https%3A%2F%2Fdarkroom-lenis-showcase.s3.us-east-1.amazonaws.com%2Fpbc_1930884531%2Fcypda2odb92k89b%2Fnetflix_i0mp1h1h3d.png&w=1920&q=90",
+      "localPath": "assets/images/image",
+      "category": "images",
+      "size": 30724,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/media/9e9f04e3c37952ab-s.p.4d24b8e7.woff2",
+      "localPath": "assets/fonts/9e9f04e3c37952ab-s.p.4d24b8e7.woff2",
+      "category": "fonts",
+      "size": 12004,
+      "contentType": "font/woff2"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/image?url=https%3A%2F%2Fdarkroom-lenis-showcase.s3.us-east-1.amazonaws.com%2Fpbc_1930884531%2Fcyiqgwj8iuhk8ju%2Flandonorris_ba6kd2yudn.png&w=1920&q=90",
+      "localPath": "assets/images/image",
+      "category": "images",
+      "size": 73671,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/9d847738df37127a.css",
+      "localPath": "assets/css/9d847738df37127a.css",
+      "category": "css",
+      "size": 49406,
+      "contentType": "text/css; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/820113a6a087e057.css",
+      "localPath": "assets/css/820113a6a087e057.css",
+      "category": "css",
+      "size": 42940,
+      "contentType": "text/css; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/media/ce62453a442c7f35-s.p.124b2306.woff2",
+      "localPath": "assets/fonts/ce62453a442c7f35-s.p.124b2306.woff2",
+      "category": "fonts",
+      "size": 37520,
+      "contentType": "font/woff2"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/image?url=https%3A%2F%2Fdarkroom-lenis-showcase.s3.us-east-1.amazonaws.com%2Fpbc_1930884531%2Fi8hutgfq6jpim9u%2Fposter_k9ogswmki2.png&w=1920&q=90",
+      "localPath": "assets/images/image",
+      "category": "images",
+      "size": 147795,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/9f08b243a528bd18.js",
+      "localPath": "assets/js/9f08b243a528bd18.js",
+      "category": "js",
+      "size": 2529,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/image?url=https%3A%2F%2Fdarkroom-lenis-showcase.s3.us-east-1.amazonaws.com%2Fpbc_1930884531%2Fh0koqjcq6s667s1%2Fposter_n1n2ekriby.png&w=1920&q=90",
+      "localPath": "assets/images/image",
+      "category": "images",
+      "size": 54310,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/image?url=https%3A%2F%2Fdarkroom-lenis-showcase.s3.us-east-1.amazonaws.com%2Fpbc_1930884531%2F3hykehcmw97l1jq%2Fposter_fyh6rkg9s8.png&w=1920&q=90",
+      "localPath": "assets/images/image",
+      "category": "images",
+      "size": 44664,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/image?url=https%3A%2F%2Fdarkroom-lenis-showcase.s3.us-east-1.amazonaws.com%2Fpbc_1930884531%2F5luerp84ks9e0k0%2Fposter_vst920k7mj.png&w=1920&q=90",
+      "localPath": "assets/images/image",
+      "category": "images",
+      "size": 46087,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/turbopack-4ccd0cdb1e0c92d7.js",
+      "localPath": "assets/js/turbopack-4ccd0cdb1e0c92d7.js",
+      "category": "js",
+      "size": 10286,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/f558734fb6e31b9d.js",
+      "localPath": "assets/js/f558734fb6e31b9d.js",
+      "category": "js",
+      "size": 32858,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/154dbe748b812d51.js",
+      "localPath": "assets/js/154dbe748b812d51.js",
+      "category": "js",
+      "size": 55546,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/ecc3d9e918ea6d68.js",
+      "localPath": "assets/js/ecc3d9e918ea6d68.js",
+      "category": "js",
+      "size": 110916,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/f03a05806642634d.js",
+      "localPath": "assets/js/f03a05806642634d.js",
+      "category": "js",
+      "size": 2462,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/6ad4219131c839a0.js",
+      "localPath": "assets/js/6ad4219131c839a0.js",
+      "category": "js",
+      "size": 30925,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/2f58ec4538ae960b.js",
+      "localPath": "assets/js/2f58ec4538ae960b.js",
+      "category": "js",
+      "size": 241481,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/e884767f662820a0.js",
+      "localPath": "assets/js/e884767f662820a0.js",
+      "category": "js",
+      "size": 9098,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/ec764ed8ab9d8bf9.js",
+      "localPath": "assets/js/ec764ed8ab9d8bf9.js",
+      "category": "js",
+      "size": 15434,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/39c1c614b083ff0d.js",
+      "localPath": "assets/js/39c1c614b083ff0d.js",
+      "category": "js",
+      "size": 30717,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/fc7efa5b4c81b2d2.js",
+      "localPath": "assets/js/fc7efa5b4c81b2d2.js",
+      "category": "js",
+      "size": 14098,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/91b11d74db521d0a.js",
+      "localPath": "assets/js/91b11d74db521d0a.js",
+      "category": "js",
+      "size": 29560,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/71fb7dd63361357d.js",
+      "localPath": "assets/js/71fb7dd63361357d.js",
+      "category": "js",
+      "size": 32678,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/7ea09e89d6b16b1c.js",
+      "localPath": "assets/js/7ea09e89d6b16b1c.js",
+      "category": "js",
+      "size": 59157,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/a42a8cd186af39c3.js",
+      "localPath": "assets/js/a42a8cd186af39c3.js",
+      "category": "js",
+      "size": 70063,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://cdn.fontshare.com/wf/NATVPFYC4NJ2MZVSHF5VZYFWGTTPQUYX/MRQWDISFO5EKUB3Q72S4DXWYEOXNEN2I/2DYLXJJ5VPGFHZKCL4LCW4EGVHYDFG4L.woff2",
+      "localPath": "assets/fonts/2DYLXJJ5VPGFHZKCL4LCW4EGVHYDFG4L.woff2",
+      "category": "fonts",
+      "size": 37600,
+      "contentType": "font/woff2"
+    },
+    {
+      "url": "https://www.lenis.dev/_vercel/insights/script.js",
+      "localPath": "assets/js/script.js",
+      "category": "js",
+      "size": 2495,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/97118dbb068abcf1.css",
+      "localPath": "assets/css/97118dbb068abcf1.css",
+      "category": "css",
+      "size": 790,
+      "contentType": "text/css; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/4e428f3053fb0707.js",
+      "localPath": "assets/js/4e428f3053fb0707.js",
+      "category": "js",
+      "size": 602,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/c2927c773ed512ee.js",
+      "localPath": "assets/js/c2927c773ed512ee.js",
+      "category": "js",
+      "size": 962,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/fc9428dd7fbb1a3e.js",
+      "localPath": "assets/js/fc9428dd7fbb1a3e.js",
+      "category": "js",
+      "size": 1753,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/f785e680a0523a69.js",
+      "localPath": "assets/js/f785e680a0523a69.js",
+      "category": "js",
+      "size": 669,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/9252681c32ee2812.js",
+      "localPath": "assets/js/9252681c32ee2812.js",
+      "category": "js",
+      "size": 523,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/bab4ed169d45de9f.js",
+      "localPath": "assets/js/bab4ed169d45de9f.js",
+      "category": "js",
+      "size": 2430,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/090f4a128a49e295.js",
+      "localPath": "assets/js/090f4a128a49e295.js",
+      "category": "js",
+      "size": 952452,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_vercel/speed-insights/script.js",
+      "localPath": "assets/js/script.js",
+      "category": "js",
+      "size": 12567,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/5ffa6229b261ebb3.js",
+      "localPath": "assets/js/5ffa6229b261ebb3.js",
+      "category": "js",
+      "size": 192663,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/f0af39cdd1c2bcc5.js",
+      "localPath": "assets/js/f0af39cdd1c2bcc5.js",
+      "category": "js",
+      "size": 45104,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/e8256cd7bc564412.js",
+      "localPath": "assets/js/e8256cd7bc564412.js",
+      "category": "js",
+      "size": 10562,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/787381ab7e8adfb3.js",
+      "localPath": "assets/js/787381ab7e8adfb3.js",
+      "category": "js",
+      "size": 48167,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://darkroom-lenis-showcase.s3.us-east-1.amazonaws.com/pbc_1930884531/cyiqgwj8iuhk8ju/landonorris_webm_gmtmuacq0l.webm",
+      "localPath": "assets/video/landonorris_webm_gmtmuacq0l.webm",
+      "category": "video",
+      "size": 3610286,
+      "contentType": "video/webm"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/daf911ae8d24cdd2.js",
+      "localPath": "assets/js/daf911ae8d24cdd2.js",
+      "category": "js",
+      "size": 111930,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://www.lenis.dev/_next/static/chunks/df91f2712f00c423.js",
+      "localPath": "assets/js/df91f2712f00c423.js",
+      "category": "js",
+      "size": 25165,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://darkroom-lenis-showcase.s3.us-east-1.amazonaws.com/pbc_1930884531/cypda2odb92k89b/netflix_webm_zzv7giof3n.webm",
+      "localPath": "assets/video/netflix_webm_zzv7giof3n.webm",
+      "category": "video",
+      "size": 3193907,
+      "contentType": "video/webm"
+    },
+    {
+      "url": "https://darkroom-lenis-showcase.s3.us-east-1.amazonaws.com/pbc_1930884531/5luerp84ks9e0k0/google_teamusa_webm_kr6hj3y7r0.webm",
+      "localPath": "assets/video/google_teamusa_webm_kr6hj3y7r0.webm",
+      "category": "video",
+      "size": 2732263,
+      "contentType": "video/webm"
+    }
+  ]
+}

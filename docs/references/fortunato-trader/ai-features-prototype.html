@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fortunato Trader — Features IA (Prototype)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #050505; --bg2: #0A0A0A; --card: #161616; --border: #1E1E1E; --border2: #2A2A2A;
+      --white: #FFF; --gray: #B0B0B0; --muted: #666; --orange: #FF6A00; --green: #00E676; --red: #FF1744;
+      --display: 'Anton', sans-serif; --body: 'Inter', sans-serif; --mono: 'JetBrains Mono', monospace;
+    }
+    html { background: var(--bg); color: var(--white); font-family: var(--body); }
+    body { background: var(--bg); min-height: 100vh; }
+
+    /* HEADER */
+    .header { text-align: center; padding: 4rem 2rem 2rem; }
+    .header .badge { display: inline-block; font-family: var(--mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--orange); background: rgba(255,106,0,0.1); border: 1px solid rgba(255,106,0,0.2); padding: 0.4rem 1rem; border-radius: 100px; margin-bottom: 1.5rem; }
+    .header h1 { font-family: var(--display); font-size: clamp(2rem, 5vw, 3.5rem); text-transform: uppercase; margin-bottom: 1rem; }
+    .header h1 .accent { color: var(--orange); }
+    .header p { font-size: 1.1rem; color: var(--gray); max-width: 700px; margin: 0 auto; line-height: 1.7; }
+
+    /* TABS */
+    .tabs { display: flex; justify-content: center; gap: 0.5rem; margin: 3rem auto 0; max-width: 900px; padding: 0 1rem; flex-wrap: wrap; }
+    .tab { padding: 0.8rem 1.5rem; border: 1px solid var(--border); border-radius: 8px; background: var(--card); color: var(--gray); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+    .tab:hover { border-color: var(--border2); color: var(--white); }
+    .tab.active { background: var(--orange); color: var(--bg); border-color: var(--orange); }
+
+    /* SECTIONS */
+    .feature { display: none; max-width: 900px; margin: 3rem auto; padding: 0 1rem; }
+    .feature.active { display: block; }
+    .feature-header { text-align: center; margin-bottom: 2rem; }
+    .feature-header h2 { font-family: var(--display); font-size: 2rem; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .feature-header p { color: var(--gray); font-size: 0.95rem; }
+
+    /* QUIZ */
+    .quiz-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; }
+    .quiz-progress { display: flex; gap: 0.5rem; margin-bottom: 2rem; }
+    .quiz-dot { flex: 1; height: 4px; background: var(--border); border-radius: 2px; transition: background 0.3s; }
+    .quiz-dot.active { background: var(--orange); }
+    .quiz-dot.done { background: var(--green); }
+    .quiz-question { font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; }
+    .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    .quiz-opt { padding: 1rem 1.2rem; border: 1px solid var(--border); border-radius: 10px; background: var(--bg2); color: var(--gray); font-size: 0.9rem; cursor: pointer; transition: all 0.3s; text-align: left; }
+    .quiz-opt:hover { border-color: var(--orange); color: var(--white); }
+    .quiz-opt.selected { border-color: var(--orange); background: rgba(255,106,0,0.1); color: var(--white); }
+    .quiz-result { display: none; text-align: center; padding: 2rem; }
+    .quiz-result h3 { font-family: var(--display); font-size: 1.8rem; text-transform: uppercase; margin-bottom: 1rem; }
+    .quiz-result .rec-card { background: var(--bg2); border: 1px solid var(--orange); border-radius: 12px; padding: 2rem; margin: 1.5rem 0; }
+    .quiz-result .rec-card h4 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .quiz-result .rec-card p { color: var(--gray); font-size: 0.9rem; margin-bottom: 1rem; }
+    .quiz-result .rec-card .discount { font-family: var(--display); font-size: 2rem; color: var(--orange); }
+    .quiz-reset { background: none; border: 1px solid var(--border2); color: var(--gray); padding: 0.6rem 1.5rem; border-radius: 6px; font-size: 0.8rem; cursor: pointer; margin-top: 1rem; }
+    .quiz-reset:hover { border-color: var(--white); color: var(--white); }
+
+    /* CALCULATOR */
+    .calc-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; }
+    .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+    .calc-field label { display: block; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+    .calc-field select, .calc-field input { width: 100%; padding: 0.8rem 1rem; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; color: var(--white); font-family: var(--body); font-size: 0.9rem; outline: none; transition: border-color 0.3s; }
+    .calc-field select:focus, .calc-field input:focus { border-color: var(--orange); }
+    .calc-field select option { background: var(--bg2); }
+    .calc-btn { width: 100%; background: var(--orange); color: var(--bg); padding: 1rem; border: none; border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.3s; }
+    .calc-btn:hover { box-shadow: 0 0 30px rgba(255,106,0,0.3); transform: translateY(-2px); }
+    .calc-result { display: none; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; margin-top: 1.5rem; }
+    .calc-result h3 { font-size: 1rem; margin-bottom: 1.5rem; }
+    .calc-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+    .calc-stat { text-align: center; padding: 1rem; background: var(--card); border-radius: 8px; }
+    .calc-stat .num { font-family: var(--display); font-size: 1.8rem; color: var(--orange); }
+    .calc-stat .label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.3rem; }
+    .calc-recommendation { background: rgba(0,230,118,0.05); border: 1px solid rgba(0,230,118,0.2); border-radius: 8px; padding: 1.5rem; }
+    .calc-recommendation h4 { color: var(--green); font-size: 0.85rem; margin-bottom: 0.5rem; }
+    .calc-recommendation p { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
+
+    /* CHATBOT */
+    .chatbot-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+    .chatbot-header { background: var(--bg2); padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 1rem; }
+    .chatbot-avatar { width: 40px; height: 40px; background: var(--orange); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; }
+    .chatbot-info h4 { font-size: 0.9rem; }
+    .chatbot-info span { font-size: 0.7rem; color: var(--green); }
+    .chatbot-messages { height: 400px; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+    .chat-msg { max-width: 80%; padding: 0.8rem 1rem; border-radius: 12px; font-size: 0.9rem; line-height: 1.5; }
+    .chat-msg.bot { background: var(--bg2); border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 4px; }
+    .chat-msg.user { background: var(--orange); color: var(--bg); align-self: flex-end; border-bottom-right-radius: 4px; font-weight: 500; }
+    .chat-msg .typing { display: inline-flex; gap: 4px; }
+    .chat-msg .typing span { width: 6px; height: 6px; background: var(--muted); border-radius: 50%; animation: typing 1.4s infinite; }
+    .chat-msg .typing span:nth-child(2) { animation-delay: 0.2s; }
+    .chat-msg .typing span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typing { 0%,60%,100% { opacity: 0.3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-4px); } }
+    .chatbot-input { display: flex; gap: 0.5rem; padding: 1rem 1.5rem; border-top: 1px solid var(--border); }
+    .chatbot-input input { flex: 1; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 0.7rem 1rem; color: var(--white); font-family: var(--body); font-size: 0.9rem; outline: none; }
+    .chatbot-input input:focus { border-color: var(--orange); }
+    .chatbot-input button { background: var(--orange); color: var(--bg); border: none; border-radius: 8px; padding: 0.7rem 1.2rem; font-weight: 700; cursor: pointer; transition: all 0.3s; }
+    .chatbot-input button:hover { box-shadow: 0 0 20px rgba(255,106,0,0.3); }
+    .chat-suggestions { display: flex; gap: 0.5rem; flex-wrap: wrap; padding: 0 1.5rem 1rem; }
+    .chat-sug { background: var(--bg2); border: 1px solid var(--border); border-radius: 20px; padding: 0.4rem 0.8rem; font-size: 0.75rem; color: var(--gray); cursor: pointer; transition: all 0.3s; }
+    .chat-sug:hover { border-color: var(--orange); color: var(--orange); }
+
+    /* IMPLEMENTATION */
+    .impl { max-width: 900px; margin: 3rem auto; padding: 0 1rem 4rem; }
+    .impl h2 { font-family: var(--display); font-size: 1.8rem; text-transform: uppercase; text-align: center; margin-bottom: 2rem; }
+    .impl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .impl-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+    .impl-card h3 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--orange); }
+    .impl-card p { font-size: 0.85rem; color: var(--gray); line-height: 1.6; margin-bottom: 1rem; }
+    .impl-card .cost { font-family: var(--mono); font-size: 0.75rem; color: var(--green); background: rgba(0,230,118,0.1); padding: 0.3rem 0.6rem; border-radius: 4px; display: inline-block; }
+    .impl-card ul { list-style: none; margin-top: 0.8rem; }
+    .impl-card li { font-size: 0.8rem; color: var(--gray); padding: 0.2rem 0; }
+    .impl-card li::before { content: '✓ '; color: var(--green); }
+
+    @media (max-width: 768px) {
+      .quiz-options { grid-template-columns: 1fr; }
+      .calc-grid { grid-template-columns: 1fr; }
+      .calc-stats { grid-template-columns: 1fr; }
+      .impl-grid { grid-template-columns: 1fr; }
+      .tabs { gap: 0.3rem; }
+      .tab { padding: 0.6rem 1rem; font-size: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="badge">Prototype — Features IA</div>
+    <h1>Fortunato Trader <span class="accent">+ Inteligência Artificial</span></h1>
+    <p>3 funcionalidades inteligentes para transformar visitantes em traders ativos. Quiz personalizado, calculadora de lucros e chatbot 24/7.</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showFeature('quiz')">Quiz Inteligente</button>
+    <button class="tab" onclick="showFeature('calc')">Calculadora de Lucros</button>
+    <button class="tab" onclick="showFeature('chat')">Chatbot IA</button>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="feature active" id="feature-quiz">
+    <div class="feature-header">
+      <h2>Qual Mesa é Ideal Pra Você?</h2>
+      <p>Responda 4 perguntas e descubra a prop firm perfeita para o seu perfil.</p>
+    </div>
+    <div class="quiz-card">
+      <div class="quiz-progress" id="quizProgress">
+        <div class="quiz-dot active"></div>
+        <div class="quiz-dot"></div>
+        <div class="quiz-dot"></div>
+        <div class="quiz-dot"></div>
+      </div>
+      <div id="quizContent">
+        <div class="quiz-question" id="quizQ">Qual seu nível de experiência?</div>
+        <div class="quiz-options" id="quizOpts"></div>
+      </div>
+      <div class="quiz-result" id="quizResult"></div>
+    </div>
+  </div>
+
+  <!-- CALCULATOR -->
+  <div class="feature" id="feature-calc">
+    <div class="feature-header">
+      <h2>Quanto Você Pode Ganhar?</h2>
+      <p>Calcule sua projeção de lucro mensal com base no seu estilo de trading.</p>
+    </div>
+    <div class="calc-card">
+      <div class="calc-grid">
+        <div class="calc-field">
+          <label>Ativo</label>
+          <select id="calcAsset">
+            <option value="MNQ">MNQ (Micro Nasdaq) — $2/ponto</option>
+            <option value="MES">MES (Micro S&P 500) — $5/ponto</option>
+            <option value="NQ">NQ (E-mini Nasdaq) — $20/ponto</option>
+            <option value="ES">ES (E-mini S&P 500) — $50/ponto</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label>Tamanho da Conta</label>
+          <select id="calcAccount">
+            <option value="25000">$25.000</option>
+            <option value="50000" selected>$50.000</option>
+            <option value="100000">$100.000</option>
+            <option value="150000">$150.000</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label>Trades por Dia</label>
+          <input type="number" id="calcTrades" value="3" min="1" max="20">
+        </div>
+        <div class="calc-field">
+          <label>Pontos Médios por Trade</label>
+          <input type="number" id="calcPoints" value="15" min="1" max="200">
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calculateProfit()">Calcular Lucro Projetado</button>
+      <div class="calc-result" id="calcResult">
+        <h3>📊 Sua Projeção Mensal</h3>
+        <div class="calc-stats" id="calcStats"></div>
+        <div class="calc-recommendation" id="calcRec"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHATBOT -->
+  <div class="feature" id="feature-chat">
+    <div class="feature-header">
+      <h2>Assistente IA Fortunato</h2>
+      <p>Tire dúvidas 24/7. A IA conhece todas as mesas e cupons.</p>
+    </div>
+    <div class="chatbot-card">
+      <div class="chatbot-header">
+        <div class="chatbot-avatar">FT</div>
+        <div class="chatbot-info">
+          <h4>Fortunato IA</h4>
+          <span>● Online agora</span>
+        </div>
+      </div>
+      <div class="chatbot-messages" id="chatMessages">
+        <div class="chat-msg bot">Olá! 👋 Sou o assistente inteligente do Fortunato Trader. Posso te ajudar a escolher a melhor prop firm, tirar dúvidas sobre trading ou explicar como funcionam os cupons. Como posso te ajudar?</div>
+      </div>
+      <div class="chat-suggestions" id="chatSuggestions">
+        <button class="chat-sug" onclick="sendChat('Qual a melhor mesa pra iniciantes?')">Melhor mesa pra iniciantes</button>
+        <button class="chat-sug" onclick="sendChat('Como funciona o cupom FORTUNATO?')">Como funciona o cupom?</button>
+        <button class="chat-sug" onclick="sendChat('Quanto posso ganhar operando MNQ?')">Quanto posso ganhar?</button>
+        <button class="chat-sug" onclick="sendChat('Como passar no desafio?')">Como passar no desafio?</button>
+      </div>
+      <div class="chatbot-input">
+        <input type="text" id="chatInput" placeholder="Digite sua pergunta..." onkeypress="if(event.key==='Enter')sendChat()">
+        <button onclick="sendChat()">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMPLEMENTATION -->
+  <div class="impl">
+    <h2>Como Implementar</h2>
+    <div class="impl-grid">
+      <div class="impl-card">
+        <h3>1. Backend com IA</h3>
+        <p>API que processa as respostas do quiz/calculadora e gera recomendações personalizadas usando Claude Haiku ou GPT-4o-mini.</p>
+        <span class="cost">~$5-20/mês (1.000 conversas)</span>
+        <ul>
+          <li>Claude Haiku 4.5 ($1/$5 MTok)</li>
+          <li>GPT-4o-mini ($0.15/$0.60 MTok)</li>
+          <li>Prompt caching = 90% desconto</li>
+        </ul>
+      </div>
+      <div class="impl-card">
+        <h3>2. Quiz Engine</h3>
+        <p>Lógica de matching que cruza respostas do usuário com características de cada prop firm para gerar recomendação personalizada.</p>
+        <span class="cost">Custo: $0 (lógica local)</span>
+        <ul>
+          <li>4-5 perguntas estratégicas</li>
+          <li>Score por prop firm</li>
+          <li>Recomendação com cupom</li>
+        </ul>
+      </div>
+      <div class="impl-card">
+        <h3>3. WhatsApp Bot</h3>
+        <p>Meta Cloud API + webhook que recebe mensagens, processa com IA e responde automaticamente. Integração natural com o público brasileiro.</p>
+        <span class="cost">~$0.005/conversa</span>
+        <ul>
+          <li>Meta Cloud API (gratuito)</li>
+          <li>Webhook com Claude Haiku</li>
+          <li>Qualificação de leads automática</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // TABS
+    function showFeature(name) {
+      document.querySelectorAll('.feature').forEach(f => f.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('feature-' + name).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    // QUIZ
+    const quizData = [
+      { q: 'Qual seu nível de experiência?', opts: ['Iniciante total', 'Já operou um pouco', 'Intermediário', 'Experiente/Profissional'] },
+      { q: 'Qual seu capital disponível?', opts: ['Até $100', '$100 - $300', '$300 - $500', 'Acima de $500'] },
+      { q: 'Qual seu estilo de trading?', opts: ['Scalping (minutos)', 'Day Trading', 'Swing Trading (dias)', 'Automatizado/Bots'] },
+      { q: 'O que é mais importante pra você?', opts: ['Menor preço', 'Saques diários', 'Regras flexíveis', 'Suporte/educação'] }
+    ];
+    let quizStep = 0, quizAnswers = [];
+
+    function renderQuiz() {
+      const d = quizData[quizStep];
+      document.getElementById('quizQ').textContent = d.q;
+      const opts = document.getElementById('quizOpts');
+      opts.innerHTML = d.opts.map((o, i) => `<button class="quiz-opt" onclick="selectOpt(${i})">${o}</button>`).join('');
+      document.querySelectorAll('.quiz-dot').forEach((dot, i) => {
+        dot.className = 'quiz-dot' + (i < quizStep ? ' done' : i === quizStep ? ' active' : '');
+      });
+    }
+
+    function selectOpt(i) {
+      quizAnswers.push(i);
+      quizStep++;
+      if (quizStep >= quizData.length) { showQuizResult(); }
+      else { renderQuiz(); }
+    }
+
+    function showQuizResult() {
+      const exp = quizAnswers[0], capital = quizAnswers[1], style = quizAnswers[2], priority = quizAnswers[3];
+      let rec = { name: '', desc: '', discount: '', why: '' };
+
+      if (exp === 0 || priority === 3) {
+        rec = { name: 'Lucid Trading', desc: 'Melhor para iniciantes com suporte completo e regras simples.', discount: '50% OFF', why: 'Drawdown generoso, aprovação rápida e flexibilidade total para aprender.' };
+      } else if (priority === 1) {
+        rec = { name: 'TakeProfit Trader', desc: 'Única mesa com saques diários. Aprovado? Recebe na hora.', discount: '40% OFF', why: 'Saques diários, drawdown estático e processo simplificado.' };
+      } else if (style === 3) {
+        rec = { name: 'Bulenox', desc: 'Perfeita para bots e estratégias automatizadas.', discount: 'ATÉ 89% OFF', why: 'Suporte completo a automação e regras claras para algoritmos.' };
+      } else {
+        rec = { name: 'Apex Trader Funding', desc: 'Maior custo-benefício do mercado com promoções de até 90%.', discount: '90% OFF', why: 'Comunidade massiva, NinjaTrader compatível e pagamento confiável.' };
+      }
+
+      document.getElementById('quizContent').style.display = 'none';
+      document.getElementById('quizProgress').style.display = 'none';
+      const r = document.getElementById('quizResult');
+      r.style.display = 'block';
+      r.innerHTML = `
+        <h3>🎯 Sua Recomendação</h3>
+        <div class="rec-card">
+          <div class="discount">${rec.discount}</div>
+          <h4>${rec.name}</h4>
+          <p>${rec.desc}</p>
+          <p style="font-size:0.8rem;color:var(--muted)"><strong style="color:var(--white)">Por que essa:</strong> ${rec.why}</p>
+        </div>
+        <a href="https://wa.me/message/6IT6E2X5LGCQM1?text=Olá! O quiz me indicou ${rec.name}. Quero saber mais!" target="_blank" style="display:inline-block;background:var(--orange);color:var(--bg);padding:0.8rem 2rem;border-radius:8px;font-weight:700;text-decoration:none;margin-top:1rem">Garantir Cupom no WhatsApp</a>
+        <br><button class="quiz-reset" onclick="resetQuiz()">Refazer Quiz</button>
+      `;
+    }
+
+    function resetQuiz() {
+      quizStep = 0; quizAnswers = [];
+      document.getElementById('quizContent').style.display = 'block';
+      document.getElementById('quizProgress').style.display = 'flex';
+      document.getElementById('quizResult').style.display = 'none';
+      renderQuiz();
+    }
+    renderQuiz();
+
+    // CALCULATOR
+    const pointValues = { MNQ: 2, MES: 5, NQ: 20, ES: 50 };
+    function calculateProfit() {
+      const asset = document.getElementById('calcAsset').value;
+      const account = parseInt(document.getElementById('calcAccount').value);
+      const trades = parseInt(document.getElementById('calcTrades').value);
+      const points = parseInt(document.getElementById('calcPoints').value);
+      const pv = pointValues[asset];
+      const daily = trades * points * pv;
+      const monthly = daily * 22;
+      const yearly = monthly * 12;
+      const risk = account * 0.01;
+      const riskPerTrade = Math.min(risk, daily * 0.5);
+
+      document.getElementById('calcResult').style.display = 'block';
+      document.getElementById('calcStats').innerHTML = `
+        <div class="calc-stat"><div class="num">$${daily.toLocaleString()}</div><div class="label">Lucro/Dia</div></div>
+        <div class="calc-stat"><div class="num" style="color:var(--green)">$${monthly.toLocaleString()}</div><div class="label">Lucro/Mês</div></div>
+        <div class="calc-stat"><div class="num" style="color:var(--green)">$${yearly.toLocaleString()}</div><div class="label">Lucro/Ano</div></div>
+      `;
+
+      let mesa = 'Apex Trader Funding';
+      let cupom = 'FORTUNATO (90% OFF)';
+      if (asset === 'MNQ' && account <= 50000) { mesa = 'TakeProfit Trader'; cupom = 'FORTUNATO (40% OFF)'; }
+      if (style === 3) { mesa = 'Bulenox'; cupom = 'FORTUNATO90 (89% OFF)'; }
+
+      document.getElementById('calcRec').innerHTML = `
+        <h4>💡 Recomendação IA</h4>
+        <p>Com ${trades} trades/dia em ${asset}, operando ${points} pontos, seu potencial é de <strong>$${monthly.toLocaleString()}/mês</strong>. Para começar, recomendamos a <strong>${mesa}</strong> com cupom <strong>${cupom}</strong>. Comece com conta de $25K para minimizar risco.</p>
+      `;
+    }
+
+    // CHATBOT
+    const chatResponses = {
+      'melhor mesa pra iniciantes': 'Para iniciantes, recomendo a **Lucid Trading** ou a **TakeProfit Trader**.\n\n🔹 **Lucid** — Drawdown generoso, aprovação rápida, flexível para aprender\n🔹 **TakeProfit** — Saques diários, regras simples\n\nAmbas aceitam cupom **FORTUNATO** com desconto! Quer que eu te ligue no WhatsApp pra ajudar?',
+      'como funciona o cupom fortunato': 'O cupom **FORTUNATO** dá desconto em todas as mesas parceiras:\n\n🏷️ Apex: 90% OFF\n🏷️ TakeProfit: 40% OFF\n🏷️ Lucid: 50% OFF\n🏷️ Bulenox: até 89% OFF\n🏷️ YLOS: até 90% OFF\n🏷️ Earn2Trade: 50% OFF\n\nÉ só colocar o código no checkout da mesa que você escolher!',
+      'quanto posso ganhar operando mnq': 'Com MNQ ($2/ponto), operando 3 trades/dia com 15 pontos cada:\n\n📊 **$90/dia → $1.980/mês → $23.760/ano**\n\nIsso com conta de $50.000. Lembre-se: gerencie o risco! Nunca arrisque mais de 1% por trade.',
+      'como passar no desafio': 'Para passar no desafio:\n\n1️⃣ Entenda as regras da mesa\n2️⃣ Crie um plano de trading escrito\n3️⃣ Pratique no simulador do NinjaTrader\n4️⃣ Comece com conta menor ($25K)\n5️⃣ Respeite o risco (1-2% por trade)\n\nQuer que eu te mande o guia completo no WhatsApp?'
+    };
+
+    function sendChat(msg) {
+      const input = document.getElementById('chatInput');
+      const text = msg || input.value.trim();
+      if (!text) return;
+      input.value = '';
+
+      const msgs = document.getElementById('chatMessages');
+      msgs.innerHTML += `<div class="chat-msg user">${text}</div>`;
+      msgs.innerHTML += `<div class="chat-msg bot" id="typing"><div class="typing"><span></span><span></span><span></span></div></div>`;
+      msgs.scrollTop = msgs.scrollHeight;
+
+      setTimeout(() => {
+        const typing = document.getElementById('typing');
+        const key = Object.keys(chatResponses).find(k => text.toLowerCase().includes(k));
+        const response = key ? chatResponses[key] : 'Desculpa, não entendi completamente. Posso te ajudar com:\n\n• Qual mesa escolher\n• Como usar os cupons\n• Quanto posso ganhar\n• Como passar no desafio\n\nOu fale diretamente com o Wesley no WhatsApp!';
+        typing.innerHTML = response.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        typing.removeAttribute('id');
+        msgs.scrollTop = msgs.scrollHeight;
+      }, 1500);
+    }
+  </script>
+</body>
+</html>

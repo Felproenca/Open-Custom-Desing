@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MarketingOS — Sistema Operacional de Aquisição</title>
+<meta name="description" content="Marketing sem sistema é aposta, não estratégia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/lenis@1.3.25/dist/lenis.css" />
+<style>
+:root{
+  --bg:#13110f;
+  --surface:#1a1816;
+  --surface-2:#211f1c;
+  --border:rgba(255,255,255,.06);
+  --border-hover:rgba(255,255,255,.12);
+  --text:#e8e4de;
+  --muted:#8b847d;
+  --dim:#5c5650;
+  --accent:#c9a87c;
+  --accent-bg:rgba(201,168,124,.06);
+  --font-display:'Cormorant Garamond',Georgia,serif;
+  --font-mono:'IBM Plex Mono','Courier New',monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --r-sm:4px;--r-lg:10px;
+}
+
+/* Lenis */
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased;scrollbar-width:thin;scrollbar-color:var(--accent) var(--bg)}
+body{font-family:var(--font-mono);background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.7;font-size:14px;font-weight:400}
+::selection{background:var(--accent);color:var(--bg)}
+a{color:inherit;text-decoration:none}
+
+/* Grid paper */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);
+  background-size:60px 60px}
+
+/* Scroll progress */
+.progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--accent);z-index:100;transition:none}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:1.2rem clamp(2rem,6vw,6rem);
+  display:flex;align-items:center;justify-content:space-between;transition:all .6s var(--ease)}
+.nav.stuck{background:rgba(19,17,15,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);padding:.8rem clamp(2rem,6vw,6rem)}
+.nav-brand{display:flex;align-items:center;gap:.6rem;font-family:var(--font-display);font-size:1.3rem;font-weight:600}
+.nav-brand .mark{width:28px;height:28px;background:var(--text);border-radius:3px;
+  display:grid;place-items:center;font-family:var(--font-display);font-weight:700;font-size:.9rem;color:var(--bg)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:11px;font-weight:500;color:var(--dim);letter-spacing:.04em;transition:color .3s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{font-size:11px;font-weight:500;padding:.45rem 1rem;border:1px solid var(--border);border-radius:var(--r-sm);
+  transition:all .3s;letter-spacing:.02em}
+.nav-cta:hover{border-color:var(--accent);background:var(--accent-bg)}
+@media(max-width:900px){.nav-links{display:none}}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  position:relative;padding:0 clamp(2rem,6vw,6rem);z-index:1}
+.hero-eyebrow{font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:2rem}
+.hero h1{font-family:var(--font-display);font-size:clamp(3rem,6vw,5.5rem);font-weight:400;line-height:1.05;
+  letter-spacing:-.02em;margin-bottom:2rem;max-width:800px}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero-sub{font-size:15px;color:var(--muted);max-width:520px;line-height:1.8;margin-bottom:3rem;font-weight:300}
+.hero-cta{display:inline-flex;align-items:center;gap:.6rem;font-size:12px;font-weight:500;
+  padding:.7rem 1.5rem;border:1px solid var(--border);border-radius:var(--r-sm);transition:all .3s;letter-spacing:.02em}
+.hero-cta:hover{border-color:var(--accent);background:var(--accent-bg)}
+.hero-cta svg{width:14px;height:14px;stroke:currentColor;stroke-width:1.5;fill:none}
+
+/* Sections */
+.section{padding:clamp(5rem,12vh,9rem) 0;position:relative;z-index:1}
+.section-inner{max-width:900px;margin:0 auto;padding:0 clamp(2rem,6vw,6rem)}
+.section-label{font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:1.5rem;display:block}
+.section h2{font-family:var(--font-display);font-size:clamp(2rem,4vw,3.2rem);font-weight:400;line-height:1.1;letter-spacing:-.015em;margin-bottom:1.5rem}
+.section h2 em{font-style:italic;color:var(--accent)}
+.section p{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:1rem;font-weight:300}
+.section p strong{color:var(--text);font-weight:500}
+
+/* Problem */
+.cycle{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-top:2rem}
+.cycle-visual{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:2rem;position:relative}
+.cycle-visual::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.4}
+.cycle-list{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.cycle-list li{display:flex;align-items:flex-start;gap:.6rem;font-size:13px;color:var(--muted);line-height:1.6}
+.cycle-list .n{font-size:11px;color:var(--accent);min-width:18px;margin-top:2px}
+@media(max-width:768px){.cycle{grid-template-columns:1fr}}
+
+/* Cards */
+.shift-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem}
+.shift-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:2rem;
+  transition:all .5s var(--ease);position:relative;overflow:hidden}
+.shift-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--accent-bg),transparent);opacity:0;transition:opacity .5s}
+.shift-card:hover{border-color:var(--border-hover);transform:translateY(-3px)}
+.shift-card:hover::before{opacity:1}
+.shift-card .num{font-family:var(--font-display);font-size:2rem;font-weight:300;color:var(--accent);opacity:.4;margin-bottom:.8rem}
+.shift-card h3{font-family:var(--font-display);font-size:1.2rem;font-weight:500;margin-bottom:.4rem}
+.shift-card p{font-size:13px;color:var(--muted);line-height:1.7}
+@media(max-width:900px){.shift-cards{grid-template-columns:1fr}}
+
+/* Timeline */
+.timeline{position:relative;max-width:700px;margin:3rem auto 0}
+.timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:1px;
+  background:linear-gradient(to bottom,transparent,var(--border),var(--border),transparent)}
+.timeline-step{display:flex;gap:1.5rem;margin-bottom:2.5rem;position:relative}
+.timeline-step:last-child{margin-bottom:0}
+.timeline-dot{width:40px;height:40px;border-radius:50%;background:var(--surface);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1}
+.timeline-dot span{font-size:12px;font-weight:600;color:var(--accent)}
+.timeline-content h3{font-family:var(--font-display);font-size:1.1rem;font-weight:500;margin-bottom:.3rem}
+.timeline-content p{font-size:13px;color:var(--muted);line-height:1.7}
+.timeline-content .tag{display:inline-block;font-size:10px;font-weight:500;color:var(--accent);
+  background:var(--accent-bg);padding:.15rem .5rem;border-radius:99px;margin-top:.4rem;letter-spacing:.05em}
+
+/* Proof */
+.proof-notice{text-align:center;margin-bottom:2rem;padding:1rem 1.5rem;background:var(--accent-bg);
+  border:1px solid rgba(201,168,124,.12);border-radius:6px;font-size:12px;color:var(--accent);max-width:600px;margin-inline:auto}
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.proof-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:all .5s var(--ease)}
+.proof-card:hover{border-color:var(--border-hover);transform:translateY(-3px)}
+.proof-card-img{height:180px;position:relative;overflow:hidden}
+.proof-card-img .gradient{position:absolute;inset:0;display:flex;align-items:flex-end;padding:1.2rem}
+.proof-card-img .tag{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);
+  background:rgba(0,0,0,.5);padding:.15rem .5rem;border-radius:99px;backdrop-filter:blur(4px)}
+.proof-card-body{padding:1.5rem}
+.proof-card-body h3{font-family:var(--font-display);font-size:1.1rem;font-weight:500;margin-bottom:.3rem}
+.proof-card-body p{font-size:12px;color:var(--muted);line-height:1.6}
+.proof-card-body .stack{display:flex;gap:.3rem;margin-top:.6rem;flex-wrap:wrap}
+.proof-card-body .stack span{font-size:10px;padding:.12rem .4rem;border-radius:99px;background:var(--surface-2);color:var(--dim)}
+@media(max-width:768px){.proof-grid{grid-template-columns:1fr}}
+
+/* Metrics */
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:2.5rem}
+.metric-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);
+  padding:2rem;text-align:center;transition:all .4s var(--ease)}
+.metric-card:hover{border-color:var(--border-hover);transform:translateY(-3px)}
+.metric-card .value{font-family:var(--font-display);font-size:2.5rem;font-weight:400;color:var(--accent);margin-bottom:.3rem}
+.metric-card .label{font-size:11px;color:var(--muted);letter-spacing:.03em}
+.metric-card .note{font-size:11px;color:var(--dim);margin-top:.5rem;font-style:italic}
+@media(max-width:900px){.metrics-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.metrics-grid{grid-template-columns:1fr}}
+
+/* CTA */
+.cta-box{text-align:center;margin-top:2.5rem}
+.cta-btn{display:inline-flex;align-items:center;gap:.6rem;font-size:12px;font-weight:500;
+  padding:.8rem 2rem;background:var(--text);color:var(--bg);border:none;border-radius:var(--r-sm);
+  cursor:pointer;transition:all .3s;letter-spacing:.02em}
+.cta-btn:hover{opacity:.9;transform:translateY(-1px)}
+.cta-btn svg{width:14px;height:14px;stroke:currentColor;stroke-width:1.5;fill:none}
+.cta-note{font-size:11px;color:var(--dim);margin-top:1rem}
+
+/* Footer */
+.footer{padding:2rem 0;border-top:1px solid var(--border);position:relative;z-index:1}
+.footer-inner{max-width:900px;margin:0 auto;padding:0 clamp(2rem,6vw,6rem);display:flex;justify-content:space-between;align-items:center}
+.footer-left{font-size:11px;color:var(--dim)}
+.footer-right{display:flex;gap:1.5rem}
+.footer-right a{font-size:11px;color:var(--dim);transition:color .3s}
+.footer-right a:hover{color:var(--text)}
+
+/* Reveal — the only animation class */
+.r{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.r.vis{opacity:1;transform:none}
+.r-scale{opacity:0;transform:scale(.96);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.r-scale.vis{opacity:1;transform:none}
+
+/* Reduced motion */
+@media(prefers-reduced-motion:reduce){
+  .r,.r-scale{opacity:1!important;transform:none!important;transition:none!important}
+}
+@media(max-width:768px){
+  .hero{min-height:auto;padding:8rem 0 4rem}
+  .footer-inner{flex-direction:column;gap:1rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-brand"><div class="mark">M</div>MarketingOS</a>
+  <ul class="nav-links">
+    <li><a href="#problema">Problema</a></li>
+    <li><a href="#sistema">Sistema</a></li>
+    <li><a href="#como">Como funciona</a></li>
+    <li><a href="#prova">Prova</a></li>
+    <li><a href="#metricas">Metricas</a></li>
+  </ul>
+  <a href="#diagnostico" class="nav-cta">Diagnostico</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow r">Sistema Operacional de Aquisicao</div>
+    <h1 class="r">Seu negocio nao tem problema de <em>marketing</em>.<br>Tem problema de <em>sistema</em>.</h1>
+    <p class="hero-sub r">Voce produz, posta, contrata, gasta — e a aquisicao continua imprevisivel. Nao e falta de esforco. E falta de arquitetura.</p>
+    <a href="#diagnostico" class="hero-cta r">
+      Diagnostico sem compromisso
+      <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- PROBLEMA -->
+<section class="section" id="problema">
+  <div class="section-inner">
+    <div class="cycle">
+      <div>
+        <span class="section-label r">O problema real</span>
+        <h2 class="r">Produzir mais nao resolve a <em>aquisicao imprevisivel</em></h2>
+        <p class="r">A maioria das empresas locais acha que precisa de mais conteudo, mais post, mais agencia. Mas o volume sem sistema e apenas ruido — produz mais sem colher resultado proporcional.</p>
+        <p class="r">O gargalo real nao e "faltou postar". e nao saber <strong>por que</strong> um cliente nao comprou, <strong>onde</strong> ele desistiu, e <strong>como</strong> impedir que isso se repita.</p>
+        <p class="r">Sem isso, cada campanha e uma aposta nova. Cada orcamento e um chute. Cada mes comeca do zero.</p>
+      </div>
+      <div class="cycle-visual r">
+        <div style="font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:1rem">O ciclo que se repete</div>
+        <ol class="cycle-list">
+          <li><span class="n">01</span> Contrata agencia → recebe "estrategia" generica</li>
+          <li><span class="n">02</span> Posta conteudo → metricas de vaidade sobem</li>
+          <li><span class="n">03</span> Aquisicao real nao muda → frustracao</li>
+          <li><span class="n">04</span> Corta gasto → comeca tudo de novo</li>
+          <li><span class="n">05</span> Concorrente parece crescer → panico</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SISTEMA -->
+<section class="section" id="sistema" style="background:var(--surface)">
+  <div class="section-inner" style="text-align:center;max-width:700px">
+    <span class="section-label r" style="display:block;text-align:center">A virada</span>
+    <h2 class="r">Voce nao compra <em>IA</em>.<br>Compra <em>previsibilidade</em>.</h2>
+    <p style="max-width:580px;margin:0 auto 2.5rem" class="r">O MarketingOS nao e agencia. Nao e ferramenta de IA. e um Sistema Operacional de Aquisicao — identifica, compreende e remove os gargalos que impedem sua empresa de adquirir clientes de forma consistente.</p>
+    <div class="shift-cards">
+      <div class="shift-card r"><div class="num">01</div><h3>Nao e marketing</h3><p>e infraestrutura. A IA e interna — voce nunca ve "gestao de redes" ou "pacote de posts". O que se vende e clareza e direcao.</p></div>
+      <div class="shift-card r"><div class="num">02</div><h3>Nao e agencia</h3><p>Agencia executa o que voce pede. O MarketingOS diagnostica o que voce realmente precisa — antes de executar qualquer coisa.</p></div>
+      <div class="shift-card r"><div class="num">03</div><h3>Nao e automacao</h3><p>Automatizar o que nao funciona e acelerar o fracasso. Primeiro o sistema, depois a automacao.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="section" id="como">
+  <div class="section-inner" style="text-align:center;max-width:700px">
+    <span class="section-label r" style="display:block;text-align:center">Como funciona</span>
+    <h2 class="r">Diagnostico primeiro.<br>Execucao depois.</h2>
+    <p style="max-width:500px;margin:0 auto 2rem" class="r">Nao e pacote fixo. A implementacao se adapta ao gargalo que o diagnostico encontrar.</p>
+    <div class="timeline">
+      <div class="timeline-step r">
+        <div class="timeline-dot"><span>1</span></div>
+        <div class="timeline-content">
+          <h3>Diagnostico de Gargalo</h3>
+          <p>Mapeamos exatamente onde sua aquisicao quebra: awareness, consideracao, conversao ou retencao.</p>
+          <span class="tag">30 dias</span>
+        </div>
+      </div>
+      <div class="timeline-step r">
+        <div class="timeline-dot"><span>2</span></div>
+        <div class="timeline-content">
+          <h3>Implementacao Adaptativa</h3>
+          <p>Com o gargalo identificado, construimos o sistema especifico para resolver aquele ponto.</p>
+          <span class="tag">60 dias</span>
+        </div>
+      </div>
+      <div class="timeline-step r">
+        <div class="timeline-dot"><span>3</span></div>
+        <div class="timeline-content">
+          <h3>Aquisicao Previsivel</h3>
+          <p>O sistema aprende. Cada conversa, cada reuniao, cada oportunidade alimenta o ciclo.</p>
+          <span class="tag">Continuo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROVA -->
+<section class="section" id="prova" style="background:var(--surface)">
+  <div class="section-inner">
+    <span class="section-label r">Prova de capacidade</span>
+    <h2 class="r">O sistema construido do zero</h2>
+    <p style="max-width:600px" class="r">Demonstracoes do MarketingOS em acao — nao resultados de clientes fechados. Sao showcases que provam capacidade de execucao, nao promessa de resultado.</p>
+    <div class="proof-notice r"><strong>Transparencia:</strong> Estes projetos sao demonstracoes do sistema construindo presenca digital do zero. Ainda nao temos clientes pagos — e isso e parte do posicionamento.</div>
+    <div class="proof-grid">
+      <div class="proof-card r"><div class="proof-card-img"><div class="gradient" style="background:linear-gradient(135deg,#2a1a30,#1a1520)"><span class="tag">Automotive</span></div></div><div class="proof-card-body"><h3>Apex Motors</h3><p>Presenca digital construida para marca automotiva de alto desempenho.</p><div class="stack"><span>Branding</span><span>Landing</span><span>Sistema</span></div></div></div>
+      <div class="proof-card r"><div class="proof-card-img"><div class="gradient" style="background:linear-gradient(135deg,#2a3020,#1a2018)"><span class="tag">Clinica</span></div></div><div class="proof-card-body"><h3>Aura Clinic</h3><p>Clinica estetica com presenca digital estrategica.</p><div class="stack"><span>Clinica</span><span>Posicionamento</span><span>Diagnostico</span></div></div></div>
+      <div class="proof-card r"><div class="proof-card-img"><div class="gradient" style="background:linear-gradient(135deg,#2a2520,#1a1815)"><span class="tag">Fitness</span></div></div><div class="proof-card-body"><h3>Forge Gym</h3><p>Academia com presenca digital que comunica antes de vender.</p><div class="stack"><span>Local</span><span>Presenca</span><span>Aquisicao</span></div></div></div>
+      <div class="proof-card r"><div class="proof-card-img"><div class="gradient" style="background:linear-gradient(135deg,#2a1a25,#1a1518)"><span class="tag">Tattoo</span></div></div><div class="proof-card-body"><h3>Noir Ink</h3><p>Estudio de tatuagem com identidade visual forte e presenca do zero.</p><div class="stack"><span>Identidade</span><span>Presenca</span><span>Sistema</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICAS -->
+<section class="section" id="metricas">
+  <div class="section-inner" style="text-align:center;max-width:700px">
+    <span class="section-label r" style="display:block;text-align:center">A metrica que importa</span>
+    <h2 class="r">O que o sistema <em>realmente</em> mede</h2>
+    <p style="max-width:500px;margin:0 auto 2rem" class="r">Nunca curtidas, seguidores ou alcance. O sistema mede o que realmente move o negocio.</p>
+    <div class="metrics-grid">
+      <div class="metric-card r-scale"><div class="value" data-count="147">—</div><div class="label">Conversas iniciadas</div><div class="note">Pessoas que buscaram contato apos ver sua presenca</div></div>
+      <div class="metric-card r-scale"><div class="value" data-count="38">—</div><div class="label">Reunioes agendadas</div><div class="note">Leads que avancaram para conversa real</div></div>
+      <div class="metric-card r-scale"><div class="value" data-count="12">—</div><div class="label">Oportunidades reais</div><div class="note">Propostas enviadas, negociacoes abertas</div></div>
+      <div class="metric-card r-scale"><div class="value" data-count="89" data-suffix="%">—</div><div class="label">Aprendizado acumulado</div><div class="note">O que cada interacao revelou sobre o mercado</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section" id="diagnostico" style="background:var(--surface);text-align:center">
+  <div class="section-inner" style="max-width:700px">
+    <span class="section-label r" style="display:block;text-align:center">Proximo passo</span>
+    <h2 class="r">Diagnostico antes da venda</h2>
+    <p style="max-width:500px;margin:0 auto 2rem" class="r">Antes de qualquer compromisso, vamos mapear onde sua aquisicao realmente quebra. Sem promessa, sem pacote — so diagnostico e direcao.</p>
+    <div class="cta-box r">
+      <button class="cta-btn" onclick="alert('Formulario em construcao')">
+        Agendar diagnostico
+        <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+      <div class="cta-note">Sem compromisso. Sem venda. So diagnostico.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-left">MarketingOS · Sistema Operacional de Aquisicao</div>
+    <div class="footer-right"><a href="#">Politica</a><a href="#">Termos</a></div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lenis@1.3.25/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+const lenis = new Lenis({
+  duration: 1.1,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  touchMultiplier: 2,
+});
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((t) => lenis.raf(t * 1000));
+gsap.ticker.lagSmoothing(0);
+
+// Nav stick
+const nav = document.getElementById('nav');
+ScrollTrigger.create({ start: 80, onUpdate: () => nav.classList.toggle('stuck', window.scrollY > 80) });
+
+// Progress bar
+gsap.to('#progress', { width: '100%', ease: 'none', scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: true } });
+
+// Reveal on scroll — simple, no stagger tricks
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); observer.unobserve(e.target); } });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.r, .r-scale').forEach(el => observer.observe(el));
+
+// Counter animation
+document.querySelectorAll('[data-count]').forEach(el => {
+  const target = parseInt(el.dataset.count);
+  const suffix = el.dataset.suffix || '';
+  ScrollTrigger.create({
+    trigger: el,
+    start: 'top 85%',
+    once: true,
+    onEnter: () => {
+      const obj = { v: 0 };
+      gsap.to(obj, {
+        v: target, duration: 1.8, ease: 'power2.out',
+        onUpdate: () => { el.textContent = Math.round(obj.v).toLocaleString() + suffix; }
+      });
+    }
+  });
+});
+
+// Smooth anchor
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) lenis.scrollTo(t, { offset: -60 });
+  });
+});
+</script>
+</body>
+</html>

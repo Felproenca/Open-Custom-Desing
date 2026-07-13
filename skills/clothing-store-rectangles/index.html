@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FORMA — Structural Clothing</title>
+<meta name="description" content="FORMA is structural clothing for the modernist. Clean lines, honest materials, zero noise.">
+
+<!-- Fonts: Forma DJR Display (display), Chivo (condensed nav), Inter (body), Chivo Mono (accents) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Chivo+Mono:wght@400&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- GSAP + ScrollTrigger + Lenis -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   DESIGN TOKENS — rectangles.fm system adapted
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  --black: #0a0a0a;
+  --cream: #e8e4d9;
+  --cream-dim: #c4bfb3;
+  --gray: #6b6560;
+  --gray-light: #3a3735;
+  --white: #f5f2eb;
+  --accent: #d4c9a8;
+
+  --font-display: 'Chivo', 'Arial Black', sans-serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'Chivo Mono', 'Courier New', monospace;
+
+  --space-xs: clamp(0.25rem, 0.5vw, 0.5rem);
+  --space-sm: clamp(0.5rem, 1vw, 1rem);
+  --space-md: clamp(1rem, 2vw, 2rem);
+  --space-lg: clamp(2rem, 4vw, 4rem);
+  --space-xl: clamp(3rem, 6vw, 6rem);
+  --space-2xl: clamp(4rem, 8vw, 10rem);
+
+  --text-hero: clamp(4rem, 12vw, 14rem);
+  --text-display: clamp(2.5rem, 6vw, 7rem);
+  --text-heading: clamp(1.5rem, 3vw, 3.5rem);
+  --text-body: clamp(0.875rem, 1.1vw, 1.125rem);
+  --text-small: clamp(0.7rem, 0.85vw, 0.875rem);
+  --text-micro: clamp(0.6rem, 0.7vw, 0.75rem);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  background: var(--black);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: auto;
+}
+
+body {
+  background: var(--black);
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; height: auto; }
+button { background: none; border: none; color: inherit; cursor: pointer; font: inherit; }
+
+::selection {
+  background: var(--cream);
+  color: var(--black);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   UTILITY
+   ═══════════════════════════════════════════════════════════ */
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); border: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   NAVIGATION
+   ═══════════════════════════════════════════════════════════ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--gray-light);
+  mix-blend-mode: normal;
+}
+
+.nav__logo {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.nav__links {
+  display: flex;
+  gap: var(--space-md);
+  list-style: none;
+}
+
+.nav__links a {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-small);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  transition: color 0.3s ease;
+}
+
+.nav__links a:hover { color: var(--cream); }
+
+.nav__cart {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  letter-spacing: 0.05em;
+  color: var(--cream-dim);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HERO SECTION
+   ═══════════════════════════════════════════════════════════ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--space-2xl) var(--space-md) var(--space-lg);
+  overflow: hidden;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    var(--black) 0%,
+    rgba(10, 10, 10, 0.4) 40%,
+    var(--black) 100%
+  );
+  z-index: 1;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero__tag {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: var(--space-sm);
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--text-hero);
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--cream);
+  margin-bottom: var(--space-md);
+}
+
+.hero__title span {
+  display: block;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--cream-dim);
+  font-size: 0.45em;
+  letter-spacing: 0.05em;
+  line-height: 1.4;
+  margin-top: var(--space-xs);
+}
+
+.hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-display);
+  font-size: var(--text-small);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--black);
+  background: var(--cream);
+  padding: var(--space-sm) var(--space-md);
+  border: none;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.hero__cta:hover {
+  background: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(232, 228, 217, 0.15);
+}
+
+.hero__cta svg {
+  width: 14px; height: 14px;
+  transition: transform 0.3s ease;
+}
+
+.hero__cta:hover svg { transform: translateX(4px); }
+
+/* Floating geometric accent */
+.hero__rect {
+  position: absolute;
+  right: 8%;
+  top: 15%;
+  width: clamp(120px, 18vw, 280px);
+  height: clamp(160px, 24vw, 380px);
+  border: 1px solid var(--gray-light);
+  z-index: 1;
+  opacity: 0;
+}
+
+.hero__rect::after {
+  content: '';
+  position: absolute;
+  inset: var(--space-sm);
+  border: 1px solid var(--gray);
+  opacity: 0.4;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MARQUEE
+   ═══════════════════════════════════════════════════════════ */
+.marquee {
+  padding: var(--space-lg) 0;
+  border-top: 1px solid var(--gray-light);
+  border-bottom: 1px solid var(--gray-light);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee__track {
+  display: flex;
+  gap: var(--space-lg);
+  animation: marquee-scroll 30s linear infinite;
+  width: max-content;
+}
+
+.marquee__item {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--text-display);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--gray-light);
+  flex-shrink: 0;
+  -webkit-text-stroke: 1px var(--gray);
+  color: transparent;
+  transition: color 0.4s ease, -webkit-text-stroke 0.4s ease;
+}
+
+.marquee__item:hover {
+  color: var(--cream);
+  -webkit-text-stroke: 0px;
+}
+
+.marquee__dot {
+  width: 8px; height: 8px;
+  background: var(--gray);
+  align-self: center;
+  flex-shrink: 0;
+}
+
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   COLLECTION GRID
+   ═══════════════════════════════════════════════════════════ */
+.collection {
+  padding: var(--space-2xl) var(--space-md);
+}
+
+.collection__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: var(--space-xl);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.collection__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.collection__title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--text-heading);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.collection__count {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--gray);
+}
+
+/* Asymmetric grid — rectangles.fm style */
+.collection__grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-md);
+}
+
+.product-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--gray-light);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.product-card:nth-child(1) { grid-column: 1 / 6; grid-row: 1 / 3; }
+.product-card:nth-child(2) { grid-column: 6 / 9; grid-row: 1 / 2; }
+.product-card:nth-child(3) { grid-column: 9 / 13; grid-row: 1 / 2; }
+.product-card:nth-child(4) { grid-column: 6 / 13; grid-row: 2 / 3; }
+.product-card:nth-child(5) { grid-column: 1 / 5; grid-row: 3 / 4; }
+.product-card:nth-child(6) { grid-column: 5 / 9; grid-row: 3 / 4; }
+.product-card:nth-child(7) { grid-column: 9 / 13; grid-row: 3 / 4; }
+
+.product-card__image {
+  width: 100%;
+  aspect-ratio: auto;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: grayscale(30%) contrast(1.05);
+}
+
+.product-card:nth-child(1) .product-card__image { aspect-ratio: 3/4; }
+.product-card:nth-child(2) .product-card__image { aspect-ratio: 4/3; }
+.product-card:nth-child(3) .product-card__image { aspect-ratio: 4/3; }
+.product-card:nth-child(4) .product-card__image { aspect-ratio: 16/7; }
+.product-card:nth-child(5) .product-card__image { aspect-ratio: 1/1; }
+.product-card:nth-child(6) .product-card__image { aspect-ratio: 1/1; }
+.product-card:nth-child(7) .product-card__image { aspect-ratio: 1/1; }
+
+.product-card:hover .product-card__image {
+  transform: scale(1.05);
+  filter: grayscale(0%) contrast(1);
+}
+
+.product-card__overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: var(--space-md);
+  background: linear-gradient(transparent, rgba(10, 10, 10, 0.9));
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-card:hover .product-card__overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.product-card__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-body);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.product-card__price {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  color: var(--cream-dim);
+}
+
+.product-card__tag {
+  position: absolute;
+  top: var(--space-sm);
+  left: var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: var(--cream);
+  color: var(--black);
+  padding: 4px 10px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FEATURED PIECE — Split layout
+   ═══════════════════════════════════════════════════════════ */
+.featured {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  border-top: 1px solid var(--gray-light);
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.featured__image-wrap {
+  position: relative;
+  overflow: hidden;
+  background: var(--gray-light);
+}
+
+.featured__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(20%);
+  transition: filter 0.6s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.featured__image-wrap:hover .featured__image {
+  filter: grayscale(0%);
+  transform: scale(1.03);
+}
+
+.featured__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-xl);
+}
+
+.featured__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: var(--space-md);
+}
+
+.featured__name {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--text-display);
+  text-transform: uppercase;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-md);
+}
+
+.featured__desc {
+  font-size: var(--text-body);
+  color: var(--cream-dim);
+  line-height: 1.6;
+  max-width: 480px;
+  margin-bottom: var(--space-lg);
+}
+
+.featured__specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--gray-light);
+}
+
+.featured__spec-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 4px;
+}
+
+.featured__spec-value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-body);
+  text-transform: uppercase;
+}
+
+.featured__price {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--text-heading);
+  margin-bottom: var(--space-md);
+}
+
+.featured__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  width: 100%;
+  max-width: 320px;
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-small);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: var(--cream);
+  color: var(--black);
+  border: none;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.featured__btn:hover {
+  background: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(232, 228, 217, 0.15);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   EDITORIAL / LOOKBOOK
+   ═══════════════════════════════════════════════════════════ */
+.editorial {
+  padding: var(--space-2xl) var(--space-md);
+}
+
+.editorial__header {
+  margin-bottom: var(--space-xl);
+}
+
+.editorial__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: var(--space-sm);
+}
+
+.editorial__title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--text-heading);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.editorial__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.editorial__item {
+  position: relative;
+  overflow: hidden;
+  background: var(--gray-light);
+  aspect-ratio: 3/4;
+  cursor: pointer;
+}
+
+.editorial__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(40%) contrast(1.1);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.editorial__item:hover img {
+  filter: grayscale(0%) contrast(1);
+  transform: scale(1.08);
+}
+
+.editorial__item-label {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: var(--space-md);
+  background: linear-gradient(transparent, rgba(10, 10, 10, 0.95));
+  transform: translateY(100%);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.editorial__item:hover .editorial__item-label {
+  transform: translateY(0);
+}
+
+.editorial__item-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-body);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.editorial__item-meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--gray);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PHILOSOPHY SECTION
+   ═══════════════════════════════════════════════════════════ */
+.philosophy {
+  padding: var(--space-2xl) var(--space-md);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: center;
+  border-top: 1px solid var(--gray-light);
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.philosophy__text {
+  max-width: 540px;
+}
+
+.philosophy__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: var(--space-md);
+}
+
+.philosophy__quote {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--text-heading);
+  text-transform: uppercase;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-md);
+}
+
+.philosophy__body {
+  font-size: var(--text-body);
+  color: var(--cream-dim);
+  line-height: 1.7;
+}
+
+.philosophy__visual {
+  position: relative;
+  height: 100%;
+  min-height: 400px;
+}
+
+.philosophy__rect {
+  position: absolute;
+  border: 1px solid var(--gray);
+}
+
+.philosophy__rect:nth-child(1) {
+  top: 10%; left: 10%;
+  width: 60%; height: 70%;
+  background: var(--gray-light);
+}
+
+.philosophy__rect:nth-child(2) {
+  top: 5%; left: 25%;
+  width: 50%; height: 60%;
+  border-color: var(--cream-dim);
+  opacity: 0.3;
+}
+
+.philosophy__rect:nth-child(3) {
+  top: 20%; left: 5%;
+  width: 70%; height: 50%;
+  background: var(--accent);
+  opacity: 0.08;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   NEWSLETTER
+   ═══════════════════════════════════════════════════════════ */
+.newsletter {
+  padding: var(--space-2xl) var(--space-md);
+  text-align: center;
+}
+
+.newsletter__title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--text-display);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-sm);
+}
+
+.newsletter__sub {
+  font-size: var(--text-body);
+  color: var(--cream-dim);
+  margin-bottom: var(--space-lg);
+}
+
+.newsletter__form {
+  display: flex;
+  max-width: 480px;
+  margin: 0 auto;
+  border: 1px solid var(--gray);
+}
+
+.newsletter__input {
+  flex: 1;
+  padding: var(--space-sm) var(--space-md);
+  background: transparent;
+  border: none;
+  color: var(--cream);
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  letter-spacing: 0.05em;
+  outline: none;
+}
+
+.newsletter__input::placeholder {
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.newsletter__submit {
+  padding: var(--space-sm) var(--space-md);
+  background: var(--cream);
+  color: var(--black);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-small);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.newsletter__submit:hover {
+  background: var(--white);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER — Massive wordmark (rectangles.fm style)
+   ═══════════════════════════════════════════════════════════ */
+.footer {
+  padding: var(--space-xl) var(--space-md) var(--space-md);
+  border-top: 1px solid var(--gray-light);
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.footer__col-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-small);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-sm);
+}
+
+.footer__col ul {
+  list-style: none;
+}
+
+.footer__col li {
+  margin-bottom: 6px;
+}
+
+.footer__col a {
+  font-size: var(--text-small);
+  color: var(--gray);
+  transition: color 0.3s ease;
+}
+
+.footer__col a:hover { color: var(--cream); }
+
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--gray-light);
+  margin-bottom: var(--space-lg);
+}
+
+.footer__copy {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--gray);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.footer__credit {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--gray);
+}
+
+.footer__wordmark {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(6rem, 18vw, 22rem);
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--cream);
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.footer__wordmark sup {
+  font-size: 0.15em;
+  vertical-align: super;
+  font-weight: 400;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REVEAL ANIMATION CLASSES
+   ═══════════════════════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .collection__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .product-card:nth-child(n) {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .product-card:nth-child(1) .product-card__image,
+  .product-card:nth-child(4) .product-card__image {
+    aspect-ratio: 3/4;
+  }
+
+  .featured {
+    grid-template-columns: 1fr;
+  }
+
+  .featured__image-wrap {
+    aspect-ratio: 3/4;
+  }
+
+  .philosophy {
+    grid-template-columns: 1fr;
+  }
+
+  .editorial__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .nav__links {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .collection__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .editorial__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .newsletter__form {
+    flex-direction: column;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ═══════════ NAVIGATION ═══════════ -->
+<nav class="nav">
+  <a href="#" class="nav__logo">FORMA<sup>®</sup></a>
+  <ul class="nav__links">
+    <li><a href="#collection">Collection</a></li>
+    <li><a href="#featured">Featured</a></li>
+    <li><a href="#lookbook">Lookbook</a></li>
+    <li><a href="#philosophy">About</a></li>
+  </ul>
+  <span class="nav__cart">Bag (0)</span>
+</nav>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="hero__bg"></div>
+  <div class="hero__rect"></div>
+  <div class="hero__content">
+    <p class="hero__tag">SS26 — Structural Essentials</p>
+    <h1 class="hero__title">
+      FORMA<span>Structural Clothing for the Modernist</span>
+    </h1>
+    <button class="hero__cta">
+      Shop Collection
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+  </div>
+</section>
+
+<!-- ═══════════ MARQUEE ═══════════ -->
+<div class="marquee">
+  <div class="marquee__track">
+    <span class="marquee__item">FORMA</span>
+    <span class="marquee__dot"></span>
+    <span class="marquee__item">STRUCTURAL</span>
+    <span class="marquee__dot"></span>
+    <span class="marquee__item">CLOTHING</span>
+    <span class="marquee__dot"></span>
+    <span class="marquee__item">HONEST</span>
+    <span class="marquee__dot"></span>
+    <span class="marquee__item">MATERIALS</span>
+    <span class="marquee__dot"></span>
+    <span class="marquee__item">ZERO</span>
+    <span class="marquee__dot"></span>
+    <span class="marquee__item">NOISE</span>
+    <span class="marquee__dot"></span>
+    <!-- Duplicate for seamless loop -->
+    <span class="marquee__item">FORMA</span>
+    <span class="marquee__dot"></span>
+    <span class="marquee__item">STRUCTURAL</span>
+    <span class="marquee__dot"></span>
+    <span class="marquee__item">CLOTHING</span>
+    <span class="marquee__dot"></span>
+    <span class="marquee__item">HONEST</span>
+    <span class="marquee__dot"></span>
+    <span class="marquee__item">MATERIALS</span>
+    <span class="marquee__dot"></span>
+    <span class="marquee__item">ZERO</span>
+    <span class="marquee__dot"></span>
+    <span class="marquee__item">NOISE</span>
+    <span class="marquee__dot"></span>
+  </div>
+</div>
+
+<!-- ═══════════ COLLECTION ═══════════ -->
+<section class="collection" id="collection">
+  <div class="collection__header">
+    <div>
+      <p class="collection__label">SS26 Collection</p>
+      <h2 class="collection__title">Essentials</h2>
+    </div>
+    <span class="collection__count">07 pieces</span>
+  </div>
+
+  <div class="collection__grid">
+    <article class="product-card">
+      <span class="product-card__tag">New</span>
+      <img class="product-card__image" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&h=1060&fit=crop" alt="Structured Oversized Tee">
+      <div class="product-card__overlay">
+        <span class="product-card__name">Structured Tee</span>
+        <span class="product-card__price">$120</span>
+      </div>
+    </article>
+
+    <article class="product-card">
+      <img class="product-card__image" src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&h=450&fit=crop" alt="Architectural Trousers">
+      <div class="product-card__overlay">
+        <span class="product-card__name">Architect Trousers</span>
+        <span class="product-card__price">$245</span>
+      </div>
+    </article>
+
+    <article class="product-card">
+      <img class="product-card__image" src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=450&fit=crop" alt="Form Wool Jacket">
+      <div class="product-card__overlay">
+        <span class="product-card__name">Form Jacket</span>
+        <span class="product-card__price">$485</span>
+      </div>
+    </article>
+
+    <article class="product-card">
+      <span class="product-card__tag">Limited</span>
+      <img class="product-card__image" src="https://images.unsplash.com/photo-1434389677669-e08b4cda3a40?w=1200&h=525&fit=crop" alt="Mono Long Sleeve">
+      <div class="product-card__overlay">
+        <span class="product-card__name">Mono Long Sleeve</span>
+        <span class="product-card__price">$165</span>
+      </div>
+    </article>
+
+    <article class="product-card">
+      <img class="product-card__image" src="https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=600&h=600&fit=crop" alt="Grid Cap">
+      <div class="product-card__overlay">
+        <span class="product-card__name">Grid Cap</span>
+        <span class="product-card__price">$65</span>
+      </div>
+    </article>
+
+    <article class="product-card">
+      <img class="product-card__image" src="https://images.unsplash.com/photo-1556906781-9a412961c28c?w=600&h=600&fit=crop" alt="Canvas Sneaker">
+      <div class="product-card__overlay">
+        <span class="product-card__name">Canvas Low</span>
+        <span class="product-card__price">$195</span>
+      </div>
+    </article>
+
+    <article class="product-card">
+      <img class="product-card__image" src="https://images.unsplash.com/photo-1622445275463-afa2ab738c34?w=600&h=600&fit=crop" alt="Minimal Belt">
+      <div class="product-card__overlay">
+        <span class="product-card__name">Edge Belt</span>
+        <span class="product-card__price">$85</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ═══════════ FEATURED ═══════════ -->
+<section class="featured" id="featured">
+  <div class="featured__image-wrap">
+    <img class="featured__image" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&h=1600&fit=crop&crop=faces" alt="The Structure Coat">
+  </div>
+  <div class="featured__content">
+    <p class="featured__label">Featured — SS26</p>
+    <h2 class="featured__name">The<br>Structure<br>Coat</h2>
+    <p class="featured__desc">
+      Architectural outerwear engineered from Japanese selvedge wool.
+      Zero linings, exposed seams, magnetic closures. Every detail is a decision.
+    </p>
+    <div class="featured__specs">
+      <div>
+        <p class="featured__spec-label">Material</p>
+        <p class="featured__spec-value">Japanese Wool</p>
+      </div>
+      <div>
+        <p class="featured__spec-label">Weight</p>
+        <p class="featured__spec-value">420gsm</p>
+      </div>
+      <div>
+        <p class="featured__spec-label">Origin</p>
+        <p class="featured__spec-value">Made in PT</p>
+      </div>
+      <div>
+        <p class="featured__spec-label">Color</p>
+        <p class="featured__spec-value">Obsidian</p>
+      </div>
+    </div>
+    <p class="featured__price">$890</p>
+    <button class="featured__btn">
+      Add to Bag
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+  </div>
+</section>
+
+<!-- ═══════════ EDITORIAL ═══════════ -->
+<section class="editorial" id="lookbook">
+  <div class="editorial__header">
+    <p class="editorial__label">Lookbook</p>
+    <h2 class="editorial__title">SS26 — Geometry of Dress</h2>
+  </div>
+
+  <div class="editorial__grid">
+    <div class="editorial__item">
+      <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&h=800&fit=crop" alt="Look 01">
+      <div class="editorial__item-label">
+        <p class="editorial__item-name">Look 01</p>
+        <p class="editorial__item-meta">Structured Tee + Architect Trousers</p>
+      </div>
+    </div>
+    <div class="editorial__item">
+      <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&h=800&fit=crop" alt="Look 02">
+      <div class="editorial__item-label">
+        <p class="editorial__item-name">Look 02</p>
+        <p class="editorial__item-meta">Form Jacket + Mono Pant</p>
+      </div>
+    </div>
+    <div class="editorial__item">
+      <img src="https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?w=600&h=800&fit=crop&crop=faces" alt="Look 03">
+      <div class="editorial__item-label">
+        <p class="editorial__item-name">Look 03</p>
+        <p class="editorial__item-meta">The Structure Coat</p>
+      </div>
+    </div>
+    <div class="editorial__item">
+      <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=600&h=800&fit=crop" alt="Look 04">
+      <div class="editorial__item-label">
+        <p class="editorial__item-name">Look 04</p>
+        <p class="editorial__item-meta">Canvas Low + Edge Belt</p>
+      </div>
+    </div>
+    <div class="editorial__item">
+      <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&h=800&fit=crop&crop=faces" alt="Look 05">
+      <div class="editorial__item-label">
+        <p class="editorial__item-name">Look 05</p>
+        <p class="editorial__item-meta">Grid Cap + Structured Tee</p>
+      </div>
+    </div>
+    <div class="editorial__item">
+      <img src="https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?w=600&h=800&fit=crop" alt="Look 06">
+      <div class="editorial__item-label">
+        <p class="editorial__item-name">Look 06</p>
+        <p class="editorial__item-meta">Full Collection</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PHILOSOPHY ═══════════ -->
+<section class="philosophy" id="philosophy">
+  <div class="philosophy__text">
+    <p class="philosophy__label">Philosophy</p>
+    <h2 class="philosophy__quote">Every line is a decision. Every seam is a commitment.</h2>
+    <p class="philosophy__body">
+      FORMA exists at the intersection of architecture and apparel. We design
+      clothing the way engineers design structures — with intention, restraint,
+      and an obsession with material honesty. No decoration. No compromise.
+      Just form following function.
+    </p>
+  </div>
+  <div class="philosophy__visual">
+    <div class="philosophy__rect"></div>
+    <div class="philosophy__rect"></div>
+    <div class="philosophy__rect"></div>
+  </div>
+</section>
+
+<!-- ═══════════ NEWSLETTER ═══════════ -->
+<section class="newsletter">
+  <h2 class="newsletter__title reveal">Stay in the Grid</h2>
+  <p class="newsletter__sub reveal">Early access, drops, and editorial. No noise.</p>
+  <form class="newsletter__form reveal" onsubmit="return false;">
+    <input class="newsletter__input" type="email" placeholder="your@email.com" required>
+    <button class="newsletter__submit" type="submit">Subscribe</button>
+  </form>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="footer">
+  <div class="footer__grid">
+    <div class="footer__col">
+      <p class="footer__col-title">Shop</p>
+      <ul>
+        <li><a href="#">New Arrivals</a></li>
+        <li><a href="#">Tops</a></li>
+        <li><a href="#">Bottoms</a></li>
+        <li><a href="#">Outerwear</a></li>
+        <li><a href="#">Accessories</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <p class="footer__col-title">About</p>
+      <ul>
+        <li><a href="#">Philosophy</a></li>
+        <li><a href="#">Materials</a></li>
+        <li><a href="#">Manufacturing</a></li>
+        <li><a href="#">Press</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <p class="footer__col-title">Help</p>
+      <ul>
+        <li><a href="#">Sizing</a></li>
+        <li><a href="#">Shipping</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <p class="footer__col-title">Social</p>
+      <ul>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Twitter</a></li>
+        <li><a href="#">TikTok</a></li>
+        <li><a href="#">Pinterest</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <span class="footer__copy">&copy; FORMA 2026. All Rights Reserved</span>
+    <span class="footer__credit">Design by Studio</span>
+  </div>
+
+  <div class="footer__wordmark">FORMA<sup>®</sup></div>
+</footer>
+
+<!-- ═══════════ SCRIPTS ═══════════ -->
+<script>
+// Lenis smooth scroll
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  smoothWheel: true,
+});
+
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
+
+// GSAP + ScrollTrigger
+gsap.registerPlugin(ScrollTrigger);
+
+// Hero entrance animations
+gsap.to('.hero__tag', {
+  opacity: 1, y: 0, duration: 1, delay: 0.3,
+  ease: 'power3.out'
+});
+gsap.to('.hero__title', {
+  opacity: 1, y: 0, duration: 1.2, delay: 0.5,
+  ease: 'power3.out'
+});
+gsap.to('.hero__cta', {
+  opacity: 1, y: 0, duration: 1, delay: 0.8,
+  ease: 'power3.out'
+});
+gsap.to('.hero__rect', {
+  opacity: 1, duration: 1.5, delay: 1,
+  ease: 'power2.out'
+});
+
+// Hero parallax
+gsap.to('.hero__rect', {
+  y: -80,
+  scrollTrigger: {
+    trigger: '.hero',
+    start: 'top top',
+    end: 'bottom top',
+    scrub: 1,
+  }
+});
+
+gsap.to('.hero__title', {
+  y: -40,
+  scrollTrigger: {
+    trigger: '.hero',
+    start: 'top top',
+    end: 'bottom top',
+    scrub: 1,
+  }
+});
+
+// Product cards staggered reveal
+gsap.utils.toArray('.product-card').forEach((card, i) => {
+  gsap.to(card, {
+    opacity: 1,
+    y: 0,
+    duration: 0.8,
+    delay: i * 0.1,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: card,
+      start: 'top 85%',
+      toggleActions: 'play none none none',
+    }
+  });
+});
+
+// Featured section parallax
+gsap.from('.featured__image', {
+  scale: 1.15,
+  scrollTrigger: {
+    trigger: '.featured',
+    start: 'top bottom',
+    end: 'bottom top',
+    scrub: 1,
+  }
+});
+
+gsap.from('.featured__name', {
+  opacity: 0,
+  x: 60,
+  duration: 1,
+  ease: 'power3.out',
+  scrollTrigger: {
+    trigger: '.featured__content',
+    start: 'top 70%',
+    toggleActions: 'play none none none',
+  }
+});
+
+gsap.from('.featured__desc', {
+  opacity: 0,
+  y: 30,
+  duration: 0.8,
+  delay: 0.2,
+  ease: 'power3.out',
+  scrollTrigger: {
+    trigger: '.featured__content',
+    start: 'top 70%',
+    toggleActions: 'play none none none',
+  }
+});
+
+// Editorial items staggered
+gsap.utils.toArray('.editorial__item').forEach((item, i) => {
+  gsap.from(item, {
+    opacity: 0,
+    y: 50,
+    duration: 0.8,
+    delay: i * 0.08,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: item,
+      start: 'top 85%',
+      toggleActions: 'play none none none',
+    }
+  });
+});
+
+// Philosophy section
+gsap.from('.philosophy__quote', {
+  opacity: 0,
+  x: -40,
+  duration: 1,
+  ease: 'power3.out',
+  scrollTrigger: {
+    trigger: '.philosophy',
+    start: 'top 60%',
+    toggleActions: 'play none none none',
+  }
+});
+
+gsap.from('.philosophy__rect:nth-child(1)', {
+  scale: 0.8,
+  opacity: 0,
+  duration: 1.2,
+  ease: 'power3.out',
+  scrollTrigger: {
+    trigger: '.philosophy__visual',
+    start: 'top 70%',
+    toggleActions: 'play none none none',
+  }
+});
+
+gsap.from('.philosophy__rect:nth-child(2)', {
+  scale: 0.6,
+  opacity: 0,
+  duration: 1.4,
+  delay: 0.2,
+  ease: 'power3.out',
+  scrollTrigger: {
+    trigger: '.philosophy__visual',
+    start: 'top 70%',
+    toggleActions: 'play none none none',
+  }
+});
+
+// Newsletter reveal
+gsap.utils.toArray('.newsletter .reveal').forEach((el, i) => {
+  gsap.from(el, {
+    opacity: 0,
+    y: 30,
+    duration: 0.8,
+    delay: i * 0.15,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: el,
+      start: 'top 85%',
+      toggleActions: 'play none none none',
+    }
+  });
+});
+
+// Footer wordmark scale on scroll
+gsap.from('.footer__wordmark', {
+  scale: 0.85,
+  opacity: 0.3,
+  scrollTrigger: {
+    trigger: '.footer__wordmark',
+    start: 'top 90%',
+    end: 'bottom bottom',
+    scrub: 1,
+  }
+});
+
+// Marquee speed on scroll
+let marqueeSpeed = 30;
+const marqueeTrack = document.querySelector('.marquee__track');
+if (marqueeTrack) {
+  ScrollTrigger.create({
+    trigger: '.marquee',
+    start: 'top bottom',
+    end: 'bottom top',
+    onUpdate: (self) => {
+      const velocity = Math.abs(self.getVelocity()) / 1000;
+      const newDuration = Math.max(10, 30 - velocity * 2);
+      marqueeTrack.style.animationDuration = newDuration + 's';
+    }
+  });
+}
+</script>
+
+</body>
+</html>

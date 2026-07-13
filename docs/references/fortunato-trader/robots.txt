@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://fortunatotrader.com.br/sitemap.xml

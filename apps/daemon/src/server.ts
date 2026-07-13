@@ -1558,7 +1558,7 @@ export async function startServer({ port = 7456, returnServer = false } = {}) {
     runs: createChatRunService({ createSseResponse, createSseErrorPayload }),
   };
 
-  const composeDaemonSystemPrompt = async ({ projectId, skillId, designSystemId }) => {
+  const composeDaemonSystemPrompt = async ({ projectId, skillId, designSystemId, userMessage }) => {
     const project = typeof projectId === 'string' && projectId ? getProject(db, projectId) : null;
     const effectiveSkillId = typeof skillId === 'string' && skillId ? skillId : project?.skillId;
     const effectiveDesignSystemId = typeof designSystemId === 'string' && designSystemId ? designSystemId : project?.designSystemId;
@@ -1597,6 +1597,7 @@ export async function startServer({ port = 7456, returnServer = false } = {}) {
       designSystemTitle,
       metadata,
       template,
+      userMessage,
     });
   };
 
@@ -1693,7 +1694,7 @@ export async function startServer({ port = 7456, returnServer = false } = {}) {
     const attachmentHint = safeAttachments.length
       ? `\n\nAttached project files: ${safeAttachments.map((p) => `\`${p}\``).join(', ')}`
       : '';
-    const daemonSystemPrompt = await composeDaemonSystemPrompt({ projectId, skillId, designSystemId });
+    const daemonSystemPrompt = await composeDaemonSystemPrompt({ projectId, skillId, designSystemId, userMessage: message });
     const instructionPrompt = [daemonSystemPrompt, systemPrompt]
       .map((part) => (typeof part === 'string' ? part.trim() : ''))
       .filter(Boolean)

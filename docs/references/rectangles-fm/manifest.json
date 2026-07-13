@@ -1,0 +1,443 @@
+{
+  "url": "https://rectangles.fm/",
+  "extractedAt": "2026-07-10T23:30:03.111Z",
+  "totalAssets": 61,
+  "totalSize": 7981593,
+  "categories": {
+    "images": 36,
+    "fonts": 3,
+    "svg": 3,
+    "css": 1,
+    "js": 18,
+    "video": 0
+  },
+  "assets": [
+    {
+      "url": "https://framerusercontent.com/images/whYEF16Jw6pKjxiNIglb5UgWyM.svg?scale-down-to=512&width=1300&height=208",
+      "localPath": "assets/svg/whYEF16Jw6pKjxiNIglb5UgWyM.svg",
+      "category": "svg",
+      "size": 3142,
+      "contentType": "image/svg+xml"
+    },
+    {
+      "url": "https://unpkg.com/lenis@1.3.23/dist/lenis.css",
+      "localPath": "assets/css/lenis.css",
+      "category": "css",
+      "size": 513,
+      "contentType": "text/css"
+    },
+    {
+      "url": "https://framerusercontent.com/images/InJG1J21go5JmeYzisGCtJ1n2qM.png?width=192&height=104",
+      "localPath": "assets/images/InJG1J21go5JmeYzisGCtJ1n2qM.png",
+      "category": "images",
+      "size": 7209,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://rectangles.fm/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js",
+      "localPath": "assets/js/email-decode.min.js",
+      "category": "js",
+      "size": 1239,
+      "contentType": "application/javascript"
+    },
+    {
+      "url": "https://framerusercontent.com/images/Wprb5D6auoGss28J3jJdAsqxXUg.png?width=442&height=91",
+      "localPath": "assets/images/Wprb5D6auoGss28J3jJdAsqxXUg.png",
+      "category": "images",
+      "size": 6917,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/Gi75jRWeyL1hAuuEEBfcilngurY.svg?scale-down-to=512&width=677&height=185",
+      "localPath": "assets/svg/Gi75jRWeyL1hAuuEEBfcilngurY.svg",
+      "category": "svg",
+      "size": 2048,
+      "contentType": "image/svg+xml"
+    },
+    {
+      "url": "https://framerusercontent.com/images/J5IAmKnX15PXFHRSI4deiBK6yPY.svg?width=475&height=64",
+      "localPath": "assets/svg/J5IAmKnX15PXFHRSI4deiBK6yPY.svg",
+      "category": "svg",
+      "size": 2228,
+      "contentType": "image/svg+xml"
+    },
+    {
+      "url": "https://framerusercontent.com/images/6mcf62RlDfRfU61Yg5vb2pefpi4.png?width=256&height=256",
+      "localPath": "assets/images/6mcf62RlDfRfU61Yg5vb2pefpi4.png",
+      "category": "images",
+      "size": 49646,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/assets/eEtLSL78VieQiIKjCgC4acH0wxU.woff2",
+      "localPath": "assets/fonts/eEtLSL78VieQiIKjCgC4acH0wxU.woff2",
+      "category": "fonts",
+      "size": 8316,
+      "contentType": "font/woff2"
+    },
+    {
+      "url": "https://framerusercontent.com/sites/61VSo4CS1O7GHvGtKy6Y0v/rolldown-runtime.BRwTesTf.mjs",
+      "localPath": "assets/js/rolldown-runtime.BRwTesTf.mjs",
+      "category": "js",
+      "size": 487,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://framerusercontent.com/assets/cW1TLQ7h8KOtTT1r5NAFiEzoA.woff2",
+      "localPath": "assets/fonts/cW1TLQ7h8KOtTT1r5NAFiEzoA.woff2",
+      "category": "fonts",
+      "size": 39788,
+      "contentType": "font/woff2"
+    },
+    {
+      "url": "https://framerusercontent.com/assets/C6wKrH7eIKbmEdUYT2717INf8PY.woff2",
+      "localPath": "assets/fonts/C6wKrH7eIKbmEdUYT2717INf8PY.woff2",
+      "category": "fonts",
+      "size": 40916,
+      "contentType": "font/woff2"
+    },
+    {
+      "url": "https://framerusercontent.com/images/mcpLofFTKVLDU0D00OGuK6nq0.png?scale-down-to=1024&width=1672&height=2016",
+      "localPath": "assets/images/mcpLofFTKVLDU0D00OGuK6nq0.png",
+      "category": "images",
+      "size": 49300,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/QV9pt3vGZpB3yihyEu5cSPRW5Zk.png?scale-down-to=1024&width=1672&height=2016",
+      "localPath": "assets/images/QV9pt3vGZpB3yihyEu5cSPRW5Zk.png",
+      "category": "images",
+      "size": 61123,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/6ArWxwCSt6lnDkcWCnZFFQlFI.png?scale-down-to=1024&width=1738&height=2016",
+      "localPath": "assets/images/6ArWxwCSt6lnDkcWCnZFFQlFI.png",
+      "category": "images",
+      "size": 16343,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/sites/61VSo4CS1O7GHvGtKy6Y0v/shared-lib.5tDcGm2N.mjs",
+      "localPath": "assets/js/shared-lib.5tDcGm2N.mjs",
+      "category": "js",
+      "size": 63113,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://framerusercontent.com/sites/61VSo4CS1O7GHvGtKy6Y0v/script_main.CdZD0x0i.mjs",
+      "localPath": "assets/js/script_main.CdZD0x0i.mjs",
+      "category": "js",
+      "size": 85951,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://framerusercontent.com/images/Tyo1qIEC8WkNYw0aeVSU28XFSB0.png?width=842&height=590",
+      "localPath": "assets/images/Tyo1qIEC8WkNYw0aeVSU28XFSB0.png",
+      "category": "images",
+      "size": 106385,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/sites/61VSo4CS1O7GHvGtKy6Y0v/react.DUGQs-Jg.mjs",
+      "localPath": "assets/js/react.DUGQs-Jg.mjs",
+      "category": "js",
+      "size": 144660,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://framerusercontent.com/sites/61VSo4CS1O7GHvGtKy6Y0v/ecfLv_9O4aHuctIymnNdCdfR2dUqpD5V7sbAPKrQKRk.ObB7jen-.mjs",
+      "localPath": "assets/js/ecfLv_9O4aHuctIymnNdCdfR2dUqpD5V7sbAPKrQKRk.ObB7jen-.mjs",
+      "category": "js",
+      "size": 338906,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://framerusercontent.com/sites/61VSo4CS1O7GHvGtKy6Y0v/framer.GMKhKBYS.mjs",
+      "localPath": "assets/js/framer.GMKhKBYS.mjs",
+      "category": "js",
+      "size": 437261,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://framerusercontent.com/sites/61VSo4CS1O7GHvGtKy6Y0v/motion.WdalzSvd.mjs",
+      "localPath": "assets/js/motion.WdalzSvd.mjs",
+      "category": "js",
+      "size": 151625,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://framerusercontent.com/images/QpcHuo7nij6uN7xwfKVCdmBEIM.webp?width=528&height=776",
+      "localPath": "assets/images/QpcHuo7nij6uN7xwfKVCdmBEIM.webp",
+      "category": "images",
+      "size": 40146,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/4Vbka6yfEoCFjF47sI2QbBgc.png?width=1672&height=2023",
+      "localPath": "assets/images/4Vbka6yfEoCFjF47sI2QbBgc.png",
+      "category": "images",
+      "size": 23876,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/V5WLmqH6t2HXGRq0hEnkAhkE3r0.png?width=2499&height=3747",
+      "localPath": "assets/images/V5WLmqH6t2HXGRq0hEnkAhkE3r0.png",
+      "category": "images",
+      "size": 1090838,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/vINslgH02zui7ggva4bLiSsoI.png?width=886&height=891",
+      "localPath": "assets/images/vINslgH02zui7ggva4bLiSsoI.png",
+      "category": "images",
+      "size": 258761,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/uotSV42TnXai6oJbXOYGN5m8.png?width=1350&height=1788",
+      "localPath": "assets/images/uotSV42TnXai6oJbXOYGN5m8.png",
+      "category": "images",
+      "size": 750530,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/HsfLXBq32v7ZJj8DN3oDSGwm0zI.png?width=886&height=891",
+      "localPath": "assets/images/HsfLXBq32v7ZJj8DN3oDSGwm0zI.png",
+      "category": "images",
+      "size": 245222,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/6hlk4ChXtx40AmZr00sjMTLJWs0.webp?width=868&height=868",
+      "localPath": "assets/images/6hlk4ChXtx40AmZr00sjMTLJWs0.webp",
+      "category": "images",
+      "size": 31400,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/f2WMbhnwhAPU3kDgWwBDrp2h5To.png?width=1215&height=900",
+      "localPath": "assets/images/f2WMbhnwhAPU3kDgWwBDrp2h5To.png",
+      "category": "images",
+      "size": 252186,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/flyaNvsnZKH1FpDZRGQPaPxBcV0.png?width=1215&height=900",
+      "localPath": "assets/images/flyaNvsnZKH1FpDZRGQPaPxBcV0.png",
+      "category": "images",
+      "size": 246106,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/HhVrOf7NWrvNtYVHrPIo0XIQM.png?width=886&height=891",
+      "localPath": "assets/images/HhVrOf7NWrvNtYVHrPIo0XIQM.png",
+      "category": "images",
+      "size": 298015,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/aPnhTR9VpZKnys1FFlKiUtn4XFo.png?width=886&height=891",
+      "localPath": "assets/images/aPnhTR9VpZKnys1FFlKiUtn4XFo.png",
+      "category": "images",
+      "size": 257878,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framer.com/edit/init.mjs",
+      "localPath": "assets/js/init.mjs",
+      "category": "js",
+      "size": 7316,
+      "contentType": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://app.framerstatic.com/chunk-WMNPBM32.mjs",
+      "localPath": "assets/js/chunk-WMNPBM32.mjs",
+      "category": "js",
+      "size": 5319,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://framerusercontent.com/images/qm4TCqMnQqXy9IqsosWHlFj88.png?width=1400&height=224",
+      "localPath": "assets/images/qm4TCqMnQqXy9IqsosWHlFj88.png",
+      "category": "images",
+      "size": 9892,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/gsap.min.js",
+      "localPath": "assets/js/gsap.min.js",
+      "category": "js",
+      "size": 72779,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/ScrollTrigger.min.js",
+      "localPath": "assets/js/ScrollTrigger.min.js",
+      "category": "js",
+      "size": 44235,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://app.framerstatic.com/chunk-HMF7T2NG.mjs",
+      "localPath": "assets/js/chunk-HMF7T2NG.mjs",
+      "category": "js",
+      "size": 769,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://app.framerstatic.com/chunk-6VQPURR3.mjs",
+      "localPath": "assets/js/chunk-6VQPURR3.mjs",
+      "category": "js",
+      "size": 1798,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://app.framerstatic.com/chunk-2F5FSM3K.mjs",
+      "localPath": "assets/js/chunk-2F5FSM3K.mjs",
+      "category": "js",
+      "size": 209,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://app.framerstatic.com/editorbar.BEETKCND.mjs",
+      "localPath": "assets/js/editorbar.BEETKCND.mjs",
+      "category": "js",
+      "size": 2299,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://app.framerstatic.com/chunk-CT63CFX7.mjs",
+      "localPath": "assets/js/chunk-CT63CFX7.mjs",
+      "category": "js",
+      "size": 4241,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://framer.com/bootstrap.7bfce40f145f2895acab3198e0c542f6ad79a5dc.js",
+      "localPath": "assets/js/bootstrap.7bfce40f145f2895acab3198e0c542f6ad79a5dc.js",
+      "category": "js",
+      "size": 1343,
+      "contentType": "application/javascript"
+    },
+    {
+      "url": "https://framerusercontent.com/images/rFUOXRF18CnKQg9ZR6wTCNvPy4A.png?width=893&height=1260",
+      "localPath": "assets/images/rFUOXRF18CnKQg9ZR6wTCNvPy4A.png",
+      "category": "images",
+      "size": 379225,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/v6YSJOhCOWmaqW50MS89f8cJvk.png?width=1215&height=900",
+      "localPath": "assets/images/v6YSJOhCOWmaqW50MS89f8cJvk.png",
+      "category": "images",
+      "size": 267449,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/c1qDQ38dSeL41RjKs094eAH9uaA.png?width=771&height=1021",
+      "localPath": "assets/images/c1qDQ38dSeL41RjKs094eAH9uaA.png",
+      "category": "images",
+      "size": 314388,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/YD2VYfsYvrvnOxsys78IC5u4.png?scale-down-to=1024&width=893&height=1260",
+      "localPath": "assets/images/YD2VYfsYvrvnOxsys78IC5u4.png",
+      "category": "images",
+      "size": 229124,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/9pMJOVYBhdi9wtix0HTvZZXDk.png?width=893&height=1260",
+      "localPath": "assets/images/9pMJOVYBhdi9wtix0HTvZZXDk.png",
+      "category": "images",
+      "size": 383432,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/VbtPlSgI1VGpB552FsWQmWfPk0.png?width=841&height=590",
+      "localPath": "assets/images/VbtPlSgI1VGpB552FsWQmWfPk0.png",
+      "category": "images",
+      "size": 95351,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/ywfx7OwlLu6mRBdf86p4BCAtxpk.png?width=841&height=590",
+      "localPath": "assets/images/ywfx7OwlLu6mRBdf86p4BCAtxpk.png",
+      "category": "images",
+      "size": 97577,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/RHHoXExC0w7SvD7Kgr4s9MottQw.png?width=841&height=590",
+      "localPath": "assets/images/RHHoXExC0w7SvD7Kgr4s9MottQw.png",
+      "category": "images",
+      "size": 97565,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/P67D6vIpEWTgY3sk0baovYJuEY.png?width=841&height=590",
+      "localPath": "assets/images/P67D6vIpEWTgY3sk0baovYJuEY.png",
+      "category": "images",
+      "size": 95477,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/Sd1cihkvgH8L2a02I9veJufHIo4.png?width=841&height=590",
+      "localPath": "assets/images/Sd1cihkvgH8L2a02I9veJufHIo4.png",
+      "category": "images",
+      "size": 99399,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/UXzpGBtGEPufuONTUZNupcrJyw.png?width=841&height=590",
+      "localPath": "assets/images/UXzpGBtGEPufuONTUZNupcrJyw.png",
+      "category": "images",
+      "size": 99831,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/9rlInE1XTM3P0yGvwLUtFhT1Lg.png?width=841&height=590",
+      "localPath": "assets/images/9rlInE1XTM3P0yGvwLUtFhT1Lg.png",
+      "category": "images",
+      "size": 98508,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/18X6tEihRsJZ7LKyzpoVP5QmU.png?width=841&height=590",
+      "localPath": "assets/images/18X6tEihRsJZ7LKyzpoVP5QmU.png",
+      "category": "images",
+      "size": 98398,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/9BHSS0twaJAXXqR6JQrD36Zew.png?width=30&height=101",
+      "localPath": "assets/images/9BHSS0twaJAXXqR6JQrD36Zew.png",
+      "category": "images",
+      "size": 2219,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/ifeXg0mEEOn002JuZCzLim8Tw4.png?width=151&height=151",
+      "localPath": "assets/images/ifeXg0mEEOn002JuZCzLim8Tw4.png",
+      "category": "images",
+      "size": 5998,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/iMzl7KsrkzTZYb6I6J6v5LZwgE.webp?scale-down-to=1024&width=893&height=1265",
+      "localPath": "assets/images/iMzl7KsrkzTZYb6I6J6v5LZwgE.webp",
+      "category": "images",
+      "size": 112054,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://framerusercontent.com/images/fvmxLZWB7i9PseVROf5XIHIJbk.png?width=888&height=957",
+      "localPath": "assets/images/fvmxLZWB7i9PseVROf5XIHIJbk.png",
+      "category": "images",
+      "size": 243324,
+      "contentType": "image/avif"
+    }
+  ]
+}

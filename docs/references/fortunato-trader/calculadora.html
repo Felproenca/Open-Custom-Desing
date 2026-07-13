@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Lucros | Fortunato Trader</title>
+  <meta name="description" content="Calcule sua projeção de lucro mensal operando futuros. Referências de drawdown, gestão de risco e recomendações personalizadas.">
+  <link rel="canonical" href="https://fortunatotrader.com.br/calculadora.html">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #050505; --bg2: #0A0A0A; --surface: #111; --card: #161616; --border: #1E1E1E; --border2: #2A2A2A;
+      --white: #FFF; --gray: #B0B0B0; --muted: #666; --orange: #FF6A00; --orange-glow: rgba(255,106,0,0.3);
+      --green: #00E676; --red: #FF1744; --display: 'Anton', sans-serif; --body: 'Inter', sans-serif; --mono: 'JetBrains Mono', monospace;
+    }
+    html { background: var(--bg); color: var(--white); font-family: var(--body); -webkit-font-smoothing: antialiased; }
+    body { background: var(--bg); }
+    a { color: inherit; text-decoration: none; }
+
+    /* NAV */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.2rem 3rem; display: flex; align-items: center; justify-content: space-between; background: rgba(5,5,5,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .nav-logo { font-family: var(--display); font-size: 1.5rem; letter-spacing: 0.06em; color: var(--orange); }
+    .nav-logo span { color: var(--white); }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--gray); transition: color 0.3s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-wa { background: #25D366; color: #fff !important; padding: 0.6rem 1.4rem; border-radius: 6px; font-weight: 700; font-size: 0.75rem; }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+    .nav-toggle span { width: 22px; height: 2px; background: var(--white); transition: all 0.3s; }
+
+    /* HERO */
+    .hero { padding: 10rem 3rem 4rem; max-width: 900px; margin: 0 auto; text-align: center; }
+    .hero-badge { display: inline-block; font-family: var(--mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--orange); background: rgba(255,106,0,0.1); border: 1px solid rgba(255,106,0,0.2); padding: 0.4rem 1rem; border-radius: 100px; margin-bottom: 1.5rem; }
+    .hero h1 { font-family: var(--display); font-size: clamp(2rem, 5vw, 3.5rem); text-transform: uppercase; margin-bottom: 1rem; }
+    .hero h1 .accent { color: var(--orange); }
+    .hero p { font-size: 1.1rem; color: var(--gray); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+
+    /* SECTION */
+    .section { padding: 5rem 3rem; max-width: 1200px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 3rem; }
+    .section-label { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); margin-bottom: 0.8rem; }
+    .section-title { font-family: var(--display); font-size: clamp(2rem, 4vw, 3rem); text-transform: uppercase; margin-bottom: 1rem; }
+    .section-desc { font-size: 1rem; color: var(--gray); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+    .section-divider { width: 50px; height: 3px; background: var(--orange); margin: 1.5rem auto; }
+
+    /* CALCULATOR */
+    .calc-wrapper { max-width: 900px; margin: 0 auto; }
+    .calc-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 3rem; position: relative; overflow: hidden; }
+    .calc-card::before { content: ''; position: absolute; width: 200px; height: 200px; background: var(--green); filter: blur(100px); opacity: 0.05; border-radius: 50%; bottom: -30%; left: -10%; }
+    .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; position: relative; }
+    .calc-field label { display: block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+    .calc-field select, .calc-field input { width: 100%; padding: 0.8rem 1rem; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; color: var(--white); font-family: var(--body); font-size: 0.9rem; outline: none; transition: border-color 0.3s; }
+    .calc-field select:focus, .calc-field input:focus { border-color: var(--orange); }
+    .calc-field select option { background: var(--bg2); }
+    .calc-btn { width: 100%; background: var(--orange); color: var(--bg); padding: 1rem; border: none; border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.3s; font-family: var(--body); position: relative; }
+    .calc-btn:hover { box-shadow: 0 0 30px var(--orange-glow); transform: translateY(-2px); }
+    .calc-result { display: none; margin-top: 2rem; position: relative; }
+    .calc-result h3 { font-size: 1.1rem; margin-bottom: 1.5rem; }
+    .calc-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+    .calc-stat { text-align: center; padding: 1.5rem; background: var(--bg2); border-radius: 10px; border: 1px solid var(--border); }
+    .calc-stat .num { font-family: var(--display); font-size: 2rem; color: var(--orange); }
+    .calc-stat .label { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.3rem; font-weight: 600; }
+
+    /* RISK REFERENCE */
+    .risk-section { margin-top: 2rem; }
+    .risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+    .risk-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+    .risk-card h4 { font-size: 0.85rem; margin-bottom: 1rem; color: var(--white); }
+    .risk-table { width: 100%; border-collapse: collapse; }
+    .risk-table th { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-align: left; padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+    .risk-table td { font-size: 0.8rem; color: var(--gray); padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+    .risk-table tr:last-child td { border-bottom: none; }
+    .risk-table .warn { color: var(--red); font-weight: 600; }
+    .risk-table .ok { color: var(--green); font-weight: 600; }
+
+    /* RECOMMENDATION */
+    .calc-rec { background: rgba(0,230,118,0.05); border: 1px solid rgba(0,230,118,0.2); border-radius: 10px; padding: 1.5rem; margin-top: 1.5rem; }
+    .calc-rec h4 { color: var(--green); font-size: 0.85rem; margin-bottom: 0.5rem; }
+    .calc-rec p { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
+
+    /* CONTENT */
+    .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
+    .content-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; }
+    .content-card h3 { font-size: 1.1rem; margin-bottom: 1rem; }
+    .content-card p { font-size: 0.9rem; color: var(--gray); line-height: 1.7; margin-bottom: 1rem; }
+    .content-card ul { list-style: none; }
+    .content-card li { font-size: 0.85rem; color: var(--gray); padding: 0.4rem 0; border-bottom: 1px solid var(--border); }
+    .content-card li:last-child { border-bottom: none; }
+    .content-card li strong { color: var(--white); }
+
+    /* TIPS */
+    .tips-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .tip { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; text-align: center; }
+    .tip .icon { font-size: 2rem; margin-bottom: 1rem; }
+    .tip h4 { font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .tip p { font-size: 0.8rem; color: var(--gray); line-height: 1.5; }
+
+    /* FOOTER */
+    .footer { background: var(--bg); padding: 3rem; border-top: 1px solid var(--border); margin-top: 5rem; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 0.7rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 0.8rem; color: var(--muted); transition: color 0.3s; }
+    .footer-links a:hover { color: var(--orange); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .hero { padding: 8rem 1.5rem 2rem; }
+      .section { padding: 3rem 1.5rem; }
+      .calc-grid { grid-template-columns: 1fr; }
+      .calc-stats { grid-template-columns: 1fr; }
+      .risk-grid { grid-template-columns: 1fr; }
+      .content-grid { grid-template-columns: 1fr; }
+      .tips-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">FORTUNATO<span>TRADER</span></a>
+    <div class="nav-links">
+      <a href="index.html#cupons">Cupons</a>
+      <a href="blog.html">Blog</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="calculadora.html">Calculadora</a>
+      <a href="index.html#sobre">Quem Sou</a>
+      <a href="https://wa.me/message/6IT6E2X5LGCQM1" class="nav-wa">WhatsApp</a>
+    </div>
+    <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">Ferramenta IA</div>
+    <h1>Quanto Você Pode <span class="accent">Ganhar?</span></h1>
+    <p>Calcule sua projeção de lucro mensal com base no seu estilo de trading. Referências de drawdown e gestão de risco incluídas.</p>
+  </section>
+
+  <!-- CALCULATOR -->
+  <section class="section">
+    <div class="calc-wrapper">
+      <div class="calc-card">
+        <div class="calc-grid">
+          <div class="calc-field">
+            <label>Ativo</label>
+            <select id="calcAsset">
+              <option value="MNQ">MNQ (Micro Nasdaq) — $2/ponto</option>
+              <option value="MES">MES (Micro S&P 500) — $5/ponto</option>
+              <option value="NQ">NQ (E-mini Nasdaq) — $20/ponto</option>
+              <option value="ES">ES (E-mini S&P 500) — $50/ponto</option>
+            </select>
+          </div>
+          <div class="calc-field">
+            <label>Tamanho da Conta</label>
+            <select id="calcAccount" onchange="updateDrawdown()">
+              <option value="25000">$25.000</option>
+              <option value="50000" selected>$50.000</option>
+              <option value="100000">$100.000</option>
+              <option value="150000">$150.000</option>
+            </select>
+          </div>
+          <div class="calc-field">
+            <label>Trades por Dia</label>
+            <input type="number" id="calcTrades" value="3" min="1" max="20">
+          </div>
+          <div class="calc-field">
+            <label>Pontos Médios por Trade</label>
+            <input type="number" id="calcPoints" value="15" min="1" max="200">
+          </div>
+        </div>
+        <button class="calc-btn" onclick="calculateProfit()">Calcular Lucro Projetado</button>
+
+        <div class="calc-result" id="calcResult">
+          <h3>📊 Sua Projeção Mensal</h3>
+          <div class="calc-stats" id="calcStats"></div>
+
+          <div class="risk-section">
+            <h3 style="font-size:1rem;margin-bottom:0.5rem">⚠️ Referência de Risco</h3>
+            <p style="font-size:0.85rem;color:var(--gray);margin-bottom:1rem">Entenda os limites da sua conta antes de operar.</p>
+            <div class="risk-grid">
+              <div class="risk-card">
+                <h4>📉 Drawdown por Conta</h4>
+                <table class="risk-table" id="drawdownTable">
+                  <tr><th>Conta</th><th>Drawdown Máx.</th><th>Perda/Dia Rec.</th></tr>
+                </table>
+              </div>
+              <div class="risk-card">
+                <h4>💰 Gestão de Risco</h4>
+                <table class="risk-table">
+                  <tr><th>Regra</th><th>Valor</th><th>Status</th></tr>
+                  <tr><td>Risco por trade</td><td id="riskPerTrade">-</td><td id="riskStatus">-</td></tr>
+                  <tr><td>Perda diária máx.</td><td id="maxDailyLoss">-</td><td>-</td></tr>
+                  <tr><td>Trades p/ atingir DD</td><td id="tradesToDD">-</td><td>-</td></tr>
+                  <tr><td>Risco-retorno mín.</td><td>2:1</td><td class="ok">✓ Ideal</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="calc-rec" id="calcRec"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTEÚDO EDUCATIVO -->
+  <section class="section" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);max-width:100%;padding:5rem 3rem">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="section-header">
+        <div class="section-label">// Educação</div>
+        <h2 class="section-title">Entenda os Números</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="content-grid">
+        <div class="content-card">
+          <h3>📉 O que é Drawdown?</h3>
+          <p>Drawdown é a maior queda entre o pico e o vale da sua conta. Se sua conta vai de $50.000 para $47.500, o drawdown é de $2.500 (5%).</p>
+          <ul>
+            <li><strong>Drawdown estático:</strong> Fixo no saldo inicial (mais previsível)</li>
+            <li><strong>Drawdown trailing:</strong> Acompanha seu lucro (mais desafiador)</li>
+            <li><strong>Drawdown diário:</strong> Limite de perda em um único dia</li>
+          </ul>
+        </div>
+        <div class="content-card">
+          <h3>💰 Quanto Posso Perder?</h3>
+          <p>A regra de ouro: nunca arrisque mais de 1-2% do capital por trade. Com conta de $50.000, o máximo por trade é $500-$1.000.</p>
+          <ul>
+            <li><strong>1% por trade:</strong> $500 de risco em conta de $50K</li>
+            <li><strong>2% por trade:</strong> $1.000 de risco (mais agressivo)</li>
+            <li><strong>Perda diária:</strong> Pare após 3 perdas seguidas</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DICAS -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-label">// Dicas</div>
+      <h2 class="section-title">Para Lucrar com Consistência</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="tips-grid">
+      <div class="tip">
+        <div class="icon">🎯</div>
+        <h4>Qualidade > Quantidade</h4>
+        <p>Melhor 2 trades bons por dia do que 10 trades ruins. Foco em setups de alta probabilidade.</p>
+      </div>
+      <div class="tip">
+        <div class="icon">📊</div>
+        <h4>Registre Tudo</h4>
+        <p>Anote cada trade: entrada, saída, motivo, resultado. O diário de trading é sua ferramenta de melhoria.</p>
+      </div>
+      <div class="tip">
+        <div class="icon">🧠</div>
+        <h4>Disciplina Acima de Tudo</h4>
+        <p>Siga suas regras sem exceção. Revenge trading (operar por vingança) é o maior inimigo do trader.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="footer-copy">&copy; 2026 Fortunato Trader — Wesley Fortunato</span>
+      <div class="footer-links">
+        <a href="index.html">Início</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="calculadora.html">Calculadora</a>
+        <a href="blog.html">Blog</a>
+        <a href="index.html#faq">FAQ</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // DRAWDOWN DATA
+    const drawdownData = {
+      25000: { dd: 1500, ddPct: 6, dailyRec: 375 },
+      50000: { dd: 2500, ddPct: 5, dailyRec: 625 },
+      100000: { dd: 3000, ddPct: 3, dailyRec: 750 },
+      150000: { dd: 5000, ddPct: 3.3, dailyRec: 1250 }
+    };
+
+    function updateDrawdown() {
+      const account = parseInt(document.getElementById('calcAccount').value);
+      const d = drawdownData[account];
+      if (!d) return;
+
+      const table = document.getElementById('drawdownTable');
+      table.innerHTML = `
+        <tr><th>Conta</th><th>Drawdown Máx.</th><th>Perda/Dia Rec.</th></tr>
+        <tr><td>$${(account/1000).toFixed(0)}K</td><td>$${d.dd.toLocaleString()} (${d.ddPct}%)</td><td class="ok">$${d.dailyRec.toLocaleString()}</td></tr>
+        <tr><td>$${(account/2000).toFixed(0)}K (metade)</td><td>$${(d.dd/2).toLocaleString()}</td><td>$${(d.dailyRec/2).toLocaleString()}</td></tr>
+        <tr><td>$${(account/4000).toFixed(0)}K (1/4)</td><td>$${(d.dd/4).toLocaleString()}</td><td>$${(d.dailyRec/4).toLocaleString()}</td></tr>
+      `;
+    }
+    updateDrawdown();
+
+    // CALCULATOR
+    const pointValues = { MNQ: 2, MES: 5, NQ: 20, ES: 50 };
+    function calculateProfit() {
+      const asset = document.getElementById('calcAsset').value;
+      const account = parseInt(document.getElementById('calcAccount').value);
+      const trades = parseInt(document.getElementById('calcTrades').value);
+      const points = parseInt(document.getElementById('calcPoints').value);
+      const pv = pointValues[asset];
+      const daily = trades * points * pv;
+      const monthly = daily * 22;
+      const yearly = monthly * 12;
+      const d = drawdownData[account];
+      const riskPerTrade = Math.min(account * 0.01, daily * 0.5);
+      const maxDaily = account * 0.02;
+      const tradesToDD = Math.floor(d.dd / riskPerTrade);
+
+      document.getElementById('calcResult').style.display = 'block';
+      document.getElementById('calcStats').innerHTML = `
+        <div class="calc-stat"><div class="num">$${daily.toLocaleString()}</div><div class="label">Lucro/Dia</div></div>
+        <div class="calc-stat"><div class="num" style="color:var(--green)">$${monthly.toLocaleString()}</div><div class="label">Lucro/Mês</div></div>
+        <div class="calc-stat"><div class="num" style="color:var(--green)">$${yearly.toLocaleString()}</div><div class="label">Lucro/Ano</div></div>
+      `;
+
+      document.getElementById('riskPerTrade').textContent = `$${riskPerTrade.toLocaleString()}`;
+      document.getElementById('riskStatus').className = riskPerTrade <= daily * 0.5 ? 'ok' : 'warn';
+      document.getElementById('riskStatus').textContent = riskPerTrade <= daily * 0.5 ? '✓ Seguro' : '⚠ Alto';
+      document.getElementById('maxDailyLoss').textContent = `$${maxDaily.toLocaleString()}`;
+      document.getElementById('tradesToDD').textContent = `${tradesToDD} trades`;
+
+      let mesa = 'Apex Trader Funding';
+      let cupom = 'FORTUNATO (90% OFF)';
+      if (asset === 'MNQ' && account <= 50000) { mesa = 'TakeProfit Trader'; cupom = 'FORTUNATO (40% OFF)'; }
+
+      document.getElementById('calcRec').innerHTML = `
+        <h4>💡 Recomendação</h4>
+        <p>Com ${trades} trades/dia em ${asset}, operando ${points} pontos, seu potencial é de <strong>$${monthly.toLocaleString()}/mês</strong>. Use <strong>${riskPerTrade <= daily * 0.5 ? '1%' : '0.5%'}</strong> de risco por trade para manter a conta segura. Recomendamos a <strong>${mesa}</strong> com cupom <strong>${cupom}</strong>.</p>
+      `;
+    }
+
+    // MOBILE NAV
+    document.getElementById('navToggle').addEventListener('click', () => {
+      const l = document.querySelector('.nav-links');
+      l.style.display = l.style.display === 'flex' ? 'none' : 'flex';
+      if (l.style.display === 'flex') {
+        l.style.position = 'fixed'; l.style.top = '60px'; l.style.left = '0'; l.style.right = '0';
+        l.style.background = 'rgba(5,5,5,0.95)'; l.style.flexDirection = 'column';
+        l.style.padding = '2rem'; l.style.gap = '1.5rem'; l.style.backdropFilter = 'blur(20px)'; l.style.zIndex = 99;
+      }
+    });
+  </script>
+</body>
+</html>

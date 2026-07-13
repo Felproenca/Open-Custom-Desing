@@ -33,6 +33,8 @@ import { OFFICIAL_DESIGNER_PROMPT } from './official-system.js';
 import { DISCOVERY_AND_PHILOSOPHY } from './discovery.js';
 import { DECK_FRAMEWORK_DIRECTIVE } from './deck-framework.js';
 import { MEDIA_GENERATION_CONTRACT } from './media-contract.js';
+import { classifyIntent } from './router.js';
+import { PHASE_TEMPLATES } from './phases.js';
 
 type ProjectMetadata = {
   kind?: string;
@@ -97,6 +99,10 @@ export interface ComposeInput {
   // Snapshot of HTML files that the agent should treat as a starting
   // reference rather than a fixed deliverable.
   template?: ProjectTemplate | undefined;
+  // User's current message — used by the workflow router to classify
+  // intent and inject the appropriate phase template (chaining + evaluation).
+  // When absent, no phase template is injected (legacy behavior).
+  userMessage?: string | undefined;
 }
 
 export function composeSystemPrompt({
@@ -107,6 +113,7 @@ export function composeSystemPrompt({
   designSystemTitle,
   metadata,
   template,
+  userMessage,
 }: ComposeInput): string {
   // Discovery + philosophy goes FIRST so its hard rules ("emit a form on
   // turn 1", "branch on brand on turn 2", "TodoWrite on turn 3", run
@@ -117,6 +124,26 @@ export function composeSystemPrompt({
     '\n\n---\n\n# Identity and workflow charter (background)\n\n',
     BASE_SYSTEM_PROMPT,
   ];
+
+  // Workflow phase injection — classify the user's intent and inject
+  // structured chaining + evaluation phases. This is the Anthropic
+  // "prompt chaining" + "evaluator-optimizer" pattern applied as a
+  // zero-cost prompt engineering technique: same single API call, but
+  // the agent follows a structured multi-step process internally.
+  //
+  // Injected AFTER identity (so the agent knows who it is) and BEFORE
+  // the skill body (so phases take precedence over skill-level workflow
+  // instructions). The skill body can still add domain-specific details
+  // on top of the phase structure.
+  if (userMessage && userMessage.trim().length > 0) {
+    const intent = classifyIntent(userMessage);
+    const phases = PHASE_TEMPLATES[intent];
+    if (phases) {
+      parts.push(
+        `\n\n---\n\n# Workflow Phases (follow these strictly)\n\n${phases}\n\n---\n`,
+      );
+    }
+  }
 
   if (designSystemBody && designSystemBody.trim().length > 0) {
     parts.push(

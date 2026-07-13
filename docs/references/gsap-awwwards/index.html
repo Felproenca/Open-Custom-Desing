@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPYLT — Freaking Delicious</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #222123;
+            --main-bg: #232224;
+            --white: #ffffff;
+            --dark-brown: #523122;
+            --mid-brown: #a26833;
+            --light-brown: #e3a458;
+            --red-brown: #7f3b2d;
+            --milk: #faeade;
+            --font-sans: "Antonio", sans-serif;
+            --font-paragraph: "ProximaNova", "Arial", sans-serif;
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow-x: hidden;
+            scrollbar-width: none;
+        }
+
+        html::-webkit-scrollbar { display: none; }
+
+        body {
+            background-color: var(--milk);
+            color: var(--dark-brown);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            line-height: 1;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            mix-blend-mode: difference;
+        }
+
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .navbar .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* ===== HERO ===== */
+        .hero-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: var(--milk);
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 2rem;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8.5vw, 8.5rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 0.95;
+            letter-spacing: -0.02em;
+            color: var(--dark-brown);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .hero-title .char {
+            display: inline-block;
+            transform: translateY(120%);
+        }
+
+        .hero-text-scroll {
+            transform: rotate(-3deg);
+            margin-bottom: 2rem;
+            border: 6px solid var(--milk);
+            clip-path: polygon(50% 0, 50% 0, 50% 100%, 50% 100%);
+            overflow: hidden;
+        }
+
+        .hero-subtitle {
+            background: var(--mid-brown);
+            padding: 0.5rem 2rem;
+        }
+
+        .hero-subtitle h1 {
+            font-size: clamp(3rem, 8.5vw, 8.5rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fce1cd;
+            line-height: 0.95;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-desc {
+            font-family: var(--font-paragraph);
+            color: var(--dark-brown);
+            text-align: center;
+            max-width: 38rem;
+            font-size: 1.1rem;
+            line-height: 1.4;
+            margin-top: 1.5rem;
+        }
+
+        .hero-button {
+            margin-top: 3rem;
+            color: var(--dark-brown);
+            background: var(--light-brown);
+            text-transform: uppercase;
+            font-family: var(--font-sans);
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 9999px;
+            padding: 1.25rem 4rem;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .hero-button:hover {
+            transform: scale(1.05);
+            background: var(--mid-brown);
+            color: var(--milk);
+        }
+
+        /* ===== MESSAGE ===== */
+        .message-section {
+            position: relative;
+            background: var(--red-brown);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            z-index: 20;
+        }
+
+        .msg-wrapper {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 0.95;
+            letter-spacing: -0.02em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4rem;
+            z-index: 5;
+        }
+
+        .msg-title {
+            text-align: center;
+            max-width: 60rem;
+            color: rgba(250, 234, 222, 0.06);
+        }
+
+        .msg-title:last-of-type {
+            color: rgba(250, 234, 222, 0.08);
+        }
+
+        .msg-wrapper p {
+            font-family: var(--font-paragraph);
+            font-size: 1rem;
+            color: var(--milk);
+            text-align: center;
+        }
+
+        .msg-text-scroll {
+            position: absolute;
+            z-index: 10;
+            transform: rotate(3deg);
+            border: 6px solid var(--red-brown);
+            clip-path: polygon(50% 0, 50% 0, 50% 100%, 50% 100%);
+        }
+
+        .msg-text-scroll h1 {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 0.95;
+            padding: 0.5rem 2rem;
+            color: var(--milk);
+        }
+
+        /* ===== FLAVOR ===== */
+        .flavor-section {
+            position: relative;
+            min-height: 100vh;
+            background: var(--milk);
+            overflow: hidden;
+        }
+
+        .flavor-content {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .flavor-left {
+            width: 50%;
+            padding: 4rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .flavor-title h1 {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 0.95;
+            letter-spacing: -0.02em;
+            color: var(--dark-brown);
+            text-align: center;
+        }
+
+        .flavor-text-scroll {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-3deg);
+            z-index: 10;
+            border: 6px solid var(--milk);
+            clip-path: polygon(50% 0, 50% 0, 50% 100%, 50% 100%);
+            white-space: nowrap;
+        }
+
+        .flavor-text-scroll h1 {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.5rem 2rem;
+            color: var(--dark-brown);
+        }
+
+        .flavor-right {
+            width: 50%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .flavor-slider {
+            display: flex;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .flavor-card {
+            flex: none;
+            width: 16rem;
+            height: 24rem;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .flavor-card:hover {
+            transform: scale(1.05) rotate(0deg) !important;
+        }
+
+        .flavor-card-inner {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .flavor-card-inner span {
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        /* ===== NUTRITION ===== */
+        .nutrition-section {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            background: radial-gradient(circle, #f3ece2, #dcccb0);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nutrition-big-img {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            object-fit: cover;
+            object-position: bottom;
+            z-index: 1;
+        }
+
+        .nutrition-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        .nutrition-title {
+            font-size: clamp(3rem, 7vw, 7rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 0.95;
+            letter-spacing: -0.02em;
+            color: #513022;
+            max-width: 40rem;
+            margin: 0 auto 2rem;
+        }
+
+        .nutrition-text-scroll {
+            transform: rotate(-3deg);
+            border: 6px solid var(--milk-yellow);
+            clip-path: polygon(50% 0, 50% 0, 50% 100%, 50% 100%);
+            white-space: nowrap;
+            margin: 2rem auto;
+            display: inline-block;
+        }
+
+        .nutrition-text-scroll h1 {
+            font-size: clamp(2rem, 5vw, 5rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.5rem 2rem;
+            color: var(--dark-brown);
+        }
+
+        .nutrition-box {
+            position: absolute;
+            bottom: 3rem;
+            left: 0;
+            width: 100%;
+            padding: 0 2rem;
+            z-index: 20;
+        }
+
+        .list-wrapper {
+            background: #fdebd2;
+            border-radius: 9999px;
+            border: 6px solid #e8ddca;
+            margin: 0 auto;
+            max-width: 80rem;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .nutrient-item {
+            text-align: center;
+            position: relative;
+            padding: 0 1.5rem;
+        }
+
+        .nutrient-item p:first-child {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #865720;
+        }
+
+        .nutrient-item p:last-child {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #513022;
+        }
+
+        .nutrient-border {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 4rem;
+            width: 1px;
+            background: #C89C6E;
+        }
+
+        /* ===== BENEFIT ===== */
+        .benefit-section {
+            position: relative;
+            background: var(--black);
+            overflow: hidden;
+        }
+
+        .benefit-titles {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .benefit-title {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 0.95;
+            color: var(--milk);
+            text-align: center;
+        }
+
+        .benefit-desc {
+            font-family: var(--font-paragraph);
+            color: var(--milk);
+            text-align: center;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            opacity: 0.8;
+        }
+
+        .vd-pin-section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .vd-pin-section video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8rem;
+            height: 8rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease, background 0.3s ease;
+            z-index: 10;
+        }
+
+        .play-btn:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .play-btn svg {
+            width: 2rem;
+            height: 2rem;
+            fill: var(--white);
+            margin-left: 4px;
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials-section {
+            position: relative;
+            background: var(--milk);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .testimonial-title {
+            font-size: clamp(6rem, 20vw, 20vw);
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            color: var(--dark-brown);
+            margin-left: 2vw;
+            padding-top: 4rem;
+        }
+
+        .pin-box {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            padding: 4rem 0 4rem 8rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .vd-card {
+            flex: none;
+            width: 22rem;
+            height: 30rem;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            margin-right: -4rem;
+            border: 6px solid var(--milk);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            position: relative;
+        }
+
+        .vd-card:nth-child(odd) {
+            transform: translateY(-2rem);
+        }
+
+        .vd-card:nth-child(even) {
+            transform: translateY(2rem);
+        }
+
+        .vd-card-inner {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            padding: 1.5rem;
+        }
+
+        .vd-card-inner span {
+            color: var(--milk);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer-section {
+            position: relative;
+            background: var(--black);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+            z-index: 10;
+        }
+
+        .footer-title {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 0.95;
+            letter-spacing: -0.02em;
+            color: var(--milk);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .footer-input-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-input-group input {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid rgba(250, 234, 222, 0.3);
+            color: var(--milk);
+            font-size: 1.5rem;
+            padding: 0.5rem 0;
+            outline: none;
+            width: 22rem;
+            font-family: var(--font-sans);
+        }
+
+        .footer-input-group input::placeholder {
+            font-weight: 700;
+            color: rgba(250, 234, 222, 0.4);
+        }
+
+        .footer-input-group input:focus {
+            border-bottom-color: var(--mid-brown);
+        }
+
+        .footer-input-group button {
+            background: var(--mid-brown);
+            color: var(--milk);
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: var(--font-sans);
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-input-group button:hover {
+            transform: scale(1.05);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-btn {
+            width: 3.5rem;
+            height: 3.5rem;
+            border: 1px solid rgba(250, 234, 222, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .social-btn svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            fill: var(--milk);
+        }
+
+        .copyright-box {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 2.5rem;
+            color: var(--milk);
+            opacity: 0.5;
+            font-family: var(--font-paragraph);
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .flavor-content {
+                flex-direction: column;
+            }
+            .flavor-left {
+                width: 100%;
+                padding: 3rem 2rem;
+            }
+            .flavor-right {
+                width: 100%;
+                height: auto;
+                padding: 2rem;
+            }
+            .flavor-slider {
+                overflow-x: auto;
+                padding-bottom: 1rem;
+            }
+            .vd-pin-section {
+                height: 80vh;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 1.5rem;
+            }
+            .navbar .nav-links {
+                display: none;
+            }
+            .hero-title,
+            .hero-subtitle h1 {
+                font-size: 3rem;
+            }
+            .hero-desc {
+                font-size: 0.95rem;
+                padding: 0 1rem;
+            }
+            .hero-button {
+                margin-top: 2rem;
+                padding: 1rem 2.5rem;
+            }
+            .msg-wrapper {
+                gap: 2rem;
+                padding: 0 1.5rem;
+            }
+            .msg-title,
+            .msg-text-scroll h1 {
+                font-size: 3rem;
+            }
+            .list-wrapper {
+                flex-wrap: wrap;
+                gap: 1rem;
+                padding: 1.5rem;
+            }
+            .nutrient-border {
+                display: none;
+            }
+            .footer-input-group {
+                flex-direction: column;
+                width: 100%;
+                padding: 0 2rem;
+            }
+            .footer-input-group input {
+                width: 100%;
+            }
+            .copyright-box {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            .vd-card {
+                width: 16rem;
+                height: 22rem;
+                margin-right: -3rem;
+            }
+            .testimonial-title {
+                font-size: 4rem;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .spin-circle {
+            animation: spin 20s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .reveal-text {
+            overflow: hidden;
+        }
+
+        .reveal-text .line {
+            display: block;
+            transform: translateY(110%);
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="#" class="logo">SPYLT</a>
+        <ul class="nav-links">
+            <li><a href="#flavors">Flavors</a></li>
+            <li><a href="#nutrition">Nutrition</a></li>
+            <li><a href="#benefits">Benefits</a></li>
+        </ul>
+    </nav>
+
+    <main id="smooth-content">
+        <!-- HERO -->
+        <section class="hero-container" id="hero">
+            <video class="hero-bg" src="https://assets.mixkit.co/videos/preview/mixkit-milk-splashing-in-a-glass-49968-large.mp4" autoplay muted playsinline loop></video>
+            <div class="hero-content" id="heroContent">
+                <h1 class="hero-title" id="heroTitle">Freaking Delicious</h1>
+                <div class="hero-text-scroll" id="heroTextScroll">
+                    <div class="hero-subtitle">
+                        <h1>Protein + Caffeine</h1>
+                    </div>
+                </div>
+                <p class="hero-desc">Live life to the fullest with SPYLT: Shatter boredom and embrace your inner kid with every deliciously smooth chug.</p>
+                <button class="hero-button">Chug a SPYLT</button>
+            </div>
+        </section>
+
+        <!-- MESSAGE -->
+        <section class="message-section" id="message">
+            <div class="msg-wrapper">
+                <h1 class="msg-title" id="msgTitle1">It's Not Just Milk</h1>
+                <p>Truly good for you</p>
+                <h1 class="msg-title" id="msgTitle2">It's freaking delicious</h1>
+            </div>
+            <div class="msg-text-scroll" id="msgTextScroll">
+                <h1>Freaking Delicious</h1>
+            </div>
+        </section>
+
+        <!-- FLAVOR -->
+        <section class="flavor-section" id="flavors">
+            <div class="flavor-content">
+                <div class="flavor-left">
+                    <div class="flavor-title">
+                        <h1>Choose Your<br>Flavor</h1>
+                    </div>
+                    <div class="flavor-text-scroll" id="flavorTextScroll">
+                        <h1>Choose Your Flavor</h1>
+                    </div>
+                </div>
+                <div class="flavor-right">
+                    <div class="flavor-slider" id="flavorSlider"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NUTRITION -->
+        <section class="nutrition-section" id="nutrition">
+            <img class="nutrition-big-img" src="https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=800&q=80" alt="Milk bottle">
+            <div class="nutrition-content">
+                <h1 class="nutrition-title" id="nutritionTitle">Freaking Good<br>For You</h1>
+                <div class="nutrition-text-scroll" id="nutritionTextScroll">
+                    <h1>Vitamins + Minerals + Protein</h1>
+                </div>
+            </div>
+            <div class="nutrition-box">
+                <div class="list-wrapper" id="nutrientList"></div>
+            </div>
+        </section>
+
+        <!-- BENEFIT -->
+        <section class="benefit-section" id="benefits">
+            <div class="benefit-titles">
+                <h1 class="benefit-title" id="bt1" style="transform: rotate(3deg);">Protein</h1>
+                <h1 class="benefit-title" id="bt2" style="transform: rotate(-1deg) translateY(-10px);">Energy</h1>
+                <h1 class="benefit-title" id="bt3" style="transform: rotate(1deg) translateY(-20px);">Focus</h1>
+                <h1 class="benefit-title" id="bt4" style="transform: rotate(-5deg) translateY(-30px);">Creatine</h1>
+                <p class="benefit-desc">All the good stuff, none of the bad.</p>
+            </div>
+            <div class="vd-pin-section" id="videoPin">
+                <video id="benefitVideo" src="https://assets.mixkit.co/videos/preview/mixkit-pouring-milk-into-a-glass-in-slow-motion-49970-large.mp4" muted loop></video>
+                <button class="play-btn" id="playBtn">
+                    <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS -->
+        <section class="testimonials-section" id="testimonials">
+            <h1 class="testimonial-title" id="testimonialTitle">Real People</h1>
+            <div class="pin-box" id="testimonialCards"></div>
+        </section>
+
+        <!-- FOOTER -->
+        <section class="footer-section" id="footer">
+            <div class="footer-content">
+                <h1 class="footer-title">Stay Fresh</h1>
+                <div class="footer-input-group">
+                    <input type="email" placeholder="Enter your email">
+                    <button>Subscribe</button>
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-btn">
+                        <svg viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                    </a>
+                    <a href="#" class="social-btn">
+                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="#" class="social-btn">
+                        <svg viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="copyright-box">
+                <p>&copy; 2026 SPYLT. All rights reserved.</p>
+                <p>Made with love and protein.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- LIBS -->
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <script>
+        // ===== LENIS =====
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smoothWheel: true,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // ===== GSAP =====
+        gsap.registerPlugin(ScrollTrigger);
+
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+        gsap.ticker.lagSmoothing(0);
+
+        // ===== HERO =====
+        const heroTitle = document.getElementById('heroTitle');
+        heroTitle.innerHTML = heroTitle.textContent.split('').map(c =>
+            c === ' ' ? ' ' : `<span class="char">${c}</span>`
+        ).join('');
+
+        const heroTl = gsap.timeline({ delay: 0.5 });
+        heroTl.to('#heroContent', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' })
+            .to('#heroTextScroll', { clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', duration: 1, ease: 'circ.out' }, '-=0.4')
+            .from('.hero-title .char', { yPercent: 200, stagger: 0.02, ease: 'power2.out', duration: 0.6 }, '-=0.5');
+
+        gsap.to('.hero-container', {
+            rotate: 7, scale: 0.9, yPercent: 30, ease: 'power1.inOut',
+            scrollTrigger: { trigger: '.hero-container', start: '1% top', end: 'bottom top', scrub: true }
+        });
+
+        // ===== MESSAGE =====
+        gsap.from('#msgTitle1', {
+            yPercent: 100, opacity: 0, duration: 1, ease: 'power2.out',
+            scrollTrigger: { trigger: '.message-section', start: 'top 70%', toggleActions: 'play none none reverse' }
+        });
+        gsap.from('#msgTitle2', {
+            yPercent: 100, opacity: 0, duration: 1, delay: 0.2, ease: 'power2.out',
+            scrollTrigger: { trigger: '.message-section', start: 'top 50%', toggleActions: 'play none none reverse' }
+        });
+        gsap.fromTo('#msgTextScroll',
+            { clipPath: 'polygon(50% 0, 50% 0, 50% 100%, 50% 100%)' },
+            { clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', ease: 'circ.out',
+              scrollTrigger: { trigger: '.message-section', start: 'top 40%', toggleActions: 'play none none reverse' }
+            }
+        );
+
+        // ===== FLAVOR =====
+        const flavors = [
+            { name: "Chocolate Milk", color: "#523122" },
+            { name: "Strawberry Milk", color: "#a02128" },
+            { name: "Cookies & Cream", color: "#2c3e50" },
+            { name: "Peanut Butter", color: "#e3a458" },
+            { name: "Vanilla Shake", color: "#f5f5dc" },
+            { name: "Max Chocolate", color: "#222123" }
+        ];
+
+        const slider = document.getElementById('flavorSlider');
+        flavors.forEach((f, i) => {
+            const card = document.createElement('div');
+            card.className = 'flavor-card';
+            card.style.transform = `rotate(${i % 2 === 0 ? -8 : 8}deg)`;
+            card.innerHTML = `<div class="flavor-card-inner" style="background:${f.color}"><span style="color:${f.color === '#f5f5dc' ? '#523122' : '#faeade'}">${f.name}</span></div>`;
+            slider.appendChild(card);
+        });
+
+        gsap.fromTo('#flavorTextScroll',
+            { clipPath: 'polygon(50% 0, 50% 0, 50% 100%, 50% 100%)' },
+            { clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', ease: 'circ.out',
+              scrollTrigger: { trigger: '.flavor-section', start: 'top 60%', toggleActions: 'play none none reverse' }
+            }
+        );
+
+        // ===== NUTRITION =====
+        gsap.from('#nutritionTitle', {
+            yPercent: 50, opacity: 0, duration: 1, ease: 'power2.out',
+            scrollTrigger: { trigger: '.nutrition-section', start: 'top 70%', toggleActions: 'play none none reverse' }
+        });
+        gsap.fromTo('#nutritionTextScroll',
+            { clipPath: 'polygon(50% 0, 50% 0, 50% 100%, 50% 100%)', opacity: 0 },
+            { clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', opacity: 1, ease: 'circ.out',
+              scrollTrigger: { trigger: '.nutrition-section', start: 'top 40%', toggleActions: 'play none none reverse' }
+            }
+        );
+
+        const nutrients = [
+            { label: "Potassium", amount: "245mg" },
+            { label: "Calcium", amount: "500mg" },
+            { label: "Vitamin A", amount: "176mcg" },
+            { label: "Vitamin D", amount: "5mcg" },
+            { label: "Iron", amount: "1mg" }
+        ];
+
+        const nutrientList = document.getElementById('nutrientList');
+        nutrients.forEach((n, i) => {
+            const item = document.createElement('div');
+            item.className = 'nutrient-item';
+            item.innerHTML = `<p>${n.label}</p><p>${n.amount}</p>`;
+            nutrientList.appendChild(item);
+            if (i < nutrients.length - 1) {
+                const border = document.createElement('div');
+                border.className = 'nutrient-border';
+                item.appendChild(border);
+            }
+        });
+
+        // ===== BENEFIT =====
+        ['#bt1', '#bt2', '#bt3', '#bt4'].forEach((sel, i) => {
+            gsap.from(sel, {
+                x: i % 2 === 0 ? -200 : 200, opacity: 0, duration: 1, delay: i * 0.1, ease: 'power2.out',
+                scrollTrigger: { trigger: '.benefit-section', start: `${80 - i * 10}% top` }
+            });
+        });
+
+        const playBtn = document.getElementById('playBtn');
+        const benefitVideo = document.getElementById('benefitVideo');
+        playBtn.addEventListener('click', () => {
+            benefitVideo.paused ? benefitVideo.play() : benefitVideo.pause();
+        });
+
+        // ===== TESTIMONIALS =====
+        const cards = [
+            { name: "Madison", color: "#a26833" },
+            { name: "Alexander", color: "#523122" },
+            { name: "Andrew", color: "#a02128" },
+            { name: "Bryan", color: "#7f3b2d" },
+            { name: "Chris", color: "#e3a458" },
+            { name: "Devante", color: "#222123" },
+            { name: "Melisa", color: "#a26833" }
+        ];
+
+        const cardsContainer = document.getElementById('testimonialCards');
+        cards.forEach(c => {
+            const el = document.createElement('div');
+            el.className = 'vd-card';
+            el.innerHTML = `<div class="vd-card-inner" style="background:${c.color}"><span>${c.name}</span></div>`;
+            cardsContainer.appendChild(el);
+        });
+
+        gsap.from('#testimonialTitle', {
+            yPercent: 100, opacity: 0, duration: 1.2, ease: 'power3.out',
+            scrollTrigger: { trigger: '.testimonials-section', start: 'top 80%', toggleActions: 'play none none reverse' }
+        });
+
+        // ===== REFRESH =====
+        ScrollTrigger.refresh();
+    </script>
+</body>
+</html>

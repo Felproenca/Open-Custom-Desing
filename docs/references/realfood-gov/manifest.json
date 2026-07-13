@@ -1,0 +1,807 @@
+{
+  "url": "https://realfood.gov/",
+  "extractedAt": "2026-07-06T20:38:25.958Z",
+  "totalAssets": 113,
+  "totalSize": 13109464,
+  "categories": {
+    "images": 91,
+    "fonts": 4,
+    "svg": 0,
+    "css": 5,
+    "js": 12,
+    "video": 1
+  },
+  "assets": [
+    {
+      "url": "https://realfood.gov/_next/static/media/797e433ab948586e-s.p.08e28id.o-okb.woff2",
+      "localPath": "assets/fonts/797e433ab948586e-s.p.08e28id.o-okb.woff2",
+      "category": "fonts",
+      "size": 23108,
+      "contentType": "font/woff2"
+    },
+    {
+      "url": "https://realfood.gov/images/video-placeholder.webp",
+      "localPath": "assets/images/video-placeholder.webp",
+      "category": "images",
+      "size": 78400,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/_next/static/chunks/0~qqde9hq6pq1.css",
+      "localPath": "assets/css/0~qqde9hq6pq1.css",
+      "category": "css",
+      "size": 3592,
+      "contentType": "text/css"
+    },
+    {
+      "url": "https://realfood.gov/_next/static/chunks/14ybxk208tskh.css",
+      "localPath": "assets/css/14ybxk208tskh.css",
+      "category": "css",
+      "size": 112151,
+      "contentType": "text/css"
+    },
+    {
+      "url": "https://realfood.gov/_next/static/chunks/0n0fd3r30ckp_.css",
+      "localPath": "assets/css/0n0fd3r30ckp_.css",
+      "category": "css",
+      "size": 3202,
+      "contentType": "text/css"
+    },
+    {
+      "url": "https://realfood.gov/_next/static/chunks/08ft2ejn3~kbf.css",
+      "localPath": "assets/css/08ft2ejn3~kbf.css",
+      "category": "css",
+      "size": 49762,
+      "contentType": "text/css"
+    },
+    {
+      "url": "https://realfood.gov/_next/static/chunks/0gunnvjn~ps58.css",
+      "localPath": "assets/css/0gunnvjn~ps58.css",
+      "category": "css",
+      "size": 33162,
+      "contentType": "text/css"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=1080,quality=90,format=auto,fit=scale-down/images/intro/broccoli.webp",
+      "localPath": "assets/images/broccoli.webp",
+      "category": "images",
+      "size": 62048,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=1080,quality=90,format=auto,fit=scale-down/images/intro/steak.webp",
+      "localPath": "assets/images/steak.webp",
+      "category": "images",
+      "size": 32898,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/milk.webp",
+      "localPath": "assets/images/milk.webp",
+      "category": "images",
+      "size": 28332,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/_next/static/chunks/095xggcc4cbyg.js",
+      "localPath": "assets/js/095xggcc4cbyg.js",
+      "category": "js",
+      "size": 28574,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://realfood.gov/_next/static/chunks/0tk28lff..v.c.js",
+      "localPath": "assets/js/0tk28lff..v.c.js",
+      "category": "js",
+      "size": 44417,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://realfood.gov/_next/static/chunks/17pnyynt1ad_u.js",
+      "localPath": "assets/js/17pnyynt1ad_u.js",
+      "category": "js",
+      "size": 226354,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://realfood.gov/images/pyramid/steak.webp",
+      "localPath": "assets/images/steak.webp",
+      "category": "images",
+      "size": 58574,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/images/pyramid/salmon.webp",
+      "localPath": "assets/images/salmon.webp",
+      "category": "images",
+      "size": 47198,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/images/pyramid/chicken.webp",
+      "localPath": "assets/images/chicken.webp",
+      "category": "images",
+      "size": 92036,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/_next/static/chunks/turbopack-03ju0~wxx7g-s.js",
+      "localPath": "assets/js/turbopack-03ju0~wxx7g-s.js",
+      "category": "js",
+      "size": 10580,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://realfood.gov/_next/static/chunks/0-sio.ztn~hzl.js",
+      "localPath": "assets/js/0-sio.ztn~hzl.js",
+      "category": "js",
+      "size": 146773,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://realfood.gov/_next/static/chunks/0ie4rdyoxp9xr.js",
+      "localPath": "assets/js/0ie4rdyoxp9xr.js",
+      "category": "js",
+      "size": 3577,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://realfood.gov/_next/static/chunks/0ysgey~.tfoh4.js",
+      "localPath": "assets/js/0ysgey~.tfoh4.js",
+      "category": "js",
+      "size": 54640,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://realfood.gov/_next/static/chunks/0sjmop6ulwkj2.js",
+      "localPath": "assets/js/0sjmop6ulwkj2.js",
+      "category": "js",
+      "size": 74327,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://realfood.gov/_next/static/chunks/0m69x-wn4p3ab.js",
+      "localPath": "assets/js/0m69x-wn4p3ab.js",
+      "category": "js",
+      "size": 466560,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://realfood.gov/_next/static/chunks/0p81n5siwnp99.js",
+      "localPath": "assets/js/0p81n5siwnp99.js",
+      "category": "js",
+      "size": 821577,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://realfood.gov/_next/static/chunks/0fw74.2qrd~w_.js",
+      "localPath": "assets/js/0fw74.2qrd~w_.js",
+      "category": "js",
+      "size": 797715,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/broken-system/food-pyramid.webp",
+      "localPath": "assets/images/food-pyramid.webp",
+      "category": "images",
+      "size": 65459,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/font/die-grotesk-a-medium.woff2",
+      "localPath": "assets/fonts/die-grotesk-a-medium.woff2",
+      "category": "fonts",
+      "size": 40407,
+      "contentType": "font/woff2"
+    },
+    {
+      "url": "https://realfood.gov/font/die-grotesk-b-bold.woff2",
+      "localPath": "assets/fonts/die-grotesk-b-bold.woff2",
+      "category": "fonts",
+      "size": 50684,
+      "contentType": "font/woff2"
+    },
+    {
+      "url": "https://realfood.gov/font/die-grotesk-d-bold.woff2",
+      "localPath": "assets/fonts/die-grotesk-d-bold.woff2",
+      "category": "fonts",
+      "size": 49716,
+      "contentType": "font/woff2"
+    },
+    {
+      "url": "https://challenges.cloudflare.com/turnstile/v0/b/80a697ecdece/api.js",
+      "localPath": "assets/js/api.js",
+      "category": "js",
+      "size": 70745,
+      "contentType": "application/javascript; charset=UTF-8"
+    },
+    {
+      "url": "https://realfood.gov/images/pyramid/cheese.webp",
+      "localPath": "assets/images/cheese.webp",
+      "category": "images",
+      "size": 16824,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/images/pyramid/butter.webp",
+      "localPath": "assets/images/butter.webp",
+      "category": "images",
+      "size": 31970,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/images/pyramid/apples.webp",
+      "localPath": "assets/images/apples.webp",
+      "category": "images",
+      "size": 32212,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/images/pyramid/bread.webp",
+      "localPath": "assets/images/bread.webp",
+      "category": "images",
+      "size": 55456,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/images/pyramid/lettuce.webp",
+      "localPath": "assets/images/lettuce.webp",
+      "category": "images",
+      "size": 51522,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/video/bgv.mp4",
+      "localPath": "assets/video/bgv.mp4",
+      "category": "video",
+      "size": 7644682,
+      "contentType": "video/mp4"
+    },
+    {
+      "url": "https://realfood.gov/images/pyramid/potato.webp",
+      "localPath": "assets/images/potato.webp",
+      "category": "images",
+      "size": 20788,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/images/pyramid/watermelon.webp",
+      "localPath": "assets/images/watermelon.webp",
+      "category": "images",
+      "size": 63218,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/milk.webp",
+      "localPath": "assets/images/milk.webp",
+      "category": "images",
+      "size": 19722,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/salmon.webp",
+      "localPath": "assets/images/salmon.webp",
+      "category": "images",
+      "size": 8031,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/olive-oil.webp",
+      "localPath": "assets/images/olive-oil.webp",
+      "category": "images",
+      "size": 21219,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/avocado.webp",
+      "localPath": "assets/images/avocado.webp",
+      "category": "images",
+      "size": 9233,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/walnut-kernel.webp",
+      "localPath": "assets/images/walnut-kernel.webp",
+      "category": "images",
+      "size": 6428,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/steak.webp",
+      "localPath": "assets/images/steak.webp",
+      "category": "images",
+      "size": 8302,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/lettuce.webp",
+      "localPath": "assets/images/lettuce.webp",
+      "category": "images",
+      "size": 15065,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/shrimp.webp",
+      "localPath": "assets/images/shrimp.webp",
+      "category": "images",
+      "size": 9343,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/chicken.webp",
+      "localPath": "assets/images/chicken.webp",
+      "category": "images",
+      "size": 12958,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/cheese.webp",
+      "localPath": "assets/images/cheese.webp",
+      "category": "images",
+      "size": 7432,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/broccoli.webp",
+      "localPath": "assets/images/broccoli.webp",
+      "category": "images",
+      "size": 12508,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/blueberries.webp",
+      "localPath": "assets/images/blueberries.webp",
+      "category": "images",
+      "size": 10503,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/canned-tuna.webp",
+      "localPath": "assets/images/canned-tuna.webp",
+      "category": "images",
+      "size": 13320,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/yogurt.webp",
+      "localPath": "assets/images/yogurt.webp",
+      "category": "images",
+      "size": 12124,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/almond.webp",
+      "localPath": "assets/images/almond.webp",
+      "category": "images",
+      "size": 8902,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/eggs.webp",
+      "localPath": "assets/images/eggs.webp",
+      "category": "images",
+      "size": 6318,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/carrots.webp",
+      "localPath": "assets/images/carrots.webp",
+      "category": "images",
+      "size": 9390,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/ground-beef.webp",
+      "localPath": "assets/images/ground-beef.webp",
+      "category": "images",
+      "size": 10461,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/strawberry.webp",
+      "localPath": "assets/images/strawberry.webp",
+      "category": "images",
+      "size": 13525,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/blueberry.webp",
+      "localPath": "assets/images/blueberry.webp",
+      "category": "images",
+      "size": 7184,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/tomatoes.webp",
+      "localPath": "assets/images/tomatoes.webp",
+      "category": "images",
+      "size": 12418,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/walnut-shelled.webp",
+      "localPath": "assets/images/walnut-shelled.webp",
+      "category": "images",
+      "size": 14302,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/frozen-peas.webp",
+      "localPath": "assets/images/frozen-peas.webp",
+      "category": "images",
+      "size": 15031,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/strawberry-right.webp",
+      "localPath": "assets/images/strawberry-right.webp",
+      "category": "images",
+      "size": 12419,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/grapes.webp",
+      "localPath": "assets/images/grapes.webp",
+      "category": "images",
+      "size": 9299,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/peanuts.webp",
+      "localPath": "assets/images/peanuts.webp",
+      "category": "images",
+      "size": 13457,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/potato.webp",
+      "localPath": "assets/images/potato.webp",
+      "category": "images",
+      "size": 7728,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/butter.webp",
+      "localPath": "assets/images/butter.webp",
+      "category": "images",
+      "size": 8649,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/green-beans.webp",
+      "localPath": "assets/images/green-beans.webp",
+      "category": "images",
+      "size": 17440,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/apples.webp",
+      "localPath": "assets/images/apples.webp",
+      "category": "images",
+      "size": 15956,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/butternut.webp",
+      "localPath": "assets/images/butternut.webp",
+      "category": "images",
+      "size": 22307,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/bananas.webp",
+      "localPath": "assets/images/bananas.webp",
+      "category": "images",
+      "size": 9083,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/oranges.webp",
+      "localPath": "assets/images/oranges.webp",
+      "category": "images",
+      "size": 8847,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/cut-apple.webp",
+      "localPath": "assets/images/cut-apple.webp",
+      "category": "images",
+      "size": 9958,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/bread.webp",
+      "localPath": "assets/images/bread.webp",
+      "category": "images",
+      "size": 9783,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/bowl-oats.webp",
+      "localPath": "assets/images/bowl-oats.webp",
+      "category": "images",
+      "size": 10639,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/olive-oil.webp",
+      "localPath": "assets/images/olive-oil.webp",
+      "category": "images",
+      "size": 34282,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/cheese.webp",
+      "localPath": "assets/images/cheese.webp",
+      "category": "images",
+      "size": 16824,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/oats.webp",
+      "localPath": "assets/images/oats.webp",
+      "category": "images",
+      "size": 14470,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/salmon.webp",
+      "localPath": "assets/images/salmon.webp",
+      "category": "images",
+      "size": 32604,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/canned-tuna.webp",
+      "localPath": "assets/images/canned-tuna.webp",
+      "category": "images",
+      "size": 35152,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/yogurt.webp",
+      "localPath": "assets/images/yogurt.webp",
+      "category": "images",
+      "size": 23792,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/ground-beef.webp",
+      "localPath": "assets/images/ground-beef.webp",
+      "category": "images",
+      "size": 60405,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/shrimp.webp",
+      "localPath": "assets/images/shrimp.webp",
+      "category": "images",
+      "size": 30126,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/eggs.webp",
+      "localPath": "assets/images/eggs.webp",
+      "category": "images",
+      "size": 34842,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/bowl-rice-beans.webp",
+      "localPath": "assets/images/bowl-rice-beans.webp",
+      "category": "images",
+      "size": 44478,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/butter.webp",
+      "localPath": "assets/images/butter.webp",
+      "category": "images",
+      "size": 38478,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/lettuce.webp",
+      "localPath": "assets/images/lettuce.webp",
+      "category": "images",
+      "size": 51522,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/tomatoes.webp",
+      "localPath": "assets/images/tomatoes.webp",
+      "category": "images",
+      "size": 28878,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/broccoli.webp",
+      "localPath": "assets/images/broccoli.webp",
+      "category": "images",
+      "size": 54104,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=90,format=auto,fit=scale-down/images/pyramid/bowl-rice-beans.webp",
+      "localPath": "assets/images/bowl-rice-beans.webp",
+      "category": "images",
+      "size": 13005,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/bananas.webp",
+      "localPath": "assets/images/bananas.webp",
+      "category": "images",
+      "size": 33249,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/apples.webp",
+      "localPath": "assets/images/apples.webp",
+      "category": "images",
+      "size": 32212,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/strawberry.webp",
+      "localPath": "assets/images/strawberry.webp",
+      "category": "images",
+      "size": 14222,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/carrots.webp",
+      "localPath": "assets/images/carrots.webp",
+      "category": "images",
+      "size": 31666,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/blueberry.webp",
+      "localPath": "assets/images/blueberry.webp",
+      "category": "images",
+      "size": 7184,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/blueberries.webp",
+      "localPath": "assets/images/blueberries.webp",
+      "category": "images",
+      "size": 13586,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/oranges.webp",
+      "localPath": "assets/images/oranges.webp",
+      "category": "images",
+      "size": 32998,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/strawberry-right.webp",
+      "localPath": "assets/images/strawberry-right.webp",
+      "category": "images",
+      "size": 13264,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/frozen-peas.webp",
+      "localPath": "assets/images/frozen-peas.webp",
+      "category": "images",
+      "size": 30482,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/potato.webp",
+      "localPath": "assets/images/potato.webp",
+      "category": "images",
+      "size": 20788,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/bowl-oats.webp",
+      "localPath": "assets/images/bowl-oats.webp",
+      "category": "images",
+      "size": 27180,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/grapes.webp",
+      "localPath": "assets/images/grapes.webp",
+      "category": "images",
+      "size": 38773,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/steak.webp",
+      "localPath": "assets/images/steak.webp",
+      "category": "images",
+      "size": 33767,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/chicken.webp",
+      "localPath": "assets/images/chicken.webp",
+      "category": "images",
+      "size": 63132,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/bread.webp",
+      "localPath": "assets/images/bread.webp",
+      "category": "images",
+      "size": 55668,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/images/pyramid/blueberries.webp",
+      "localPath": "assets/images/blueberries.webp",
+      "category": "images",
+      "size": 13586,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/oats.webp",
+      "localPath": "assets/images/oats.webp",
+      "category": "images",
+      "size": 44476,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=85,format=auto,fit=scale-down/images/covers/3.webp",
+      "localPath": "assets/images/3.webp",
+      "category": "images",
+      "size": 4200,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=85,format=auto,fit=scale-down/images/covers/1.webp",
+      "localPath": "assets/images/1.webp",
+      "category": "images",
+      "size": 7967,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=85,format=auto,fit=scale-down/images/covers/2.webp",
+      "localPath": "assets/images/2.webp",
+      "category": "images",
+      "size": 6909,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=640,quality=90,format=auto,fit=scale-down/images/pyramid/avocado.webp",
+      "localPath": "assets/images/avocado.webp",
+      "category": "images",
+      "size": 32108,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/cdn-cgi/image/width=256,quality=85,format=auto,fit=scale-down/images/covers/4.webp",
+      "localPath": "assets/images/4.webp",
+      "category": "images",
+      "size": 14449,
+      "contentType": "image/avif"
+    },
+    {
+      "url": "https://realfood.gov/images/pyramid/carrots.webp",
+      "localPath": "assets/images/carrots.webp",
+      "category": "images",
+      "size": 55742,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/images/pyramid/bowl-oats.webp",
+      "localPath": "assets/images/bowl-oats.webp",
+      "category": "images",
+      "size": 27180,
+      "contentType": "image/webp"
+    },
+    {
+      "url": "https://realfood.gov/images/pyramid/eggs.webp",
+      "localPath": "assets/images/eggs.webp",
+      "category": "images",
+      "size": 29190,
+      "contentType": "image/webp"
+    }
+  ]
+}

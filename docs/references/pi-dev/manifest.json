@@ -1,0 +1,121 @@
+{
+  "url": "https://pi.dev/",
+  "extractedAt": "2026-07-07T01:12:39.652Z",
+  "totalAssets": 15,
+  "totalSize": 1335035,
+  "categories": {
+    "images": 0,
+    "fonts": 5,
+    "svg": 0,
+    "css": 2,
+    "js": 8,
+    "video": 0
+  },
+  "assets": [
+    {
+      "url": "https://pi.dev/style.css?v=25f10907-9522-4d87-9c63-28ec856640e4",
+      "localPath": "assets/css/style.css",
+      "category": "css",
+      "size": 222304,
+      "contentType": "text/css"
+    },
+    {
+      "url": "https://pi.dev/asciinema/asciinema-player.css?v=25f10907-9522-4d87-9c63-28ec856640e4",
+      "localPath": "assets/css/asciinema-player.css",
+      "category": "css",
+      "size": 31094,
+      "contentType": "text/css"
+    },
+    {
+      "url": "https://pi.dev/fonts/PlantinNowVariable-Italic.woff2",
+      "localPath": "assets/fonts/PlantinNowVariable-Italic.woff2",
+      "category": "fonts",
+      "size": 94676,
+      "contentType": "font/woff2"
+    },
+    {
+      "url": "https://pi.dev/fonts/DepartureMono-Regular.woff2",
+      "localPath": "assets/fonts/DepartureMono-Regular.woff2",
+      "category": "fonts",
+      "size": 22496,
+      "contentType": "font/woff2"
+    },
+    {
+      "url": "https://pi.dev/assets/pi-dev.js?v=25f10907-9522-4d87-9c63-28ec856640e4",
+      "localPath": "assets/js/pi-dev.js",
+      "category": "js",
+      "size": 551,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://pi.dev/assets/sa.js?v=25f10907-9522-4d87-9c63-28ec856640e4",
+      "localPath": "assets/js/sa.js",
+      "category": "js",
+      "size": 3823,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://pi.dev/fonts/PlantinNowVariable-Upright.woff2",
+      "localPath": "assets/fonts/PlantinNowVariable-Upright.woff2",
+      "category": "fonts",
+      "size": 83136,
+      "contentType": "font/woff2"
+    },
+    {
+      "url": "https://pi.dev/assets/copy-buttons.js?v=25f10907-9522-4d87-9c63-28ec856640e4",
+      "localPath": "assets/js/copy-buttons.js",
+      "category": "js",
+      "size": 1132,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://pi.dev/assets/home-inline.js?v=25f10907-9522-4d87-9c63-28ec856640e4",
+      "localPath": "assets/js/home-inline.js",
+      "category": "js",
+      "size": 75859,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://pi.dev/asciinema/asciinema-player.min.js?v=25f10907-9522-4d87-9c63-28ec856640e4",
+      "localPath": "assets/js/asciinema-player.min.js",
+      "category": "js",
+      "size": 238385,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://pi.dev/assets/theme-toggle.js?v=25f10907-9522-4d87-9c63-28ec856640e4",
+      "localPath": "assets/js/theme-toggle.js",
+      "category": "js",
+      "size": 2836,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://pi.dev/assets/nav-sheet.js?v=25f10907-9522-4d87-9c63-28ec856640e4",
+      "localPath": "assets/js/nav-sheet.js",
+      "category": "js",
+      "size": 3719,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://pi.dev/assets/logo-context-menu.js?v=25f10907-9522-4d87-9c63-28ec856640e4",
+      "localPath": "assets/js/logo-context-menu.js",
+      "category": "js",
+      "size": 3908,
+      "contentType": "text/javascript"
+    },
+    {
+      "url": "https://pi.dev/fonts/CommitMono-400-Regular.otf",
+      "localPath": "assets/fonts/CommitMono-400-Regular.otf",
+      "category": "fonts",
+      "size": 274820,
+      "contentType": "font/otf"
+    },
+    {
+      "url": "https://pi.dev/fonts/CommitMono-700-Regular.otf",
+      "localPath": "assets/fonts/CommitMono-700-Regular.otf",
+      "category": "fonts",
+      "size": 276296,
+      "contentType": "font/otf"
+    }
+  ]
+}
