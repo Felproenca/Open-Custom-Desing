@@ -181,16 +181,16 @@
     <h1>CURSOR<br><span>TRAIL</span></h1>
     <div class="test-grid">
       <div class="test-card">
-        <h3>Trail</h3>
-        <p>Itens seguem o cursor com atraso progressivo. Ajuste o lag para controlar a suavidade.</p>
+        <h3>Trail Orgânico</h3>
+        <p>Cada item tem lag diferente + wobble rotacional + noise sutil. Parece flutuar naturalmente.</p>
       </div>
       <div class="test-card">
-        <h3>Snap</h3>
-        <p>Pare o mouse para ver os itens se empilharem. A velocity threshold controla a sensibilidade.</p>
+        <h3>Snap com Stagger</h3>
+        <p>Empilhamento com delay por item + jitter aleatório no X. Não é perfeito de propósito.</p>
       </div>
       <div class="test-card">
-        <h3>Unsnap</h3>
-        <p>Mova o mouse novamente para soltar. O unsnap threshold define quando soltar.</p>
+        <h3>Elastic Unsnap</h3>
+        <p>Volta com elastic.out — leve "quique" orgânico ao soltar, não linear.</p>
       </div>
     </div>
   </div>
@@ -209,9 +209,9 @@
   <div class="controls">
     <h4>Controles</h4>
     <div class="control-row">
-      <label>Lag (trail)</label>
-      <input type="range" id="ctrl-lag" min="0.05" max="0.4" step="0.01" value="0.14">
-      <span class="value" id="val-lag">0.14</span>
+      <label>Noise intensity</label>
+      <input type="range" id="ctrl-lag" min="0" max="4" step="0.1" value="1.5">
+      <span class="value" id="val-lag">1.5</span>
     </div>
     <div class="control-row">
       <label>Stagger (snap)</label>
@@ -242,7 +242,7 @@
 
   <script>
     // ============================================
-    // CURSOR TRAIL — MODELO DE TESTE
+    // CURSOR TRAIL — VERSÃO ORGÂNICA
     // ============================================
 
     const ITEMS = document.querySelectorAll('.trail-item');
@@ -250,11 +250,24 @@
     const N = ITEMS.length;
 
     const mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    const proxies = Array.from({ length: N }, () => ({ x: mouse.x, y: mouse.y }));
+    const proxies = Array.from({ length: N }, () => ({
+      x: mouse.x, y: mouse.y,
+      rotX: 0, rotY: 0, scale: 1,
+    }));
 
-    // CONFIG — ajuste via controles
+    // ============================================
+    // LAG DIFERENTE POR ITEM (mais orgânico)
+    // ============================================
+    const ITEM_CONFIG = [
+      { lag: 0.12, wobble: 2.5, pulse: 0.04, noise: 1.2 },  // tomate
+      { lag: 0.16, wobble: 3.0, pulse: 0.06, noise: 0.9 },   // queijo
+      { lag: 0.10, wobble: 2.0, pulse: 0.03, noise: 1.5 },   // alface
+      { lag: 0.18, wobble: 3.5, pulse: 0.05, noise: 1.0 },   // carne
+      { lag: 0.13, wobble: 2.8, pulse: 0.07, noise: 1.3 },   // cebola
+    ];
+
+    // CONFIG global
     const CFG = {
-      lag: 0.14,
       stagger: 0.05,
       snapDuration: 0.4,
       snapEase: 'back.out(1.7)',
@@ -262,11 +275,25 @@
       velocityThreshold: 3,
       unsnapThreshold: 8,
       stackSpacing: 30,
+      wobbleSpeed: 0.03,    // velocidade do wobble
+      pulseSpeed: 0.02,     // velocidade do pulse
+      noiseIntensity: 1.5,  // intensidade do ruído
     };
 
     let stacked = false;
     let lx = mouse.x, ly = mouse.y, vel = 0;
     let cx = mouse.x, cy = mouse.y;
+    let frame = 0;
+
+    // ============================================
+    // NOISE FUNCIONAL (simplified Perlin-like)
+    // ============================================
+    function noise(x, y) {
+      const n = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
+      return n - Math.floor(n);
+    }
+
+    function lerp(a, b, t) { return a + (b - a) * t; }
 
     // ============================================
     // 1. MOUSE TRACKING
@@ -284,21 +311,22 @@
     });
 
     // ============================================
-    // 2. APARIÇÃO
+    // 2. APARIÇÃO (stagger orgânico)
     // ============================================
     ITEMS.forEach((item, i) => {
       gsap.to(item, {
         scale: 1, opacity: 1,
-        duration: 0.6,
-        delay: 0.3 + i * 0.08,
-        ease: 'back.out(2)',
+        duration: 0.7,
+        delay: 0.3 + i * 0.08 + noise(i, 0) * 0.1,
+        ease: 'elastic.out(1, 0.75)',
       });
     });
 
     // ============================================
-    // 3. TICKER
+    // 3. TICKER — trail orgânico
     // ============================================
     function tick() {
+      frame++;
       const dx = mouse.x - lx;
       const dy = mouse.y - ly;
       vel = Math.sqrt(dx * dx + dy * dy);
@@ -306,35 +334,54 @@
       ly = mouse.y;
 
       if (!stacked) {
-        proxies[0].x += (mouse.x - proxies[0].x) * CFG.lag;
-        proxies[0].y += (mouse.y - proxies[0].y) * CFG.lag;
+        // Cada item tem seu próprio lag
+        proxies[0].x += (mouse.x - proxies[0].x) * ITEM_CONFIG[0].lag;
+        proxies[0].y += (mouse.y - proxies[0].y) * ITEM_CONFIG[0].lag;
 
         for (let i = 1; i < N; i++) {
-          proxies[i].x += (proxies[i-1].x - proxies[i].x) * CFG.lag;
-          proxies[i].y += (proxies[i-1].y - proxies[i].y) * CFG.lag;
+          const cfg = ITEM_CONFIG[i];
+          proxies[i].x += (proxies[i-1].x - proxies[i].x) * cfg.lag;
+          proxies[i].y += (proxies[i-1].y - proxies[i].y) * cfg.lag;
         }
 
+        // Aplica com wobble, pulse e noise
         ITEMS.forEach((item, i) => {
+          const cfg = ITEM_CONFIG[i];
+          const p = proxies[i];
+
+          // Wobble: rotação sutil baseada no frame
+          const wobble = Math.sin(frame * CFG.wobbleSpeed + i * 1.5) * cfg.wobble;
+
+          // Pulse: scale sutil
+          const pulse = 1 + Math.sin(frame * CFG.pulseSpeed + i * 2.1) * cfg.pulse;
+
+          // Noise: offset aleatório suave
+          const nx = (noise(frame * 0.01 + i, i) - 0.5) * CFG.noiseIntensity * cfg.noise;
+          const ny = (noise(i, frame * 0.01 + i) - 0.5) * CFG.noiseIntensity * cfg.noise;
+
+          // Rotação baseada no movimento + wobble
+          const baseRot = (p.x - proxies[Math.max(0, i-1)].x) * 0.3;
+          const totalRot = baseRot + wobble;
+
           gsap.set(item, {
-            x: proxies[i].x,
-            y: proxies[i].y,
+            x: p.x + nx,
+            y: p.y + ny,
             xPercent: -50,
             yPercent: -50,
-            rotation: (proxies[i].x - proxies[Math.max(0, i-1)].x) * 0.3,
+            rotation: totalRot,
+            scale: pulse,
           });
         });
 
         if (vel < CFG.velocityThreshold) stack();
       }
 
-      // Status
       document.getElementById('s-vel').textContent = vel.toFixed(1);
-
       requestAnimationFrame(tick);
     }
 
     // ============================================
-    // 4. STACK
+    // 4. STACK — empilhamento orgânico
     // ============================================
     function stack() {
       stacked = true;
@@ -344,12 +391,15 @@
 
       ITEMS.forEach((item, i) => {
         item.classList.add('stacked');
+        // Offset aleatório sutil no eixo X para não ser perfeito
+        const jitterX = (noise(i, 99) - 0.5) * 6;
+
         gsap.to(item, {
           y: cy - i * CFG.stackSpacing,
-          x: cx,
+          x: cx + jitterX,
           scale: 1 - i * 0.03,
-          rotation: (i % 2 === 0 ? -1 : 1) * (3 + i),
-          duration: CFG.snapDuration,
+          rotation: (i % 2 === 0 ? -1 : 1) * (3 + i + noise(i, 50) * 4),
+          duration: CFG.snapDuration + noise(i, 77) * 0.1,
           ease: CFG.snapEase,
           delay: i * CFG.stagger,
           overwrite: 'auto',
@@ -378,8 +428,8 @@
         gsap.to(item, {
           scale: 1, rotation: 0,
           duration: CFG.unsnapDuration,
-          ease: 'power2.out',
-          delay: i * 0.02,
+          ease: 'elastic.out(1, 0.6)',
+          delay: i * 0.03,
           overwrite: 'auto',
         });
       });
@@ -403,7 +453,7 @@
       });
     }
 
-    bind('ctrl-lag', 'lag', 'val-lag');
+    bind('ctrl-lag', 'noiseIntensity', 'val-lag');
     bind('ctrl-stagger', 'stagger', 'val-stagger');
     bind('ctrl-snap', 'snapDuration', 'val-snap');
     bind('ctrl-vel', 'velocityThreshold', 'val-vel', v => v.toFixed(1));
