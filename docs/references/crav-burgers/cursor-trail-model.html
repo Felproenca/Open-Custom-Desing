@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cursor Trail — Modelo de Teste</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      background: #0a0a0a;
+      font-family: 'Inter', system-ui, sans-serif;
+      overflow: hidden;
+      cursor: none;
+    }
+
+    /* === CONTEÚDO DE TESTE === */
+    .test-content {
+      padding: 6vw;
+      display: flex;
+      flex-direction: column;
+      gap: 8vw;
+    }
+
+    .test-content h1 {
+      font-size: 10vw;
+      font-weight: 900;
+      color: #fff;
+      line-height: 0.9;
+    }
+
+    .test-content h1 span { color: #7c3aed; }
+
+    .test-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2vw;
+    }
+
+    .test-card {
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 16px;
+      padding: 2vw;
+      color: #a1a1aa;
+      font-size: 1vw;
+      transition: border-color 0.3s;
+    }
+
+    .test-card:hover { border-color: #7c3aed; }
+
+    .test-card h3 {
+      color: #fff;
+      font-size: 1.4vw;
+      margin-bottom: 0.5vw;
+    }
+
+    /* === CURSOR TRAIL === */
+    .cursor-trail {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 99999;
+    }
+
+    .cursor-dot {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: #7c3aed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 100000;
+      transform: translate(-50%, -50%);
+      will-change: transform;
+    }
+
+    .trail-item {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      overflow: hidden;
+      will-change: transform;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .trail-item.stacked {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+    }
+
+    /* Cores dos itens */
+    .trail-item[data-i="0"] { background: #f91814; }
+    .trail-item[data-i="1"] { background: #ffd750; }
+    .trail-item[data-i="2"] { background: #60A905; }
+    .trail-item[data-i="3"] { background: #ff6b35; }
+    .trail-item[data-i="4"] { background: #7c3aed; }
+
+    /* === PAINEL DE CONTROLES === */
+    .controls {
+      position: fixed;
+      top: 1vw;
+      right: 1vw;
+      background: rgba(24,24,27,0.95);
+      border: 1px solid #27272a;
+      border-radius: 12px;
+      padding: 1.2vw;
+      z-index: 100001;
+      width: 22vw;
+      font-size: 0.85vw;
+      color: #a1a1aa;
+      backdrop-filter: blur(10px);
+    }
+
+    .controls h4 {
+      color: #fff;
+      margin-bottom: 0.8vw;
+      font-size: 0.9vw;
+    }
+
+    .control-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5vw;
+    }
+
+    .control-row label { flex: 1; }
+
+    .control-row input[type="range"] {
+      width: 55%;
+      accent-color: #7c3aed;
+    }
+
+    .control-row .value {
+      width: 3vw;
+      text-align: right;
+      color: #7c3aed;
+      font-family: monospace;
+    }
+
+    .status {
+      margin-top: 0.8vw;
+      padding-top: 0.8vw;
+      border-top: 1px solid #27272a;
+      font-family: monospace;
+      font-size: 0.75vw;
+      line-height: 1.6;
+    }
+
+    .status .label { color: #52525b; }
+    .status .val { color: #7c3aed; }
+
+    @media (max-width: 768px) {
+      .controls { display: none; }
+      .trail-item { width: 44px; height: 44px; font-size: 24px; }
+      .test-content h1 { font-size: 16vw; }
+      .test-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cursor-trail, .cursor-dot { display: none; }
+      body { cursor: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="test-content">
+    <h1>CURSOR<br><span>TRAIL</span></h1>
+    <div class="test-grid">
+      <div class="test-card">
+        <h3>Trail</h3>
+        <p>Itens seguem o cursor com atraso progressivo. Ajuste o lag para controlar a suavidade.</p>
+      </div>
+      <div class="test-card">
+        <h3>Snap</h3>
+        <p>Pare o mouse para ver os itens se empilharem. A velocity threshold controla a sensibilidade.</p>
+      </div>
+      <div class="test-card">
+        <h3>Unsnap</h3>
+        <p>Mova o mouse novamente para soltar. O unsnap threshold define quando soltar.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRAIL ELEMENTS -->
+  <div class="cursor-trail" aria-hidden="true">
+    <div class="cursor-dot"></div>
+    <div class="trail-item" data-i="0">&#127813;</div>
+    <div class="trail-item" data-i="1">&#129472;</div>
+    <div class="trail-item" data-i="2">&#129388;</div>
+    <div class="trail-item" data-i="3">&#127828;</div>
+    <div class="trail-item" data-i="4">&#129476;</div>
+  </div>
+
+  <!-- CONTROLES -->
+  <div class="controls">
+    <h4>Controles</h4>
+    <div class="control-row">
+      <label>Lag (trail)</label>
+      <input type="range" id="ctrl-lag" min="0.05" max="0.4" step="0.01" value="0.14">
+      <span class="value" id="val-lag">0.14</span>
+    </div>
+    <div class="control-row">
+      <label>Stagger (snap)</label>
+      <input type="range" id="ctrl-stagger" min="0" max="0.15" step="0.01" value="0.05">
+      <span class="value" id="val-stagger">0.05</span>
+    </div>
+    <div class="control-row">
+      <label>Snap duration</label>
+      <input type="range" id="ctrl-snap" min="0.1" max="1" step="0.05" value="0.4">
+      <span class="value" id="val-snap">0.40</span>
+    </div>
+    <div class="control-row">
+      <label>Velocity threshold</label>
+      <input type="range" id="ctrl-vel" min="0.5" max="10" step="0.5" value="3">
+      <span class="value" id="val-vel">3.0</span>
+    </div>
+    <div class="control-row">
+      <label>Stack spacing</label>
+      <input type="range" id="ctrl-space" min="15" max="60" step="1" value="30">
+      <span class="value" id="val-space">30</span>
+    </div>
+    <div class="status">
+      <div><span class="label">velocity:</span> <span class="val" id="s-vel">0</span></div>
+      <div><span class="label">state:</span> <span class="val" id="s-state">trail</span></div>
+      <div><span class="label">items:</span> <span class="val" id="s-items">5</span></div>
+    </div>
+  </div>
+
+  <script>
+    // ============================================
+    // CURSOR TRAIL — MODELO DE TESTE
+    // ============================================
+
+    const ITEMS = document.querySelectorAll('.trail-item');
+    const DOT = document.querySelector('.cursor-dot');
+    const N = ITEMS.length;
+
+    const mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    const proxies = Array.from({ length: N }, () => ({ x: mouse.x, y: mouse.y }));
+
+    // CONFIG — ajuste via controles
+    const CFG = {
+      lag: 0.14,
+      stagger: 0.05,
+      snapDuration: 0.4,
+      snapEase: 'back.out(1.7)',
+      unsnapDuration: 0.3,
+      velocityThreshold: 3,
+      unsnapThreshold: 8,
+      stackSpacing: 30,
+    };
+
+    let stacked = false;
+    let lx = mouse.x, ly = mouse.y, vel = 0;
+    let cx = mouse.x, cy = mouse.y;
+
+    // ============================================
+    // 1. MOUSE TRACKING
+    // ============================================
+    let ticking = false;
+    document.addEventListener('mousemove', e => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          mouse.x = e.clientX;
+          mouse.y = e.clientY;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+
+    // ============================================
+    // 2. APARIÇÃO
+    // ============================================
+    ITEMS.forEach((item, i) => {
+      gsap.to(item, {
+        scale: 1, opacity: 1,
+        duration: 0.6,
+        delay: 0.3 + i * 0.08,
+        ease: 'back.out(2)',
+      });
+    });
+
+    // ============================================
+    // 3. TICKER
+    // ============================================
+    function tick() {
+      const dx = mouse.x - lx;
+      const dy = mouse.y - ly;
+      vel = Math.sqrt(dx * dx + dy * dy);
+      lx = mouse.x;
+      ly = mouse.y;
+
+      if (!stacked) {
+        proxies[0].x += (mouse.x - proxies[0].x) * CFG.lag;
+        proxies[0].y += (mouse.y - proxies[0].y) * CFG.lag;
+
+        for (let i = 1; i < N; i++) {
+          proxies[i].x += (proxies[i-1].x - proxies[i].x) * CFG.lag;
+          proxies[i].y += (proxies[i-1].y - proxies[i].y) * CFG.lag;
+        }
+
+        ITEMS.forEach((item, i) => {
+          gsap.set(item, {
+            x: proxies[i].x,
+            y: proxies[i].y,
+            xPercent: -50,
+            yPercent: -50,
+            rotation: (proxies[i].x - proxies[Math.max(0, i-1)].x) * 0.3,
+          });
+        });
+
+        if (vel < CFG.velocityThreshold) stack();
+      }
+
+      // Status
+      document.getElementById('s-vel').textContent = vel.toFixed(1);
+
+      requestAnimationFrame(tick);
+    }
+
+    // ============================================
+    // 4. STACK
+    // ============================================
+    function stack() {
+      stacked = true;
+      cx = mouse.x;
+      cy = mouse.y;
+      document.getElementById('s-state').textContent = 'stacked';
+
+      ITEMS.forEach((item, i) => {
+        item.classList.add('stacked');
+        gsap.to(item, {
+          y: cy - i * CFG.stackSpacing,
+          x: cx,
+          scale: 1 - i * 0.03,
+          rotation: (i % 2 === 0 ? -1 : 1) * (3 + i),
+          duration: CFG.snapDuration,
+          ease: CFG.snapEase,
+          delay: i * CFG.stagger,
+          overwrite: 'auto',
+        });
+      });
+    }
+
+    // ============================================
+    // 5. UNSNAP
+    // ============================================
+    document.addEventListener('mousemove', e => {
+      if (stacked) {
+        const d = Math.sqrt(
+          (e.clientX - cx) ** 2 + (e.clientY - cy) ** 2
+        );
+        if (d > 40 || vel > CFG.unsnapThreshold) unstack();
+      }
+    });
+
+    function unstack() {
+      stacked = false;
+      document.getElementById('s-state').textContent = 'trail';
+
+      ITEMS.forEach((item, i) => {
+        item.classList.remove('stacked');
+        gsap.to(item, {
+          scale: 1, rotation: 0,
+          duration: CFG.unsnapDuration,
+          ease: 'power2.out',
+          delay: i * 0.02,
+          overwrite: 'auto',
+        });
+      });
+
+      proxies.forEach((p, i) => {
+        p.x = mouse.x - i * 25;
+        p.y = mouse.y;
+      });
+    }
+
+    // ============================================
+    // 6. CONTROLES
+    // ============================================
+    function bind(id, key, display, fmt) {
+      const el = document.getElementById(id);
+      const val = document.getElementById(display);
+      el.addEventListener('input', () => {
+        const v = parseFloat(el.value);
+        CFG[key] = v;
+        val.textContent = fmt ? fmt(v) : v.toFixed(2);
+      });
+    }
+
+    bind('ctrl-lag', 'lag', 'val-lag');
+    bind('ctrl-stagger', 'stagger', 'val-stagger');
+    bind('ctrl-snap', 'snapDuration', 'val-snap');
+    bind('ctrl-vel', 'velocityThreshold', 'val-vel', v => v.toFixed(1));
+    bind('ctrl-space', 'stackSpacing', 'val-space', v => v.toFixed(0));
+
+    document.getElementById('s-items').textContent = N;
+
+    // ============================================
+    // 7. INIT
+    // ============================================
+    requestAnimationFrame(tick);
+
+    if ('ontouchstart' in window) {
+      document.querySelector('.cursor-trail').style.display = 'none';
+      DOT.style.display = 'none';
+      document.body.style.cursor = 'auto';
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      document.hidden ? gsap.globalTimeline.pause() : gsap.globalTimeline.resume();
+    });
+  </script>
+</body>
+</html>
